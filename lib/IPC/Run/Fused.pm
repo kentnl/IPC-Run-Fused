@@ -1,9 +1,10 @@
+use strict;
+use warnings;
+
 package IPC::Run::Fused;
 
 # ABSTRACT: Capture Stdout/Stderr simultaneously as if it were one stream, painlessly.
 #
-use strict;
-use warnings;
 
 =head1 SYNOPSIS
 
