@@ -1,0 +1,96 @@
+NAME
+    IPC::Run::Fused - Capture Stdout/Stderr simultaneously as if it were one
+    stream, painlessly.
+
+VERSION
+    version 0.01000001
+
+SYNOPSIS
+      use IPC::Run::Fused qw( run_fused );
+
+      run_fused my $fh, $stderror_filled_program, '--file' , $tricky_filename, @moreargs  || die "Argh $@";
+      open      my $fh, '>', 'somefile.txt'                               || die "NOO  $@";
+
+      # Simple implementation of 'tee' like behaviour,
+      # sending to stdout and to a file.
+
+      while( my $line = <$fh> ) {
+        print $fh $line;
+        print $line;
+      };
+
+DESCRIPTION
+    Have you ever tried to do essentially the same as you would in bash do
+    to this:
+
+      parentapp <( app 2>&1  )
+
+    And found massive road works getting in the way.
+
+    Sure, you can aways do this style syntax:
+
+      open my $fh, 'someapp --args foo 2>&1 |';
+
+    But thats not very nice, because
+
+    1. you're relying on a subshell to do that for you
+    2. you have to manually escape everything
+    3. you can't use list context.
+
+    And none of this is very Modern or Nice
+
+SIMPLEST THING THAT JUST WORKS
+    This code is barely tested, its here, because I spent hours griping
+    about how the existing ways suck.
+
+FEATURES
+    1. No String Interpolation.
+        Arguments after the first work as if you'd passed them directly to
+        'system'. You can be as dangerous or as safe as you want with them.
+        We recommend passing a list, but a string should work.
+
+        But if you're using a string, this modules probably not affording
+        you much.
+
+    2. No dicking around with managing multiple file handles yourself.
+        I looked at IPC::Run IPC::Run3 and IPC::Open3, and they all seemed
+        very unfriendly, and none did what I wnted.
+
+    3. Non-global filehandles supported by design.
+        All the competition seem to still have this thing for global file
+        handles and you having to use them. Yuck!.
+
+        We have a few global FH's inside our code, but they're only STDERR
+        and STDOUT, at present I don't think I can circumvent that. If I
+        ever can, I'll endeavour to do so =)
+
+EXPORTED FUNCTIONS
+    No functions are exported by default, be explicit with what you want.
+
+    At this time there is only one, and there are no plans for more.
+
+  run_fused
+  run_fused $fh, $cmdstr
+  run_fused $fh, $cmd, @args
+    $fh will be clobbered like 'open' does, and $cmd, @args will be passed,
+    as-is, through to exec() or system().
+
+    $fh will point to an IO::Handle attached to the end of a pipe running
+    back to the called application.
+
+    the command will be run in a fork, and stderr and stdout "fused" into a
+    singluar pipe.
+
+    NOTE: at present, STDIN's FD is left unchanged, and child processes will
+    inherit parent STDIN's, and will thus block ( somewhere ) waiting for
+    response.
+
+AUTHOR
+      Kent Fredric <kentnl@cpan.org>
+
+COPYRIGHT AND LICENSE
+    This software is copyright (c) 2009 by Kent Fredric.
+
+    This is free software; you can redistribute it and/or modify it under
+    the same terms as the Perl 5 programming language system itself.
+
