@@ -108,14 +108,19 @@ sub run_fused {
 
   # Copy STDOUT and STDERR for resurrection.
 
-  my ( $stdout, $stderr ) = ( POSIX::dup( fileno(*STDOUT) ), POSIX::dup( fileno(*STDERR) ) );
+  my ( $stdout, $stderr );
+  return unless ( $stdout = POSIX::dup( fileno(*STDOUT) ) );
+  return unless ( $stderr = POSIX::dup( fileno(*STDERR) ) );
 
   # Generate a pipe to accept data from child process.
   my ( $response_r, $response_w ) = POSIX::pipe();
 
   # Put Perl handles on the pipe.
-  my $responder = IO::Handle->new->fdopen( $response_r, 'r' );
-  my $writer    = IO::Handle->new->fdopen( $response_w, 'w' );
+  my ( $responder, $writer );
+
+  return unless ( $responder = IO::Handle->new->fdopen( $response_r, 'r' ) );
+  return unless ( $writer    = IO::Handle->new->fdopen( $response_w, 'w' ) );
+
   $responder->autoflush(1);
   $writer->autoflush(1);
 
@@ -130,15 +135,16 @@ sub run_fused {
     if ( not my $pid = fork() ) {
 
       # Reopen STDERR and STDOUT to point to the pipe.
-      open *STDERR, '>>&=', $response_w;
-      open *STDOUT, '>>&=', $response_w;
+      open *STDOUT, '>>&=', $response_w || die "Error Assigning STDOUT $@";
+
+      open *STDERR, '>>&=', $response_w || die "Error Assigning STDERR $@";
 
       select *STDERR;
       $|++;
       select *STDOUT;
       $|++;
 
-      exec @rest;
+      exec @rest or die "Error calling process, $@";
       exit    # dead code.
     }
 
@@ -146,6 +152,7 @@ sub run_fused {
 
   #  open *STDERR, '>>&=', $oldstderr;
   #  open *STDOUT, '>>&=', $oldstdout;
+  return 1;
 }
 
 1;
