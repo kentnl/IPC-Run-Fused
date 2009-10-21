@@ -18,9 +18,15 @@
 use strict;
 use warnings;
 
-use Test::More tests => 4;
+use Test::More tests => 400;
+use Time::HiRes qw( nanosleep );
 use FindBin;
 
+sub jitter {
+  for ( 0 ..int(rand(4)) ){
+    nanosleep int( rand( 10 ) );
+  }
+}
 # NOTE: This test is hard to guarantee, its possibly random.
 
 my $output = "w0w1w2w3w4w5w6w7w8w9w10\n" x 6 .
@@ -28,12 +34,14 @@ my $output = "w0w1w2w3w4w5w6w7w8w9w10\n" x 6 .
 
 use IPC::Run::Fused qw( run_fused );
 
-for ( 1 .. 4 ){
+# We do this lots to make sure theres no race conditions.
+for ( 1 .. 400 ){
   my $str = '';
-
+  jitter;
   run_fused my $fh, $^X, "$FindBin::Bin/tbin/01.pl" or die "$@";
-
+  jitter;
   while( my $line = <$fh> ){
+    jitter;
     $str .= $line;
   }
 
