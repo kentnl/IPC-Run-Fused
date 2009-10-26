@@ -2,7 +2,7 @@
 abstract: 'Capture Stdout/Stderr simultaneously as if it were one stream, painlessly.'
 author:
   - 'Kent Fredric <kentnl@cpan.org>'
-generated_by: 'Dist::Zilla version 1.092680'
+generated_by: 'Dist::Zilla version 1.092930'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -11,14 +11,13 @@ name: IPC-Run-Fused
 provides:
   IPC::Run::Fused:
     file: lib/IPC/Run/Fused.pm
-    version: 0.01000001
+    version: 0.01000514
 requires:
   FindBin: 0
   IO::Handle: 0
   POSIX: 0
   Sub::Exporter: 0.982
   Test::More: 0
-  Time::HiRes: 0
 resources:
-  repository: http://github.com/kentfredric/IPC-Run-Fused/tree
-version: 0.01000001
+  repository: http://github.com/kentfredric/IPC-Run-Fused
+version: 0.01000514

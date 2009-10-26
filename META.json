@@ -1,13 +1,13 @@
 {
    "resources" : {
-      "repository" : "http://github.com/kentfredric/IPC-Run-Fused/tree"
+      "repository" : "http://github.com/kentfredric/IPC-Run-Fused"
    },
-   "generated_by" : "Dist::Zilla version 1.092680",
+   "generated_by" : "Dist::Zilla version 1.092930",
    "meta-spec" : {
       "version" : 1.4,
       "url" : "http://module-build.sourceforge.net/META-spec-v1.4.html"
    },
-   "version" : "0.01000001",
+   "version" : "0.01000514",
    "name" : "IPC-Run-Fused",
    "author" : [
       "Kent Fredric <kentnl@cpan.org>"
@@ -15,7 +15,7 @@
    "license" : "perl",
    "provides" : {
       "IPC::Run::Fused" : {
-         "version" : "0.01000001",
+         "version" : "0.01000514",
          "file" : "lib/IPC/Run/Fused.pm"
       }
    },
@@ -24,8 +24,7 @@
       "POSIX" : "0",
       "FindBin" : "0",
       "IO::Handle" : "0",
-      "Sub::Exporter" : "0.982",
-      "Time::HiRes" : "0"
+      "Sub::Exporter" : "0.982"
    },
    "abstract" : "Capture Stdout/Stderr simultaneously as if it were one stream, painlessly."
 }

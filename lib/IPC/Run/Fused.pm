@@ -2,9 +2,10 @@ use strict;
 use warnings;
 
 package IPC::Run::Fused;
-our $VERSION = '0.01000001';
+our $VERSION = '0.01000514';
 
 
+use 5.8.0;
 
 # ABSTRACT: Capture Stdout/Stderr simultaneously as if it were one stream, painlessly.
 #
@@ -57,7 +58,15 @@ sub run_fused {
       select *STDOUT;
       $|++;
 
-      exec @rest or die "Error calling process, $@";
+      my $program = $rest[0];
+
+      if ( ref $program ) {
+        exec ${$program} or die "Error calling process, $@ $?";
+      }
+      else {
+
+        exec { $program } @rest or die "Error calling process, $@ $?";
+      }
       exit    # dead code.
     }
 
@@ -72,7 +81,6 @@ sub run_fused {
 
 
 __END__
-
 =pod
 
 =head1 NAME
@@ -81,24 +89,26 @@ IPC::Run::Fused - Capture Stdout/Stderr simultaneously as if it were one stream,
 
 =head1 VERSION
 
-version 0.01000001
+version 0.01000514
 
 =head1 SYNOPSIS
 
   use IPC::Run::Fused qw( run_fused );
 
-  run_fused my $fh, $stderror_filled_program, '--file' , $tricky_filename, @moreargs  || die "Argh $@";
-  open      my $fh, '>', 'somefile.txt'                               || die "NOO  $@";
+  run_fused( my $fh, $stderror_filled_program, '--file', $tricky_filename, @moreargs ) || die "Argh $@";
+  open my $fh, '>', 'somefile.txt' || die "NOO  $@";
 
   # Simple implementation of 'tee' like behaviour,
   # sending to stdout and to a file.
 
-  while( my $line = <$fh> ) {
+  while ( my $line = <$fh> ) {
     print $fh $line;
     print $line;
-  };
+  }
 
+=cut
 
+=pod
 
 =head1 DESCRIPTION
 
@@ -122,7 +132,7 @@ But thats not very nice, because
 
 =item 3. you can't use list context.
 
-=back 
+=back
 
 And none of this is very B<Modern> or B<Nice>
 
@@ -137,7 +147,7 @@ This code is barely tested, its here, because I spent hours griping about how th
 =item 1. No String Interpolation.
 
 Arguments after the first work as if you'd passed them directly to 'system'. You can be as dangerous or as
-safe as you want with them. We recommend passing a list, but a string should work.
+safe as you want with them. We recommend passing a list, but a string ( as a scalar reference ) should work
 
 But if you're using a string, this modules probably not affording you much.
 
@@ -151,7 +161,7 @@ All the competition seem to still have this thing for global file handles and yo
 
 We have a few global FH's inside our code, but they're only STDERR and STDOUT, at present I don't think I can circumvent that. If I ever can, I'll endeavour to do so =)
 
-=back 
+=back
 
 =head1 EXPORTED FUNCTIONS
 
@@ -161,9 +171,16 @@ At this time there is only one, and there are no plans for more.
 
 =head2 run_fused
 
-=head2 run_fused $fh, $cmdstr
+  run_fused( $fh, $executable, @params ) || die "$@";
+  run_fused( $fh, \$command_string ) || die "$@";
 
-=head2 run_fused $fh, $cmd, @args
+  # Recommended
+
+  run_fused( my $fh, $execuable, @params ) || die "$@";
+
+  # Somewhat supported
+
+  run_fused( my $fh, \$command_string ) || die "$@";
 
 $fh will be clobbered like 'open' does, and $cmd, @args will be passed, as-is, through to exec() or system().
 
@@ -173,11 +190,9 @@ the command will be run in a fork, and stderr and stdout "fused" into a singluar
 
 B<NOTE:> at present, STDIN's FD is left unchanged, and child processes will inherit parent STDIN's, and will thus block ( somewhere ) waiting for response.
 
-
-
 =head1 AUTHOR
 
-  Kent Fredric <kentnl@cpan.org>
+Kent Fredric <kentnl@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
@@ -186,6 +201,5 @@ This software is copyright (c) 2009 by Kent Fredric.
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
 
-=cut 
-
+=cut
 

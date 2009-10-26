@@ -1,4 +1,20 @@
 Revision history for IPC-Run-Fused
+0.01000514 2009-10-26 13:46:20 UTC
+          Hard depends on perl 5.8.0 or greater due to >>&= File Open
+
+          Fixed up the absense of parentheses in synopsis and tests.
+
+          Tidied Synopsis Code.
+
+          run_fused( $fh, 'Command String | bar' ) will now be interpreted as
+          if to look for a literal program sharing that literal name. To get the prior behaviour,
+          pass a scalar ref instead, ie: run_fused( $fh, \'Command String' ).
+
+          run_fused( $fh, @list ) now properly calls exec with
+            exec { $program } @args
+
+          dropped Time::HiRes and now use a stupid arthimetic loop to delay things.
+
 
 0.01000001 2009-10-21 00:36:09 UTC
           First version.

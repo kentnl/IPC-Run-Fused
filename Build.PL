@@ -18,7 +18,6 @@ my $build = Module::Build->new(
     "FindBin" => '0',
     "IO::Handle" => '0',
     "Sub::Exporter" => '0.982',
-    "Time::HiRes" => '0',
   },
   script_files => [ qw() ],
 );

@@ -3,21 +3,21 @@ NAME
     stream, painlessly.
 
 VERSION
-    version 0.01000001
+    version 0.01000514
 
 SYNOPSIS
       use IPC::Run::Fused qw( run_fused );
 
-      run_fused my $fh, $stderror_filled_program, '--file' , $tricky_filename, @moreargs  || die "Argh $@";
-      open      my $fh, '>', 'somefile.txt'                               || die "NOO  $@";
+      run_fused( my $fh, $stderror_filled_program, '--file', $tricky_filename, @moreargs ) || die "Argh $@";
+      open my $fh, '>', 'somefile.txt' || die "NOO  $@";
 
       # Simple implementation of 'tee' like behaviour,
       # sending to stdout and to a file.
 
-      while( my $line = <$fh> ) {
+      while ( my $line = <$fh> ) {
         print $fh $line;
         print $line;
-      };
+      }
 
 DESCRIPTION
     Have you ever tried to do essentially the same as you would in bash do
@@ -47,7 +47,8 @@ FEATURES
     1. No String Interpolation.
         Arguments after the first work as if you'd passed them directly to
         'system'. You can be as dangerous or as safe as you want with them.
-        We recommend passing a list, but a string should work.
+        We recommend passing a list, but a string ( as a scalar reference )
+        should work
 
         But if you're using a string, this modules probably not affording
         you much.
@@ -70,8 +71,17 @@ EXPORTED FUNCTIONS
     At this time there is only one, and there are no plans for more.
 
   run_fused
-  run_fused $fh, $cmdstr
-  run_fused $fh, $cmd, @args
+      run_fused( $fh, $executable, @params ) || die "$@";
+      run_fused( $fh, \$command_string ) || die "$@";
+
+      # Recommended
+
+      run_fused( my $fh, $execuable, @params ) || die "$@";
+
+      # Somewhat supported
+
+      run_fused( my $fh, \$command_string ) || die "$@";
+
     $fh will be clobbered like 'open' does, and $cmd, @args will be passed,
     as-is, through to exec() or system().
 
@@ -86,7 +96,7 @@ EXPORTED FUNCTIONS
     response.
 
 AUTHOR
-      Kent Fredric <kentnl@cpan.org>
+    Kent Fredric <kentnl@cpan.org>
 
 COPYRIGHT AND LICENSE
     This software is copyright (c) 2009 by Kent Fredric.
