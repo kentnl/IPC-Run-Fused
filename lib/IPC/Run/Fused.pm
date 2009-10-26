@@ -2,6 +2,7 @@ use strict;
 use warnings;
 
 package IPC::Run::Fused;
+use 5.8.0;
 
 # ABSTRACT: Capture Stdout/Stderr simultaneously as if it were one stream, painlessly.
 #
@@ -10,16 +11,16 @@ package IPC::Run::Fused;
 
   use IPC::Run::Fused qw( run_fused );
 
-  run_fused my $fh, $stderror_filled_program, '--file' , $tricky_filename, @moreargs  || die "Argh $@";
-  open      my $fh, '>', 'somefile.txt'                               || die "NOO  $@";
+  run_fused( my $fh, $stderror_filled_program, '--file', $tricky_filename, @moreargs ) || die "Argh $@";
+  open my $fh, '>', 'somefile.txt' || die "NOO  $@";
 
   # Simple implementation of 'tee' like behaviour,
   # sending to stdout and to a file.
 
-  while( my $line = <$fh> ) {
+  while ( my $line = <$fh> ) {
     print $fh $line;
     print $line;
-  };
+  }
 
 =cut
 
@@ -60,7 +61,7 @@ This code is barely tested, its here, because I spent hours griping about how th
 =item 1. No String Interpolation.
 
 Arguments after the first work as if you'd passed them directly to 'system'. You can be as dangerous or as
-safe as you want with them. We recommend passing a list, but a string should work.
+safe as you want with them. We recommend passing a list, but a string ( as a scalar reference ) should work
 
 But if you're using a string, this modules probably not affording you much.
 
@@ -84,9 +85,16 @@ At this time there is only one, and there are no plans for more.
 
 =head2 run_fused
 
-=head2 run_fused $fh, $cmdstr
+  run_fused( $fh, $executable, @params ) || die "$@";
+  run_fused( $fh, \$command_string ) || die "$@";
 
-=head2 run_fused $fh, $cmd, @args
+  # Recommended
+
+  run_fused( my $fh, $execuable, @params ) || die "$@";
+
+  # Somewhat supported
+
+  run_fused( my $fh, \$command_string ) || die "$@";
 
 $fh will be clobbered like 'open' does, and $cmd, @args will be passed, as-is, through to exec() or system().
 
@@ -144,7 +152,15 @@ sub run_fused {
       select *STDOUT;
       $|++;
 
-      exec @rest or die "Error calling process, $@";
+      my $program = $rest[0];
+
+      if ( ref $program ) {
+        exec ${$program} or die "Error calling process, $@ $?";
+      }
+      else {
+
+        exec { $program } @rest or die "Error calling process, $@ $?";
+      }
       exit    # dead code.
     }
 
