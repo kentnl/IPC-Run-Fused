@@ -1,2 +1,5 @@
+verbose = 9
+exclude = ProhibitSubroutinePrototypes
+
 [Perl::Critic::Policy::BuiltinFunctions::ProhibitStringyEval]
 allow_includes = 1

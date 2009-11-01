@@ -1,5 +1,9 @@
 Revision history for IPC-Run-Fused
+0.01001122 2009-11-01 21:22:16 UTC
+          Fall back to native pipes if POSIX pipes fail. Experimental, so will carp.
+
 0.01000514 2009-10-26 13:46:20 UTC
+
           Hard depends on perl 5.8.0 or greater due to >>&= File Open
 
           Fixed up the absense of parentheses in synopsis and tests.

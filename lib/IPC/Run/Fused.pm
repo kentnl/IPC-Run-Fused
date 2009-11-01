@@ -2,7 +2,7 @@ use strict;
 use warnings;
 
 package IPC::Run::Fused;
-our $VERSION = '0.01000514';
+our $VERSION = '0.01001122';
 
 
 use 5.8.0;
@@ -17,6 +17,37 @@ use IO::Handle;
 
 use Sub::Exporter -setup => { exports => [qw( run_fused )], };
 
+sub _mk_pipe_perl(&) {
+  my ( $response_r, $response_w, $fail ) = ( undef, undef, @_ );
+  pipe $response_r, $response_w;
+  if ( not defined $response_r or not defined $response_w ) {
+    return $fail->();
+  }
+  return ( $response_r, $response_w, fileno $response_r, fileno $response_w );
+}
+
+sub _mk_pipe_posix(&) {
+  my ( $response_r, $response_w, $fail ) = ( undef, undef, @_ );
+  ( $response_r, $response_w ) = POSIX::pipe();
+  my ( $responder, $writer );
+  if ( not defined $response_r or not defined $response_w ) {
+    return $fail->('pipe');
+  }
+  $responder = IO::Handle->new->fdopen( $response_r, 'r' );
+  $writer    = IO::Handle->new->fdopen( $response_w, 'w' );
+  if ( not defined $writer ) {
+    return $fail->('writer');
+  }
+  if ( not defined $responder ) {
+    return $fail->('responder');
+  }
+
+  $responder->autoflush(1);
+  $writer->autoflush(1);
+
+  return ( $responder, $writer, $response_r, $response_w );
+}
+
 sub run_fused {
   my ( $fhx, @rest ) = @_;
 
@@ -25,18 +56,28 @@ sub run_fused {
   my ( $stdout, $stderr );
   return unless ( $stdout = POSIX::dup( fileno(*STDOUT) ) );
   return unless ( $stderr = POSIX::dup( fileno(*STDERR) ) );
+  my ( $responder, $writer, $fdr, $fdw );
+  if (1) {
 
-  # Generate a pipe to accept data from child process.
-  my ( $response_r, $response_w ) = POSIX::pipe();
+    #POSIX FIRST -- it seems faster.
+    ( $responder, $writer, $fdr, $fdw ) = _mk_pipe_posix {
+      my $err = shift;
+      Carp::carp("Posix pipe failed doing $err, trying native");
+      return _mk_pipe_perl {
+        Carp::croak("Native pipe failed");
+      };
+    };
+  }
+  else {
 
-  # Put Perl handles on the pipe.
-  my ( $responder, $writer );
-
-  return unless ( $responder = IO::Handle->new->fdopen( $response_r, 'r' ) );
-  return unless ( $writer    = IO::Handle->new->fdopen( $response_w, 'w' ) );
-
-  $responder->autoflush(1);
-  $writer->autoflush(1);
+    # NATIVE FIRST
+    ( $responder, $writer, $fdr, $fdw ) = _mk_pipe_perl {
+      Carp::carp("Native pipe failed, trying posix");
+      return _mk_pipe_posix {
+        Carp::croak("Posix pipe failed doing $_[0]");
+      };
+    };
+  }
 
   # Return the handle to the user.
   $_[0] = $responder;
@@ -49,9 +90,9 @@ sub run_fused {
     if ( not my $pid = fork() ) {
 
       # Reopen STDERR and STDOUT to point to the pipe.
-      open *STDOUT, '>>&=', $response_w || die "Error Assigning STDOUT $@";
+      open *STDOUT, '>>&=', $fdw || die "Error Assigning STDOUT $@";
 
-      open *STDERR, '>>&=', $response_w || die "Error Assigning STDERR $@";
+      open *STDERR, '>>&=', $fdw || die "Error Assigning STDERR $@";
 
       select *STDERR;
       $|++;
@@ -65,7 +106,7 @@ sub run_fused {
       }
       else {
 
-        exec { $program } @rest or die "Error calling process, $@ $?";
+        exec {$program} @rest or die "Error calling process, $@ $?";
       }
       exit    # dead code.
     }
@@ -89,7 +130,7 @@ IPC::Run::Fused - Capture Stdout/Stderr simultaneously as if it were one stream,
 
 =head1 VERSION
 
-version 0.01000514
+version 0.01001122
 
 =head1 SYNOPSIS
 
