@@ -11,7 +11,7 @@ name: IPC-Run-Fused
 provides:
   IPC::Run::Fused:
     file: lib/IPC/Run/Fused.pm
-    version: 0.01001122
+    version: 0.01001607
 requires:
   FindBin: 0
   IO::Handle: 0
@@ -20,4 +20,4 @@ requires:
   Test::More: 0
 resources:
   repository: http://github.com/kentfredric/IPC-Run-Fused
-version: 0.01001122
+version: 0.01001607

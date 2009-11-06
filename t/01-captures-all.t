@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 400;
+use Test::More tests => 100;
 use FindBin;
 
 sub jitter {
@@ -22,7 +22,7 @@ my $output = "w0w1w2w3w4w5w6w7w8w9w10\n" x 6 . join '', map { "<<$_>>\np0p1p2p3p
 use IPC::Run::Fused qw( run_fused );
 
 # We do this lots to make sure theres no race conditions.
-for ( 1 .. 400 ) {
+for ( 1 .. 100 ) {
   my $str = '';
   jitter;
   run_fused( my $fh, $^X, "$FindBin::Bin/tbin/01.pl" ) or die "$@";

@@ -1,4 +1,12 @@
 Revision history for IPC-Run-Fused
+0.01001607 2009-11-06 06:34:07 UTC
+          Native pipes by default.
+          Removed needless POSIX::dup();
+          Loads more error handling to try work out whats going wrong in tests.
+          Reorgansied fork() code into a handy subroutine.
+          Reduced Test-grinding from 400 to 100, as 100 seems enough to make problems 
+            turn up if there are any
+
 0.01001122 2009-11-01 21:22:16 UTC
           Fall back to native pipes if POSIX pipes fail. Experimental, so will carp.
 

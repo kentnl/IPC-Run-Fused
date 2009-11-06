@@ -2,7 +2,7 @@ use strict;
 use warnings;
 
 package IPC::Run::Fused;
-our $VERSION = '0.01001122';
+our $VERSION = '0.01001607';
 
 
 use 5.8.0;
@@ -21,7 +21,15 @@ sub _mk_pipe_perl(&) {
   my ( $response_r, $response_w, $fail ) = ( undef, undef, @_ );
   pipe $response_r, $response_w;
   if ( not defined $response_r or not defined $response_w ) {
-    return $fail->();
+    return $fail->('perl `pipe` doesn\'t work');
+  }
+  $response_r->autoflush(1);
+  $response_w->autoflush(1);
+  if ( not defined $response_r->fileno ){
+    $fail->('Fileno not supported on pipe reader', $?, $!, $^E, $@ );
+  }
+  if ( not defined $response_w->fileno ){
+    $fail->('Fileno not supported on pipe writer', $?, $!, $^E, $@ );
   }
   return ( $response_r, $response_w, fileno $response_r, fileno $response_w );
 }
@@ -31,15 +39,15 @@ sub _mk_pipe_posix(&) {
   ( $response_r, $response_w ) = POSIX::pipe();
   my ( $responder, $writer );
   if ( not defined $response_r or not defined $response_w ) {
-    return $fail->('pipe');
+    return $fail->('posix pipe doesn\'t work',  $?, $!, $^E, $@ );
   }
   $responder = IO::Handle->new->fdopen( $response_r, 'r' );
   $writer    = IO::Handle->new->fdopen( $response_w, 'w' );
   if ( not defined $writer ) {
-    return $fail->('writer');
+    return $fail->('writer not defined', $?, $!, $^E, $@ );
   }
   if ( not defined $responder ) {
-    return $fail->('responder');
+    return $fail->('responder not defined', $?, $!, $^E, $@ );
   }
 
   $responder->autoflush(1);
@@ -48,73 +56,46 @@ sub _mk_pipe_posix(&) {
   return ( $responder, $writer, $response_r, $response_w );
 }
 
+sub _run_fork   {
+  my ( $write_fno , $params, $fail ) = @_;
+  # Reopen STDERR and STDOUT to point to the pipe.
+  open *STDOUT, '>>&=', $write_fno || $fail->('Assigning to STDOUT', $?, $!, $^E, $@);
+  open *STDERR, '>>&=', $write_fno || $fail->('Assigning to STDERR', $?, $!, $^E, $@);
+
+  select *STDERR;
+  $|++;
+  select *STDOUT;
+  $|++;
+
+  my $program = $params->[0];
+
+  if ( ref $program ) {
+    exec ${$program} or $fail->('Calling process',$?,$!,$^E,$@);
+  }
+  else {
+    exec {$program} @{$params} or $fail->('Calling process',$?,$!,$^E,$@);
+  }
+  exit    # dead code.
+}
+
 sub run_fused {
   my ( $fhx, @rest ) = @_;
 
-  # Copy STDOUT and STDERR for resurrection.
-
-  my ( $stdout, $stderr );
-  return unless ( $stdout = POSIX::dup( fileno(*STDOUT) ) );
-  return unless ( $stderr = POSIX::dup( fileno(*STDERR) ) );
-  my ( $responder, $writer, $fdr, $fdw );
-  if (1) {
-
-    #POSIX FIRST -- it seems faster.
-    ( $responder, $writer, $fdr, $fdw ) = _mk_pipe_posix {
-      my $err = shift;
-      Carp::carp("Posix pipe failed doing $err, trying native");
-      return _mk_pipe_perl {
-        Carp::croak("Native pipe failed");
-      };
-    };
-  }
-  else {
-
-    # NATIVE FIRST
-    ( $responder, $writer, $fdr, $fdw ) = _mk_pipe_perl {
-      Carp::carp("Native pipe failed, trying posix");
+  my ( $responder, $writer, $fdr, $fdw )  = _mk_pipe_perl {
+      Carp::cluck("Native pipe failed, trying posix ( @_ )");
       return _mk_pipe_posix {
-        Carp::croak("Posix pipe failed doing $_[0]");
+        Carp::confess("Posix pipe failed : @_ ");
       };
-    };
-  }
+  };
 
   # Return the handle to the user.
   $_[0] = $responder;
 
-  # my $tstdout   = IO::Handle->new->fdopen( $oldstdout,  'w' );
-  # $tstdout->autoflush(1);
-
   # Run the users app with the new stuff.
-  {
-    if ( not my $pid = fork() ) {
+  _run_fork( $fdw, \@rest, sub {
+        Carp::confess("Fork Failure, @_ ");
+  }) if ( not my $pid = fork() );
 
-      # Reopen STDERR and STDOUT to point to the pipe.
-      open *STDOUT, '>>&=', $fdw || die "Error Assigning STDOUT $@";
-
-      open *STDERR, '>>&=', $fdw || die "Error Assigning STDERR $@";
-
-      select *STDERR;
-      $|++;
-      select *STDOUT;
-      $|++;
-
-      my $program = $rest[0];
-
-      if ( ref $program ) {
-        exec ${$program} or die "Error calling process, $@ $?";
-      }
-      else {
-
-        exec {$program} @rest or die "Error calling process, $@ $?";
-      }
-      exit    # dead code.
-    }
-
-  }
-
-  #  open *STDERR, '>>&=', $oldstderr;
-  #  open *STDOUT, '>>&=', $oldstdout;
   return 1;
 }
 
@@ -130,7 +111,7 @@ IPC::Run::Fused - Capture Stdout/Stderr simultaneously as if it were one stream,
 
 =head1 VERSION
 
-version 0.01001122
+version 0.01001607
 
 =head1 SYNOPSIS
 

@@ -7,7 +7,7 @@
       "version" : 1.4,
       "url" : "http://module-build.sourceforge.net/META-spec-v1.4.html"
    },
-   "version" : "0.01001122",
+   "version" : "0.01001607",
    "name" : "IPC-Run-Fused",
    "author" : [
       "Kent Fredric <kentnl@cpan.org>"
@@ -15,7 +15,7 @@
    "license" : "perl",
    "provides" : {
       "IPC::Run::Fused" : {
-         "version" : "0.01001122",
+         "version" : "0.01001607",
          "file" : "lib/IPC/Run/Fused.pm"
       }
    },
