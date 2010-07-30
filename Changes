@@ -1,4 +1,8 @@
 Revision history for IPC-Run-Fused
+0.01028806 2010-07-30 17:52:27 Pacific/Auckland
+          Migrate code to [@KENTNL]
+          Fix non-portable vstring in use $version;
+
 0.01001607 2009-11-06 06:34:07 UTC
           Native pipes by default.
           Removed needless POSIX::dup();

@@ -2,10 +2,10 @@ use strict;
 use warnings;
 
 package IPC::Run::Fused;
-our $VERSION = '0.01001607';
-
-
-use 5.8.0;
+BEGIN {
+  $IPC::Run::Fused::VERSION = '0.01028806';
+}
+use 5.008000;
 
 # ABSTRACT: Capture Stdout/Stderr simultaneously as if it were one stream, painlessly.
 #
@@ -111,7 +111,7 @@ IPC::Run::Fused - Capture Stdout/Stderr simultaneously as if it were one stream,
 
 =head1 VERSION
 
-version 0.01001607
+version 0.01028806
 
 =head1 SYNOPSIS
 
@@ -127,10 +127,6 @@ version 0.01001607
     print $fh $line;
     print $line;
   }
-
-=cut
-
-=pod
 
 =head1 DESCRIPTION
 
@@ -218,7 +214,7 @@ Kent Fredric <kentnl@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2009 by Kent Fredric.
+This software is copyright (c) 2010 by Kent Fredric.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

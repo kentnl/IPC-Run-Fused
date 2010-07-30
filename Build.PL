@@ -2,24 +2,40 @@
 use strict;
 use warnings;
 
-use Module::Build;
+use Module::Build 0.3601;
 
-my $build = Module::Build->new(
-  module_name   => 'IPC::Run::Fused',
-  license       => 'perl',
-  dist_abstract => "Capture\ Stdout\/Stderr\ simultaneously\ as\ if\ it\ were\ one\ stream\,\ painlessly\.",
-  dist_name     => "IPC\-Run\-Fused",
-  dist_author   => [
-"Kent\ Fredric\ \<kentnl\@cpan\.org\>",
-  ],
-  requires      => {
-    "Test::More" => '0',
-    "POSIX" => '0',
-    "FindBin" => '0',
-    "IO::Handle" => '0',
-    "Sub::Exporter" => '0.982',
+
+my %module_build_args = (
+  'build_requires' => {
+    'File::Find' => '0',
+    'File::Temp' => '0',
+    'FindBin' => '0',
+    'Module::Build' => '0.3601',
+    'Test::More' => '0.88'
   },
-  script_files => [ qw() ],
+  'configure_requires' => {
+    'Module::Build' => '0.3601'
+  },
+  'dist_abstract' => 'Capture Stdout/Stderr simultaneously as if it were one stream, painlessly.',
+  'dist_author' => [
+    'Kent Fredric <kentnl@cpan.org>'
+  ],
+  'dist_name' => 'IPC-Run-Fused',
+  'dist_version' => '0.01028806',
+  'license' => 'perl',
+  'module_name' => 'IPC::Run::Fused',
+  'recommends' => {},
+  'recursive_test_files' => 1,
+  'requires' => {
+    'IO::Handle' => '0',
+    'POSIX' => '0',
+    'Sub::Exporter' => '0.982',
+    'perl' => '5.008000'
+  },
+  'script_files' => []
 );
+
+
+my $build = Module::Build->new(%module_build_args);
 
 $build->create_build_script;
