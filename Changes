@@ -1,5 +1,7 @@
 Revision history for {{$dist->name}}
 {{$NEXT}}
+
+0.01028806 2010-07-30 17:52:27 Pacific/Auckland
           Migrate code to [@KENTNL]
           Fix non-portable vstring in use $version;
 
