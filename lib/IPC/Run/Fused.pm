@@ -2,7 +2,7 @@ use strict;
 use warnings;
 
 package IPC::Run::Fused;
-use 5.8.0;
+use 5.008000;
 
 # ABSTRACT: Capture Stdout/Stderr simultaneously as if it were one stream, painlessly.
 #
