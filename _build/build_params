@@ -1,0 +1,131 @@
+do{ my $x = [
+       {
+         'ARGV' => []
+       },
+       {},
+       {
+         'allow_mb_mismatch' => 0,
+         'use_tap_harness' => 0,
+         'dist_abstract' => 'Capture Stdout/Stderr simultaneously as if it were one stream, painlessly.',
+         'scripts' => undef,
+         'release_status' => 'stable',
+         'config' => undef,
+         'license' => 'perl',
+         'has_config_data' => undef,
+         'extra_compiler_flags' => [],
+         'dist_version_from' => undef,
+         'pm_files' => undef,
+         'build_elements' => [
+                               'PL',
+                               'support',
+                               'pm',
+                               'xs',
+                               'share_dir',
+                               'pod',
+                               'script'
+                             ],
+         'include_dirs' => [],
+         'prefix' => undef,
+         'extra_linker_flags' => [],
+         'tap_harness_args' => {},
+         'prefix_relpaths' => {},
+         'verbose' => undef,
+         'magic_number' => undef,
+         'mb_version' => '0.4003',
+         'share_dir' => undef,
+         'quiet' => undef,
+         'mymetafile' => 'MYMETA.yml',
+         'test_files' => undef,
+         'destdir' => undef,
+         'dynamic_config' => 1,
+         'metafile2' => 'META.json',
+         'xs_files' => undef,
+         'dist_author' => [
+                            'Kent Fredric <kentnl@cpan.org>'
+                          ],
+         'dist_version' => '0.01028807',
+         'install_sets' => {},
+         'bundle_inc_preload' => [],
+         'debugger' => undef,
+         'get_options' => {},
+         'create_makefile_pl' => undef,
+         'recursive_test_files' => 1,
+         'program_name' => undef,
+         'install_path' => {},
+         'needs_compiler' => '',
+         'requires' => {
+                         'Sub::Exporter' => '0.982',
+                         'perl' => 'v5.8.3',
+                         'warnings' => 0,
+                         'IO::Handle' => 0,
+                         'POSIX' => 0,
+                         'strict' => 0
+                       },
+         '_added_to_INC' => [],
+         'dist_suffix' => undef,
+         'build_class' => 'Module::Build',
+         'meta_add' => {},
+         'create_packlist' => 1,
+         'PL_files' => undef,
+         'orig_dir' => '/home/kent/perl/IPC-Run-Fused/IPC-Run-Fused-0.01028807',
+         'install_base_relpaths' => {},
+         'dist_name' => 'IPC-Run-Fused',
+         'auto_configure_requires' => 1,
+         'pollute' => undef,
+         'recurse_into' => [],
+         'c_source' => undef,
+         'build_bat' => 0,
+         'html_css' => '',
+         'blib' => 'blib',
+         'use_rcfile' => 1,
+         'install_base' => undef,
+         'create_readme' => undef,
+         'build_script' => 'Build',
+         'metafile' => 'META.yml',
+         'autosplit' => undef,
+         'bundle_inc' => [],
+         'pod_files' => undef,
+         'build_requires' => {
+                               'Test::More' => '0.98',
+                               'Module::Build' => '0.4003',
+                               'File::Find' => 0,
+                               'FindBin' => 0,
+                               'File::Temp' => 0
+                             },
+         'perl' => '/home/kent/perl5/perlbrew/perls/perl-blead/bin/perl5.17.9',
+         'config_dir' => '_build',
+         'bindoc_dirs' => [
+                            'blib/script'
+                          ],
+         'script_files' => [],
+         'original_prefix' => {},
+         'prereq_action_types' => [
+                                    'requires',
+                                    'build_requires',
+                                    'conflicts',
+                                    'recommends'
+                                  ],
+         'conflicts' => {},
+         'meta_merge' => {},
+         'recommends' => {},
+         'cpan_client' => 'cpan',
+         'configure_requires' => {
+                                   'Module::Build' => '0.4003'
+                                 },
+         'create_license' => undef,
+         'base_dir' => '/home/kent/perl/IPC-Run-Fused/IPC-Run-Fused-0.01028807',
+         'module_name' => 'IPC::Run::Fused',
+         'installdirs' => 'site',
+         'debug' => undef,
+         'sign' => undef,
+         'mymetafile2' => 'MYMETA.json',
+         'libdoc_dirs' => [
+                            'blib/lib',
+                            'blib/arch'
+                          ],
+         'test_file_exts' => [
+                               '.t'
+                             ]
+       }
+     ];
+$x; }

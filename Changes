@@ -1,37 +1,96 @@
-Revision history for IPC-Run-Fused
-0.01028806 2010-07-30 17:52:27 Pacific/Auckland
-          Migrate code to [@KENTNL]
-          Fix non-portable vstring in use $version;
+﻿Revision history for IPC-Run-Fused
 
-0.01001607 2009-11-06 06:34:07 UTC
-          Native pipes by default.
-          Removed needless POSIX::dup();
-          Loads more error handling to try work out whats going wrong in tests.
-          Reorgansied fork() code into a handy subroutine.
-          Reduced Test-grinding from 400 to 100, as 100 seems enough to make problems 
-            turn up if there are any
+0.01028807 2013-01-26T00:26:12Z
+ - Maint release.
 
-0.01001122 2009-11-01 21:22:16 UTC
-          Fall back to native pipes if POSIX pipes fail. Experimental, so will carp.
+ [BugFixes]
+ - disabled tests on Win32. We have had it work on win32, but the tests are
+   broken on win32, and we're  not quite sure why yet. Code is planned to
+   have a total overhaul at some point.
 
-0.01000514 2009-10-26 13:46:20 UTC
+ [Dependencies::Changed / build_requires]
+ - Module::Build 0.3601 -> 0.4003
 
-          Hard depends on perl 5.8.0 or greater due to >>&= File Open
+ [Dependencies::Changed / configure_requires]
+ - Module::Build 0.3601 -> 0.4003
 
-          Fixed up the absense of parentheses in synopsis and tests.
+ [Dependencies::Changed / runtime_requires]
+ - perl v5.008000 -> v5.8.3
 
-          Tidied Synopsis Code.
+ [Dependencies::Changed / test_requires]
+ - Test::More 0.88 -> 0.98
 
-          run_fused( $fh, 'Command String | bar' ) will now be interpreted as
-          if to look for a literal program sharing that literal name. To get the prior behaviour,
-          pass a scalar ref instead, ie: run_fused( $fh, \'Command String' ).
+ [Dependencies::New / develop_recommends]
+ - Dist::Zilla::PluginBundle::Author::KENTNL::Lite v1.3.0
 
-          run_fused( $fh, @list ) now properly calls exec with
-            exec { $program } @args
+ [Dependencies::New / develop_requires]
+ - Dist::Zilla::PluginBundle::Author::KENTNL::Lite 0
+ - Pod::Coverage::TrustPod 0
+ - Test::CPAN::Meta 0
+ - Test::Pod 1.41
+ - Test::Pod::Coverage 1.08
+ - version 0.9901
 
-          dropped Time::HiRes and now use a stupid arthimetic loop to delay things.
+ [Dependencies::New / develop_suggests]
+ - Dist::Zilla::PluginBundle::Author::KENTNL v1.7.0
 
+ [Dependencies::New / runtime_requires]
+ - strict 0
+ - warnings 0
 
-0.01000001 2009-10-21 00:36:09 UTC
-          First version.
+ [Documentation]
+ - add README.mkdn to dist
+ - normalise Changes to CPAN::Changes form
+ - update copyright license year
+ - reindent LICENSE file
+ - update fsf address
+
+ [Internals]
+ - declare $AUTHORITY
+ - change $VERSION declaration form
+
+ [Meta]
+ - set bug tracker to github issues
+ - use https:// for all git uris.
+ - add x_authority
+
+ [Packaging]
+ - move to @Author::KENTNL
+ - move author/release tests to xt/ and stay there
+
+ [Tests]
+ - regenerate 00-compile.t
+ - regenerate 000-report-versions-tiny.t
+
+0.01028806 2010-07-30T05:52:27Z
+ - Migrate code to [@KENTNL]
+ - Fix non-portable vstring in use $version;
+
+0.01001607 2009-11-06T06:34:07Z
+ - Native pipes by default.
+ - Removed needless POSIX::dup();
+ - Loads more error handling to try work out whats going wrong in tests.
+ - Reorgansied fork() code into a handy subroutine.
+ - Reduced Test-grinding from 400 to 100, as 100 seems enough to make
+   problems  turn up if there are any
+
+0.01001122 2009-11-01T21:22:16Z
+ - Fall back to native pipes if POSIX pipes fail. Experimental, so will
+   carp.
+
+0.01000514 2009-10-26T13:46:20Z
+ - Hard depends on perl 5.8.0 or greater due to >>&= File Open
+ - Fixed up the absense of parentheses in synopsis and tests.
+ - Tidied Synopsis Code.
+ - run_fused( $fh, 'Command String | bar' ) will now be interpreted as
+ - if to look for a literal program sharing that literal name. To get the
+   prior behaviour,
+ - pass a scalar ref instead, ie: run_fused( $fh, \'Command String' ).
+ - run_fused( $fh, @list ) now properly calls exec with exec { $program }
+   @args
+ - dropped Time::HiRes and now use a stupid arthimetic loop to delay
+   things.
+
+0.01000001 2009-10-21T00:36:09Z
+ - First version.
 
