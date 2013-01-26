@@ -28,11 +28,11 @@ sub _mk_pipe_perl(&) {
   }
   $response_r->autoflush(1);
   $response_w->autoflush(1);
-  if ( not defined $response_r->fileno ){
-    $fail->('Fileno not supported on pipe reader', $?, $!, $^E, $@ );
+  if ( not defined $response_r->fileno ) {
+    $fail->( 'Fileno not supported on pipe reader', $?, $!, $^E, $@ );
   }
-  if ( not defined $response_w->fileno ){
-    $fail->('Fileno not supported on pipe writer', $?, $!, $^E, $@ );
+  if ( not defined $response_w->fileno ) {
+    $fail->( 'Fileno not supported on pipe writer', $?, $!, $^E, $@ );
   }
   return ( $response_r, $response_w, fileno $response_r, fileno $response_w );
 }
@@ -42,15 +42,15 @@ sub _mk_pipe_posix(&) {
   ( $response_r, $response_w ) = POSIX::pipe();
   my ( $responder, $writer );
   if ( not defined $response_r or not defined $response_w ) {
-    return $fail->('posix pipe doesn\'t work',  $?, $!, $^E, $@ );
+    return $fail->( 'posix pipe doesn\'t work', $?, $!, $^E, $@ );
   }
   $responder = IO::Handle->new->fdopen( $response_r, 'r' );
   $writer    = IO::Handle->new->fdopen( $response_w, 'w' );
   if ( not defined $writer ) {
-    return $fail->('writer not defined', $?, $!, $^E, $@ );
+    return $fail->( 'writer not defined', $?, $!, $^E, $@ );
   }
   if ( not defined $responder ) {
-    return $fail->('responder not defined', $?, $!, $^E, $@ );
+    return $fail->( 'responder not defined', $?, $!, $^E, $@ );
   }
 
   $responder->autoflush(1);
@@ -59,11 +59,12 @@ sub _mk_pipe_posix(&) {
   return ( $responder, $writer, $response_r, $response_w );
 }
 
-sub _run_fork   {
-  my ( $write_fno , $params, $fail ) = @_;
+sub _run_fork {
+  my ( $write_fno, $params, $fail ) = @_;
+
   # Reopen STDERR and STDOUT to point to the pipe.
-  open *STDOUT, '>>&=', $write_fno || $fail->('Assigning to STDOUT', $?, $!, $^E, $@);
-  open *STDERR, '>>&=', $write_fno || $fail->('Assigning to STDERR', $?, $!, $^E, $@);
+  open *STDOUT, '>>&=', $write_fno || $fail->( 'Assigning to STDOUT', $?, $!, $^E, $@ );
+  open *STDERR, '>>&=', $write_fno || $fail->( 'Assigning to STDERR', $?, $!, $^E, $@ );
 
   select *STDERR;
   $|++;
@@ -73,10 +74,11 @@ sub _run_fork   {
   my $program = $params->[0];
 
   if ( ref $program ) {
-    exec ${$program} or $fail->('Calling process',$?,$!,$^E,$@);
+    exec ${$program} or $fail->( 'Calling process', $?, $!, $^E, $@ );
   }
   else {
-    exec {$program} @{$params} or $fail->('Calling process',$?,$!,$^E,$@);
+    exec {$program} @{$params}
+      or $fail->( 'Calling process', $?, $!, $^E, $@ );
   }
   exit    # dead code.
 }
@@ -84,20 +86,24 @@ sub _run_fork   {
 sub run_fused {
   my ( $fhx, @rest ) = @_;
 
-  my ( $responder, $writer, $fdr, $fdw )  = _mk_pipe_perl {
-      Carp::cluck("Native pipe failed, trying posix ( @_ )");
-      return _mk_pipe_posix {
-        Carp::confess("Posix pipe failed : @_ ");
-      };
+  my ( $responder, $writer, $fdr, $fdw ) = _mk_pipe_perl {
+    Carp::cluck("Native pipe failed, trying posix ( @_ )");
+    return _mk_pipe_posix {
+      Carp::confess("Posix pipe failed : @_ ");
+    };
   };
 
   # Return the handle to the user.
   $_[0] = $responder;
 
   # Run the users app with the new stuff.
-  _run_fork( $fdw, \@rest, sub {
-        Carp::confess("Fork Failure, @_ ");
-  }) if ( not my $pid = fork() );
+  _run_fork(
+    $fdw,
+    \@rest,
+    sub {
+      Carp::confess("Fork Failure, @_ ");
+    }
+  ) if ( not my $pid = fork() );
 
   return 1;
 }
