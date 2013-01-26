@@ -26,10 +26,9 @@ sub _run_fork {
   my ( $pipe, $params, $fail ) = @_;
 
   my $writer = $pipe->writer;
-  my $write_fno = $writer->fileno;
   # Reopen STDERR and STDOUT to point to the pipe.
-  open *STDOUT, '>>&=', $write_fno || $fail->( 'Assigning to STDOUT', $?, $!, $^E, $@ );
-  open *STDERR, '>>&=', $write_fno || $fail->( 'Assigning to STDERR', $?, $!, $^E, $@ );
+  open *STDOUT, '>>&=', $writer || $fail->( 'Assigning to STDOUT', $?, $!, $^E, $@ );
+  open *STDERR, '>>&=', $writer || $fail->( 'Assigning to STDERR', $?, $!, $^E, $@ );
 
   select *STDERR;
   $|++;
