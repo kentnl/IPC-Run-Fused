@@ -1,6 +1,8 @@
 ﻿Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.02000000 2013-01-26T01:07:56Z
  - Guts removed mostly and replaced with IO::Pipe, because the existing
    code was broken and not very portable.
 
