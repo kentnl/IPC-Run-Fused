@@ -55,7 +55,6 @@
  - regenerate 00-compile.t
  - regenerate 000-report-versions-tiny.t
 
-
 0.01028806 2010-07-30T05:52:27Z
  - Migrate code to [@KENTNL]
  - Fix non-portable vstring in use $version;
