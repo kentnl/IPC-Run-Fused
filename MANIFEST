@@ -12,6 +12,7 @@ perlcritic.rc
 t/00-compile.t
 t/000-report-versions-tiny.t
 t/01-captures-all.t
+t/02-captures-nodelay.t
 t/tbin/01.pl
 xt/author/critic.t
 xt/release/cpan-changes.t

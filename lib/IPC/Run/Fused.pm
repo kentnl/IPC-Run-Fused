@@ -6,7 +6,7 @@ BEGIN {
   $IPC::Run::Fused::AUTHORITY = 'cpan:KENTNL';
 }
 {
-  $IPC::Run::Fused::VERSION = '0.01028808';
+  $IPC::Run::Fused::VERSION = '0.01030000';
 }
 use 5.008000;
 
@@ -20,20 +20,14 @@ use IO::Handle;
 
 use Sub::Exporter -setup => { exports => [qw( run_fused )], };
 
-
-
 sub _run_fork {
   my ( $pipe, $params, $fail ) = @_;
 
   my $writer = $pipe->writer;
-  # Reopen STDERR and STDOUT to point to the pipe.
-  open *STDOUT, '>>&=', $writer || $fail->( 'Assigning to STDOUT', $?, $!, $^E, $@ );
-  open *STDERR, '>>&=', $writer || $fail->( 'Assigning to STDERR', $?, $!, $^E, $@ );
 
-  select *STDERR;
-  $|++;
-  select *STDOUT;
-  $|++;
+  # Reopen STDERR and STDOUT to point to the pipe.
+  open *STDOUT, '>>&=', $writer->fileno || $fail->( 'Assigning to STDOUT', $?, $!, $^E, $@ );
+  open *STDERR, '>>&=', $writer->fileno || $fail->( 'Assigning to STDERR', $?, $!, $^E, $@ );
 
   my $program = $params->[0];
 
@@ -52,17 +46,20 @@ sub run_fused {
 
   my $pipe = IO::Pipe->new();
 
-  # Return the handle to the user.
-  $_[0] = $pipe->reader();
+  my $pid = fork();
+  if ( not $pid ) {
 
-  # Run the users app with the new stuff.
-  _run_fork(
-    $pipe,
-    \@rest,
-    sub {
-      Carp::confess("Fork Failure, @_ ");
-    }
-  ) if ( not my $pid = fork() );
+    _run_fork(
+      $pipe,
+      \@rest,
+      sub {
+        Carp::confess("Fork Failure, @_ ");
+      }
+    );
+    exit;
+  }
+
+  $_[0] = $pipe->reader;
 
   return 1;
 }
@@ -79,7 +76,7 @@ IPC::Run::Fused - Capture Stdout/Stderr simultaneously as if it were one stream,
 
 =head1 VERSION
 
-version 0.01028808
+version 0.01030000
 
 =head1 SYNOPSIS
 
