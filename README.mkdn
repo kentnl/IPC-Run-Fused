@@ -4,7 +4,7 @@ IPC::Run::Fused - Capture Stdout/Stderr simultaneously as if it were one stream,
 
 # VERSION
 
-version 0.01028807
+version 0.01028808
 
 # SYNOPSIS
 

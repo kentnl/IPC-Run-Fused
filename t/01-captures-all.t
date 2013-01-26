@@ -5,13 +5,13 @@ use warnings;
 use Test::More;
 
 if ( $^O eq 'MSWin32' and not $ENV{IPC_RUN_FUSED_FORCE_TEST} ) {
-    plan skip_all => 'Known to stall on Win32, set IPC_RUN_FUSED_FORCE_TEST to override';
-} else {
-    plan tests => 100;
+  plan skip_all => 'Known to stall on Win32, set IPC_RUN_FUSED_FORCE_TEST to override';
+}
+else {
+  plan tests => 100;
 }
 
 use FindBin;
-
 
 sub jitter {
   my $i;
