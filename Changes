@@ -1,5 +1,12 @@
 ﻿Revision history for IPC-Run-Fused
 
+0.02000000 2013-01-26T01:07:56Z
+ - Guts removed mostly and replaced with IO::Pipe, because the existing
+   code was broken and not very portable.
+
+ [Dependencies::New / runtime_requires]
+ - IO::Pipe
+
 0.01028807 2013-01-26T00:26:12Z
  - Maint release.
 

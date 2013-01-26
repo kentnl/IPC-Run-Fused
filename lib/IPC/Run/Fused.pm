@@ -6,7 +6,7 @@ BEGIN {
   $IPC::Run::Fused::AUTHORITY = 'cpan:KENTNL';
 }
 {
-  $IPC::Run::Fused::VERSION = '0.01028807';
+  $IPC::Run::Fused::VERSION = '0.02000000';
 }
 use 5.008000;
 
@@ -15,61 +15,19 @@ use 5.008000;
 
 
 
-use POSIX qw();
+use IO::Pipe;
 use IO::Handle;
 
 use Sub::Exporter -setup => { exports => [qw( run_fused )], };
 
-sub _mk_pipe_perl(&) {
-  my ( $response_r, $response_w, $fail ) = ( undef, undef, @_ );
-  pipe $response_r, $response_w;
-  if ( not defined $response_r or not defined $response_w ) {
-    return $fail->('perl `pipe` doesn\'t work');
-  }
-  $response_r->autoflush(1);
-  $response_w->autoflush(1);
-  if ( not defined $response_r->fileno ) {
-    $fail->( 'Fileno not supported on pipe reader', $?, $!, $^E, $@ );
-  }
-  if ( not defined $response_w->fileno ) {
-    $fail->( 'Fileno not supported on pipe writer', $?, $!, $^E, $@ );
-  }
-  return ( $response_r, $response_w, fileno $response_r, fileno $response_w );
-}
-
-sub _mk_pipe_posix(&) {
-  my ( $response_r, $response_w, $fail ) = ( undef, undef, @_ );
-  ( $response_r, $response_w ) = POSIX::pipe();
-  my ( $responder, $writer );
-  if ( not defined $response_r or not defined $response_w ) {
-    return $fail->( 'posix pipe doesn\'t work', $?, $!, $^E, $@ );
-  }
-  $responder = IO::Handle->new->fdopen( $response_r, 'r' );
-  $writer    = IO::Handle->new->fdopen( $response_w, 'w' );
-  if ( not defined $writer ) {
-    return $fail->( 'writer not defined', $?, $!, $^E, $@ );
-  }
-  if ( not defined $responder ) {
-    return $fail->( 'responder not defined', $?, $!, $^E, $@ );
-  }
-
-  $responder->autoflush(1);
-  $writer->autoflush(1);
-
-  return ( $responder, $writer, $response_r, $response_w );
-}
-
 sub _run_fork {
-  my ( $write_fno, $params, $fail ) = @_;
+  my ( $pipe, $params, $fail ) = @_;
+
+  my $writer = $pipe->writer;
 
   # Reopen STDERR and STDOUT to point to the pipe.
-  open *STDOUT, '>>&=', $write_fno || $fail->( 'Assigning to STDOUT', $?, $!, $^E, $@ );
-  open *STDERR, '>>&=', $write_fno || $fail->( 'Assigning to STDERR', $?, $!, $^E, $@ );
-
-  select *STDERR;
-  $|++;
-  select *STDOUT;
-  $|++;
+  open *STDOUT, '>>&=', $writer->fileno || $fail->( 'Assigning to STDOUT', $?, $!, $^E, $@ );
+  open *STDERR, '>>&=', $writer->fileno || $fail->( 'Assigning to STDERR', $?, $!, $^E, $@ );
 
   my $program = $params->[0];
 
@@ -86,24 +44,22 @@ sub _run_fork {
 sub run_fused {
   my ( $fhx, @rest ) = @_;
 
-  my ( $responder, $writer, $fdr, $fdw ) = _mk_pipe_perl {
-    Carp::cluck("Native pipe failed, trying posix ( @_ )");
-    return _mk_pipe_posix {
-      Carp::confess("Posix pipe failed : @_ ");
-    };
-  };
+  my $pipe = IO::Pipe->new();
 
-  # Return the handle to the user.
-  $_[0] = $responder;
+  my $pid = fork();
+  if ( not $pid ) {
 
-  # Run the users app with the new stuff.
-  _run_fork(
-    $fdw,
-    \@rest,
-    sub {
-      Carp::confess("Fork Failure, @_ ");
-    }
-  ) if ( not my $pid = fork() );
+    _run_fork(
+      $pipe,
+      \@rest,
+      sub {
+        Carp::confess("Fork Failure, @_ ");
+      }
+    );
+    exit;
+  }
+
+  $_[0] = $pipe->reader;
 
   return 1;
 }
@@ -120,7 +76,7 @@ IPC::Run::Fused - Capture Stdout/Stderr simultaneously as if it were one stream,
 
 =head1 VERSION
 
-version 0.01028807
+version 0.02000000
 
 =head1 SYNOPSIS
 

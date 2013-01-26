@@ -21,13 +21,14 @@ my %module_build_args = (
     "Kent Fredric <kentnl\@cpan.org>"
   ],
   "dist_name" => "IPC-Run-Fused",
-  "dist_version" => "0.01028807",
+  "dist_version" => "0.02000000",
   "license" => "perl",
   "module_name" => "IPC::Run::Fused",
   "recommends" => {},
   "recursive_test_files" => 1,
   "requires" => {
     "IO::Handle" => 0,
+    "IO::Pipe" => 0,
     "POSIX" => 0,
     "Sub::Exporter" => "0.982",
     "perl" => "v5.8.3",

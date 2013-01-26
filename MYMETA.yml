@@ -20,9 +20,10 @@ name: IPC-Run-Fused
 provides:
   IPC::Run::Fused:
     file: lib/IPC/Run/Fused.pm
-    version: 0.01028807
+    version: 0.02000000
 requires:
   IO::Handle: 0
+  IO::Pipe: 0
   POSIX: 0
   Sub::Exporter: 0.982
   perl: v5.8.3
@@ -32,7 +33,7 @@ resources:
   bugtracker: https://github.com/kentfredric/IPC-Run-Fused/issues
   homepage: https://github.com/kentfredric/IPC-Run-Fused
   repository: https://github.com/kentfredric/IPC-Run-Fused.git
-version: 0.01028807
+version: 0.02000000
 x_BuiltWith:
   modules:
     Dist::Zilla::PluginBundle::Author::KENTNL: 1.7.0
@@ -41,6 +42,7 @@ x_BuiltWith:
     File::Temp: 0.22
     FindBin: 1.51
     IO::Handle: 1.33
+    IO::Pipe: 1.15
     Module::Build: 0.4003
     POSIX: 1.32
     Pod::Coverage::TrustPod: 0.100002
