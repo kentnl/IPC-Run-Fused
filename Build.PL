@@ -21,7 +21,7 @@ my %module_build_args = (
     "Kent Fredric <kentnl\@cpan.org>"
   ],
   "dist_name" => "IPC-Run-Fused",
-  "dist_version" => "0.01030000",
+  "dist_version" => "0.02000000",
   "license" => "perl",
   "module_name" => "IPC::Run::Fused",
   "recommends" => {},
