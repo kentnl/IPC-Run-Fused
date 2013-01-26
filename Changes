@@ -1,6 +1,6 @@
 ﻿Revision history for IPC-Run-Fused
 
-0.01028807 2013-01-26T00:06:17Z
+0.01028807 2013-01-26T00:09:59Z
  [Dependencies::Changed / build_requires]
  - Module::Build 0.3601 -> 0.4003
 
@@ -33,9 +33,28 @@
 
  [Documentation]
  - add README.mkdn to dist
+ - normalise Changes to CPAN::Changes form
+ - update copyright license year
+ - reindent LICENSE file
+ - update fsf address
+
+ [Internals]
+ - declare $AUTHORITY
+ - change $VERSION declaration form
+
+ [Meta]
+ - set bug tracker to github issues
+ - use https:// for all git uris.
+ - add x_authority
 
  [Packaging]
  - move to @Author::KENTNL
+ - move author/release tests to xt/ and stay there
+
+ [Tests]
+ - regenerate 00-compile.t
+ - regenerate 000-report-versions-tiny.t
+
 
 0.01028806 2010-07-30T05:52:27Z
  - Migrate code to [@KENTNL]
