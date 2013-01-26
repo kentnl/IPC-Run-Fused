@@ -1,6 +1,11 @@
 ﻿Revision history for IPC-Run-Fused
 
-0.01028807 2013-01-26T00:21:09Z
+0.01028807 2013-01-26T00:23:15Z
+ [BugFixes]
+ - disabled tests on Win32. We have had it work on win32, but the tests are
+   broken on win32, and we're  not quite sure why yet. Code is planned to
+   have a total overhaul at some point.
+
  [Dependencies::Changed / build_requires]
  - Module::Build 0.3601 -> 0.4003
 
