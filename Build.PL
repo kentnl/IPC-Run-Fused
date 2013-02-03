@@ -29,7 +29,6 @@ my %module_build_args = (
   "requires" => {
     "IO::Handle" => 0,
     "IO::Pipe" => 0,
-    "Module::Runtime" => 0,
     "POSIX" => 0,
     "Sub::Exporter" => "0.982",
     "perl" => "5.008000",

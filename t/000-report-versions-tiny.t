@@ -56,7 +56,6 @@ eval { $v .= pmver('FindBin','any version') };
 eval { $v .= pmver('IO::Handle','any version') };
 eval { $v .= pmver('IO::Pipe','any version') };
 eval { $v .= pmver('Module::Build','0.4003') };
-eval { $v .= pmver('Module::Runtime','any version') };
 eval { $v .= pmver('POSIX','any version') };
 eval { $v .= pmver('Pod::Coverage::TrustPod','any version') };
 eval { $v .= pmver('Sub::Exporter','0.982') };

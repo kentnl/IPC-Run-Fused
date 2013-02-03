@@ -15,8 +15,6 @@ use 5.008000;
 
 
 
-use Module::Runtime;
-
 use Sub::Exporter -setup => { exports => [ run_fused => \&_build_run_fused ], };
 
 sub _build_run_fused {

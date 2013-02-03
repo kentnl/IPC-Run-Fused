@@ -44,7 +44,6 @@
          "requires" : {
             "IO::Handle" : "0",
             "IO::Pipe" : "0",
-            "Module::Runtime" : "0",
             "POSIX" : "0",
             "Sub::Exporter" : "0.982",
             "perl" : "5.008000",
@@ -94,7 +93,6 @@
          "IO::Handle" : "1.33",
          "IO::Pipe" : "1.15",
          "Module::Build" : "0.4003",
-         "Module::Runtime" : "0.013",
          "POSIX" : "1.32",
          "Pod::Coverage::TrustPod" : "0.100002",
          "Sub::Exporter" : "0.984",
