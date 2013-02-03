@@ -73,7 +73,8 @@ At this time there is only one, and there are no plans for more.
 ## run\_fused
 
     run_fused( $fh, $executable, @params ) || die "$@";
-    run_fused( $fh, \$command_string ) || die "$@";
+    run_fused( $fh, \$command_string )     || die "$@";
+    run_fused( $fh, sub { .. } )           || die "$@";
 
     # Recommended
 
