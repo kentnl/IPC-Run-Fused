@@ -16,6 +16,7 @@
 
  [Dependencies::Removed / runtime_requires]
  - IO::Pipe
+ - POSIX
 
  [Modules::New]
  - IPC::Run::Fused::POSIX
