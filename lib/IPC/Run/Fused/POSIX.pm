@@ -10,7 +10,10 @@ BEGIN {
   $IPC::Run::Fused::POSIX::VERSION = '0.03000000';
 }
 
+# ABSTRACT: Implementation of IPC::Run::Fused for POSIX-ish systems.
+
 use IO::Pipe;
+
 
 sub run_fused {
   my ( $read_handle, @params ) = @_;
@@ -51,11 +54,35 @@ __END__
 
 =head1 NAME
 
-IPC::Run::Fused::POSIX
+IPC::Run::Fused::POSIX - Implementation of IPC::Run::Fused for POSIX-ish systems.
 
 =head1 VERSION
 
 version 0.03000000
+
+=head1 METHODS
+
+=head2 run_fused
+
+  run_fused( $fh, $executable, @params ) || die "$@";
+  run_fused( $fh, \$command_string )     || die "$@";
+  run_fused( $fh, sub { .. } )           || die "$@";
+
+  # Recommended
+
+  run_fused( my $fh, $execuable, @params ) || die "$@";
+
+  # Somewhat supported
+
+  run_fused( my $fh, \$command_string ) || die "$@";
+
+$fh will be clobbered like 'open' does, and $cmd, @args will be passed, as-is, through to exec() or system().
+
+$fh will point to an IO::Handle attached to the end of a pipe running back to the called application.
+
+the command will be run in a fork, and stderr and stdout "fused" into a singluar pipe.
+
+B<NOTE:> at present, STDIN's FD is left unchanged, and child processes will inherit parent STDIN's, and will thus block ( somewhere ) waiting for response.
 
 =head1 AUTHOR
 
