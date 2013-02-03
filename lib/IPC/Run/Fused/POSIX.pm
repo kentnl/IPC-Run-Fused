@@ -7,7 +7,7 @@ BEGIN {
   $IPC::Run::Fused::POSIX::AUTHORITY = 'cpan:KENTNL';
 }
 {
-  $IPC::Run::Fused::POSIX::VERSION = '0.02000001';
+  $IPC::Run::Fused::POSIX::VERSION = '0.03000000';
 }
 
 use IO::Pipe;
@@ -55,7 +55,7 @@ IPC::Run::Fused::POSIX
 
 =head1 VERSION
 
-version 0.02000001
+version 0.03000000
 
 =head1 AUTHOR
 

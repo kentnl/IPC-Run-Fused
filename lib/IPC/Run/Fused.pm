@@ -6,7 +6,7 @@ BEGIN {
   $IPC::Run::Fused::AUTHORITY = 'cpan:KENTNL';
 }
 {
-  $IPC::Run::Fused::VERSION = '0.02000001';
+  $IPC::Run::Fused::VERSION = '0.03000000';
 }
 use 5.008000;
 
@@ -42,7 +42,7 @@ IPC::Run::Fused - Capture Stdout/Stderr simultaneously as if it were one stream,
 
 =head1 VERSION
 
-version 0.02000001
+version 0.03000000
 
 =head1 SYNOPSIS
 

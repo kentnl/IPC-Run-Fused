@@ -64,11 +64,11 @@
    "provides" : {
       "IPC::Run::Fused" : {
          "file" : "lib/IPC/Run/Fused.pm",
-         "version" : "0.02000001"
+         "version" : "0.03000000"
       },
       "IPC::Run::Fused::POSIX" : {
          "file" : "lib/IPC/Run/Fused/POSIX.pm",
-         "version" : "0.02000001"
+         "version" : "0.03000000"
       }
    },
    "release_status" : "stable",
@@ -83,7 +83,7 @@
          "web" : "https://github.com/kentfredric/IPC-Run-Fused"
       }
    },
-   "version" : "0.02000001",
+   "version" : "0.03000000",
    "x_BuiltWith" : {
       "modules" : {
          "Dist::Zilla::PluginBundle::Author::KENTNL" : "1.7.0",

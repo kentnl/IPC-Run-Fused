@@ -20,10 +20,10 @@ name: IPC-Run-Fused
 provides:
   IPC::Run::Fused:
     file: lib/IPC/Run/Fused.pm
-    version: 0.02000001
+    version: 0.03000000
   IPC::Run::Fused::POSIX:
     file: lib/IPC/Run/Fused/POSIX.pm
-    version: 0.02000001
+    version: 0.03000000
 requires:
   IO::Handle: 0
   IO::Pipe: 0
@@ -37,7 +37,7 @@ resources:
   bugtracker: https://github.com/kentfredric/IPC-Run-Fused/issues
   homepage: https://github.com/kentfredric/IPC-Run-Fused
   repository: https://github.com/kentfredric/IPC-Run-Fused.git
-version: 0.02000001
+version: 0.03000000
 x_BuiltWith:
   modules:
     Dist::Zilla::PluginBundle::Author::KENTNL: 1.7.0
