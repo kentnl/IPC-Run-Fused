@@ -111,7 +111,8 @@ use Sub::Exporter -setup => { exports => [ run_fused => \&_build_run_fused ], };
 
 sub _build_run_fused {
   if ( $^O eq 'MSWin32' ) {
-    return sub { die 'Win32 Support WIP' };
+    require IPC::Run::Fused::Win32;
+    return \&IPC::Run::Fused::Win32::run_fused;
   }
   require IPC::Run::Fused::POSIX;
   return \&IPC::Run::Fused::POSIX::run_fused;
