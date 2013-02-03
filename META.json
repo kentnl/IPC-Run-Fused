@@ -42,6 +42,7 @@
       },
       "runtime" : {
          "requires" : {
+            "IO::Handle" : "0",
             "Sub::Exporter" : "0.982",
             "perl" : "5.008000",
             "strict" : "0",
@@ -87,6 +88,7 @@
          "File::Find" : "1.23",
          "File::Temp" : "0.22",
          "FindBin" : "1.51",
+         "IO::Handle" : "1.33",
          "Module::Build" : "0.4003",
          "Pod::Coverage::TrustPod" : "0.100002",
          "Sub::Exporter" : "0.984",

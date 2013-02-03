@@ -10,6 +10,8 @@ BEGIN {
   $IPC::Run::Fused::POSIX::VERSION = '0.03000000';
 }
 
+use IO::Handle;
+
 # ABSTRACT: Implementation of IPC::Run::Fused for POSIX-ish systems.
 
 
@@ -21,8 +23,7 @@ sub run_fused {
   pipe( $reader, $writer ) or _fail('Creating Pipe');
 
   if ( my $pid = fork() ) {
-    open $_[0], '<&=', $reader->fileno or _fail('Assigning Read Handle');
-    $_[0]->autoflush(1);
+    $_[0] = $reader;
     return $pid;
   }
 

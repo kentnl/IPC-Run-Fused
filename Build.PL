@@ -27,6 +27,7 @@ my %module_build_args = (
   "recommends" => {},
   "recursive_test_files" => 1,
   "requires" => {
+    "IO::Handle" => 0,
     "Sub::Exporter" => "0.982",
     "perl" => "5.008000",
     "strict" => 0,
