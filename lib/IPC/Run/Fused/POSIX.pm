@@ -6,8 +6,6 @@ package IPC::Run::Fused::POSIX;
 
 # ABSTRACT: Implementation of IPC::Run::Fused for POSIX-ish systems.
 
-use IO::Pipe;
-
 =method run_fused
 
   run_fused( $fh, $executable, @params ) || die "$@";
