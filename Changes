@@ -1,6 +1,8 @@
 ﻿Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.03000000 2013-02-03T00:47:09Z
  [!Features]
  - Most the code for Unix-like environments moved to ::POSIX with a proxy
    method in the main namespace that will defer to the right backend
