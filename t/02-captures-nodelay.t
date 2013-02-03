@@ -22,9 +22,10 @@ use IPC::Run::Fused qw( run_fused );
 # We do this lots to make sure theres no race conditions.
 for ( 1 .. 100 ) {
   my $str = '';
-  run_fused( my $fh, $^X, "$FindBin::Bin/tbin/01.pl" ) or die "$@";
+  my $pid = run_fused( my $fh, $^X, "$FindBin::Bin/tbin/01.pl" ) or die "$@";
   while ( my $line = <$fh> ) {
     $str .= $line;
   }
   is( $str, $output, 'Captures All' );
+  waitpid $pid, 0;
 }

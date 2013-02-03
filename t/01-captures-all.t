@@ -33,7 +33,7 @@ use IPC::Run::Fused qw( run_fused );
 for ( 1 .. 100 ) {
   my $str = '';
   jitter;
-  run_fused( my $fh, $^X, "$FindBin::Bin/tbin/01.pl" ) or die "$@";
+  my $pid = run_fused( my $fh, $^X, "$FindBin::Bin/tbin/01.pl" ) or die "$@";
   jitter;
   while ( my $line = <$fh> ) {
     jitter;
@@ -41,4 +41,5 @@ for ( 1 .. 100 ) {
   }
 
   is( $str, $output, 'Captures All' );
+  waitpid( $pid, 0 );
 }
