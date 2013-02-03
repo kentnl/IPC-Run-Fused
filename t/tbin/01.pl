@@ -2,6 +2,9 @@
 use strict;
 use warnings;
 
+*STDOUT->autoflush(0);
+*STDERR->autoflush(0);
+
 for my $m ( 0 .. 5 ) {
   print "<<$m>>\n";
   for ( 0 .. 10 ) {

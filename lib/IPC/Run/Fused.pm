@@ -6,7 +6,7 @@ BEGIN {
   $IPC::Run::Fused::AUTHORITY = 'cpan:KENTNL';
 }
 {
-  $IPC::Run::Fused::VERSION = '0.02000000';
+  $IPC::Run::Fused::VERSION = '0.02000001';
 }
 use 5.008000;
 
@@ -15,53 +15,19 @@ use 5.008000;
 
 
 
-use IO::Pipe;
-use IO::Handle;
+use Module::Runtime;
 
-use Sub::Exporter -setup => { exports => [qw( run_fused )], };
+use Sub::Exporter -setup => { exports => [ run_fused => \&_build_run_fused ], };
 
-sub _run_fork {
-  my ( $pipe, $params, $fail ) = @_;
-
-  my $writer = $pipe->writer;
-
-  # Reopen STDERR and STDOUT to point to the pipe.
-  open *STDOUT, '>>&=', $writer->fileno || $fail->( 'Assigning to STDOUT', $?, $!, $^E, $@ );
-  open *STDERR, '>>&=', $writer->fileno || $fail->( 'Assigning to STDERR', $?, $!, $^E, $@ );
-
-  my $program = $params->[0];
-
-  if ( ref $program ) {
-    exec ${$program} or $fail->( 'Calling process', $?, $!, $^E, $@ );
+sub _build_run_fused {
+  if ( $^O eq 'MSWin32' ) {
+    return sub { die 'Win32 Support WIP' };
   }
-  else {
-    exec {$program} @{$params}
-      or $fail->( 'Calling process', $?, $!, $^E, $@ );
-  }
-  exit    # dead code.
+  require IPC::Run::Fused::POSIX;
+  return \&IPC::Run::Fused::POSIX::run_fused;
 }
-
-sub run_fused {
-  my ( $fhx, @rest ) = @_;
-
-  my $pipe = IO::Pipe->new();
-
-  my $pid = fork();
-  if ( not $pid ) {
-
-    _run_fork(
-      $pipe,
-      \@rest,
-      sub {
-        Carp::confess("Fork Failure, @_ ");
-      }
-    );
-    exit;
-  }
-
-  $_[0] = $pipe->reader;
-
-  return 1;
+{
+  *run_fused = _build_run_fused();
 }
 
 1;
@@ -76,7 +42,7 @@ IPC::Run::Fused - Capture Stdout/Stderr simultaneously as if it were one stream,
 
 =head1 VERSION
 
-version 0.02000000
+version 0.02000001
 
 =head1 SYNOPSIS
 

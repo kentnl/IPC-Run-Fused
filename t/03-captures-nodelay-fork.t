@@ -19,13 +19,29 @@ my $output = "w0w1w2w3w4w5w6w7w8w9w10\n" x 6 . join '', map { "<<$_>>\np0p1p2p3p
 
 use IPC::Run::Fused qw( run_fused );
 
+my $callback = sub {
+  *STDOUT->autoflush(0);
+  *STDERR->autoflush(0);
+  for my $m ( 0 .. 5 ) {
+    print "<<$m>>\n";
+    for ( 0 .. 10 ) {
+      print {*STDERR} "w$_";
+    }
+    print {*STDERR} "\n";
+    for ( 0 .. 10 ) {
+      print {*STDOUT} "p$_";
+    }
+    print {*STDOUT} "\n";
+  }
+};
+
 # We do this lots to make sure theres no race conditions.
 for ( 1 .. 100 ) {
   my $str = '';
-  my $pid = run_fused( my $fh, $^X, "$FindBin::Bin/tbin/01.pl" ) or die "$@";
+  my $pid = run_fused( my $fh, $callback ) or die "$@";
   while ( my $line = <$fh> ) {
     $str .= $line;
   }
   is( $str, $output, 'Captures All' );
-  waitpid $pid, 0;
+  waitpid( $pid, -1 );
 }
