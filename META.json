@@ -43,10 +43,8 @@
       "runtime" : {
          "requires" : {
             "IO::Handle" : "0",
-            "IO::Pipe" : "0",
-            "POSIX" : "0",
             "Sub::Exporter" : "0.982",
-            "perl" : "v5.8.3",
+            "perl" : "5.008000",
             "strict" : "0",
             "warnings" : "0"
          }
@@ -63,7 +61,11 @@
    "provides" : {
       "IPC::Run::Fused" : {
          "file" : "lib/IPC/Run/Fused.pm",
-         "version" : "0.02000000"
+         "version" : "0.03000000"
+      },
+      "IPC::Run::Fused::POSIX" : {
+         "file" : "lib/IPC/Run/Fused/POSIX.pm",
+         "version" : "0.03000000"
       }
    },
    "release_status" : "stable",
@@ -78,7 +80,7 @@
          "web" : "https://github.com/kentfredric/IPC-Run-Fused"
       }
    },
-   "version" : "0.02000000",
+   "version" : "0.03000000",
    "x_BuiltWith" : {
       "modules" : {
          "Dist::Zilla::PluginBundle::Author::KENTNL" : "1.7.0",
@@ -87,9 +89,7 @@
          "File::Temp" : "0.22",
          "FindBin" : "1.51",
          "IO::Handle" : "1.33",
-         "IO::Pipe" : "1.15",
          "Module::Build" : "0.4003",
-         "POSIX" : "1.32",
          "Pod::Coverage::TrustPod" : "0.100002",
          "Sub::Exporter" : "0.984",
          "Test::CPAN::Meta" : "0.22",
@@ -128,7 +128,7 @@
          {
             "class" : "Dist::Zilla::Plugin::Git::NextVersion",
             "name" : "@Author::KENTNL/Git::NextVersion",
-            "version" : "2.006"
+            "version" : "2.008"
          },
          {
             "class" : "Dist::Zilla::Plugin::MetaConfig",
@@ -170,7 +170,7 @@
          {
             "class" : "Dist::Zilla::Plugin::Git::GatherDir",
             "name" : "@Author::KENTNL/Git::GatherDir",
-            "version" : "2.006"
+            "version" : "2.008"
          },
          {
             "class" : "Dist::Zilla::Plugin::License",
@@ -338,7 +338,7 @@
          {
             "class" : "Dist::Zilla::Plugin::CheckExtraTests",
             "name" : "@Author::KENTNL/CheckExtraTests",
-            "version" : "0.007"
+            "version" : "0.008"
          },
          {
             "class" : "Dist::Zilla::Plugin::TestRelease",
@@ -353,27 +353,27 @@
          {
             "class" : "Dist::Zilla::Plugin::Git::Check",
             "name" : "@Author::KENTNL/Git::Check",
-            "version" : "2.006"
+            "version" : "2.008"
          },
          {
             "class" : "Dist::Zilla::Plugin::Git::Tag",
             "name" : "@Author::KENTNL/Git::Tag/tag_master",
-            "version" : "2.006"
+            "version" : "2.008"
          },
          {
             "class" : "Dist::Zilla::Plugin::Git::Commit",
             "name" : "@Author::KENTNL/Git::Commit",
-            "version" : "2.006"
+            "version" : "2.008"
          },
          {
             "class" : "Dist::Zilla::Plugin::Git::CommitBuild",
             "name" : "@Author::KENTNL/Git::CommitBuild",
-            "version" : "2.006"
+            "version" : "2.008"
          },
          {
             "class" : "Dist::Zilla::Plugin::Git::Tag",
             "name" : "@Author::KENTNL/Git::Tag/tag_release",
-            "version" : "2.006"
+            "version" : "2.008"
          },
          {
             "class" : "Dist::Zilla::Plugin::UploadToCPAN",

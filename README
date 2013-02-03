@@ -3,7 +3,7 @@ NAME
     stream, painlessly.
 
 VERSION
-    version 0.02000000
+    version 0.03000000
 
 SYNOPSIS
       use IPC::Run::Fused qw( run_fused );
@@ -72,7 +72,8 @@ EXPORTED FUNCTIONS
 
   run_fused
       run_fused( $fh, $executable, @params ) || die "$@";
-      run_fused( $fh, \$command_string ) || die "$@";
+      run_fused( $fh, \$command_string )     || die "$@";
+      run_fused( $fh, sub { .. } )           || die "$@";
 
       # Recommended
 

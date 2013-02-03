@@ -132,84 +132,19 @@
 .rm #[ #] #H #V #F C
 .\" ========================================================================
 .\"
-.IX Title "IPC::Run::Fused 3"
-.TH IPC::Run::Fused 3 "2013-02-03" "perl v5.17.9" "User Contributed Perl Documentation"
+.IX Title "IPC::Run::Fused::POSIX 3"
+.TH IPC::Run::Fused::POSIX 3 "2013-02-03" "perl v5.17.9" "User Contributed Perl Documentation"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
 .nh
 .SH "NAME"
-IPC::Run::Fused \- Capture Stdout/Stderr simultaneously as if it were one stream, painlessly.
+IPC::Run::Fused::POSIX \- Implementation of IPC::Run::Fused for POSIX\-ish systems.
 .SH "VERSION"
 .IX Header "VERSION"
 version 0.03000000
-.SH "SYNOPSIS"
-.IX Header "SYNOPSIS"
-.Vb 1
-\&  use IPC::Run::Fused qw( run_fused );
-\&
-\&  run_fused( my $fh, $stderror_filled_program, \*(Aq\-\-file\*(Aq, $tricky_filename, @moreargs ) || die "Argh $@";
-\&  open my $fh, \*(Aq>\*(Aq, \*(Aqsomefile.txt\*(Aq || die "NOO  $@";
-\&
-\&  # Simple implementation of \*(Aqtee\*(Aq like behaviour,
-\&  # sending to stdout and to a file.
-\&
-\&  while ( my $line = <$fh> ) {
-\&    print $fh $line;
-\&    print $line;
-\&  }
-.Ve
-.SH "DESCRIPTION"
-.IX Header "DESCRIPTION"
-Have you ever tried to do essentially the same as you would in bash do to this:
-.PP
-.Vb 1
-\&  parentapp <( app 2>&1  )
-.Ve
-.PP
-And found massive road works getting in the way.
-.PP
-Sure, you can aways do this style syntax:
-.PP
-.Vb 1
-\&  open my $fh, \*(Aqsomeapp \-\-args foo 2>&1 |\*(Aq;
-.Ve
-.PP
-But thats not very nice, because
-.IP "1. you're relying on a subshell to do that for you" 4
-.IX Item "1. you're relying on a subshell to do that for you"
-.PD 0
-.IP "2. you have to manually escape everything" 4
-.IX Item "2. you have to manually escape everything"
-.IP "3. you can't use list context." 4
-.IX Item "3. you can't use list context."
-.PD
-.PP
-And none of this is very \fBModern\fR or \fBNice\fR
-.SH "SIMPLEST THING THAT JUST WORKS"
-.IX Header "SIMPLEST THING THAT JUST WORKS"
-This code is barely tested, its here, because I spent hours griping about how the existing ways suck.
-.SH "FEATURES"
-.IX Header "FEATURES"
-.IP "1. No String Interpolation." 4
-.IX Item "1. No String Interpolation."
-Arguments after the first work as if you'd passed them directly to 'system'. You can be as dangerous or as
-safe as you want with them. We recommend passing a list, but a string ( as a scalar reference ) should work
-.Sp
-But if you're using a string, this modules probably not affording you much.
-.IP "2. No dicking around with managing multiple file handles yourself." 4
-.IX Item "2. No dicking around with managing multiple file handles yourself."
-I looked at IPC::Run IPC::Run3 and IPC::Open3, and they all seemed very unfriendly, and none did what I wnted.
-.IP "3. Non-global filehandles supported by design." 4
-.IX Item "3. Non-global filehandles supported by design."
-All the competition seem to still have this thing for global file handles and you having to use them. Yuck!.
-.Sp
-We have a few global \s-1FH\s0's inside our code, but they're only \s-1STDERR\s0 and \s-1STDOUT,\s0 at present I don't think I can circumvent that. If I ever can, I'll endeavour to do so =)
-.SH "EXPORTED FUNCTIONS"
-.IX Header "EXPORTED FUNCTIONS"
-No functions are exported by default, be explicit with what you want.
-.PP
-At this time there is only one, and there are no plans for more.
+.SH "METHODS"
+.IX Header "METHODS"
 .SS "run_fused"
 .IX Subsection "run_fused"
 .Vb 3

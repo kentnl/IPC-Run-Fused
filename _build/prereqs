@@ -1,20 +1,18 @@
 do{ my $x = {
        'conflicts' => {},
        'build_requires' => {
-                             'Test::More' => '0.98',
-                             'File::Temp' => 0,
                              'Module::Build' => '0.4003',
                              'FindBin' => 0,
+                             'File::Temp' => 0,
+                             'Test::More' => '0.98',
                              'File::Find' => 0
                            },
        'requires' => {
-                       'strict' => 0,
-                       'Sub::Exporter' => '0.982',
-                       'IO::Pipe' => 0,
-                       'IO::Handle' => 0,
-                       'perl' => 'v5.8.3',
+                       'perl' => '5.008000',
                        'warnings' => 0,
-                       'POSIX' => 0
+                       'strict' => 0,
+                       'IO::Handle' => 0,
+                       'Sub::Exporter' => '0.982'
                      },
        'recommends' => {}
      };

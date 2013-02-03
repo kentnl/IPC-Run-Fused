@@ -1,5 +1,29 @@
 ﻿Revision history for IPC-Run-Fused
 
+0.03000000 2013-02-03T00:47:09Z
+ [!Features]
+ - Most the code for Unix-like environments moved to ::POSIX with a proxy
+   method in the main namespace that will defer to the right backend
+   depending on the value of $^O.
+ - This serves as a stepping stone to working Win32 Support.
+ - Win32 Currently causes a die() because its broken anyway atm.
+ - Added support for passing a coderef to run.
+ - IO::Pipe code dropped and just uses a plain `pipe` which is less
+   magical.
+
+ [Dependencies::Changed / runtime_requires]
+ - perl v5.8.3 -> 5.008000
+
+ [Dependencies::Removed / runtime_requires]
+ - IO::Pipe
+ - POSIX
+
+ [Modules::New]
+ - IPC::Run::Fused::POSIX
+
+ [Tests::New]
+ - t/03-captures-nodelay-fork.t
+
 0.02000000 2013-01-26T01:07:56Z
  - Guts removed mostly and replaced with IO::Pipe, because the existing
    code was broken and not very portable.
