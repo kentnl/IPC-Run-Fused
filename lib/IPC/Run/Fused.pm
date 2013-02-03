@@ -106,53 +106,17 @@ B<NOTE:> at present, STDIN's FD is left unchanged, and child processes will inhe
 
 =cut
 
-use IO::Pipe;
-use IO::Handle;
+use Sub::Exporter -setup => { exports => [ run_fused => \&_build_run_fused ], };
 
-use Sub::Exporter -setup => { exports => [qw( run_fused )], };
-
-sub _run_fork {
-  my ( $pipe, $params, $fail ) = @_;
-
-  my $writer = $pipe->writer;
-
-  # Reopen STDERR and STDOUT to point to the pipe.
-  open *STDOUT, '>>&=', $writer->fileno || $fail->( 'Assigning to STDOUT', $?, $!, $^E, $@ );
-  open *STDERR, '>>&=', $writer->fileno || $fail->( 'Assigning to STDERR', $?, $!, $^E, $@ );
-
-  my $program = $params->[0];
-
-  if ( ref $program ) {
-    exec ${$program} or $fail->( 'Calling process', $?, $!, $^E, $@ );
+sub _build_run_fused {
+  if ( $^O eq 'MSWin32' ) {
+    return sub { die 'Win32 Support WIP' };
   }
-  else {
-    exec {$program} @{$params}
-      or $fail->( 'Calling process', $?, $!, $^E, $@ );
-  }
-  exit    # dead code.
+  require IPC::Run::Fused::POSIX;
+  return \&IPC::Run::Fused::POSIX::run_fused;
 }
-
-sub run_fused {
-  my ( $fhx, @rest ) = @_;
-
-  my $pipe = IO::Pipe->new();
-
-  my $pid = fork();
-  if ( not $pid ) {
-
-    _run_fork(
-      $pipe,
-      \@rest,
-      sub {
-        Carp::confess("Fork Failure, @_ ");
-      }
-    );
-    exit;
-  }
-
-  $_[0] = $pipe->reader;
-
-  return 1;
+{
+  *run_fused = _build_run_fused();
 }
 
 1;
