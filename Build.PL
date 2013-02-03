@@ -28,7 +28,6 @@ my %module_build_args = (
   "recursive_test_files" => 1,
   "requires" => {
     "IO::Handle" => 0,
-    "IO::Pipe" => 0,
     "POSIX" => 0,
     "Sub::Exporter" => "0.982",
     "perl" => "5.008000",

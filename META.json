@@ -43,7 +43,6 @@
       "runtime" : {
          "requires" : {
             "IO::Handle" : "0",
-            "IO::Pipe" : "0",
             "POSIX" : "0",
             "Sub::Exporter" : "0.982",
             "perl" : "5.008000",
@@ -91,7 +90,6 @@
          "File::Temp" : "0.22",
          "FindBin" : "1.51",
          "IO::Handle" : "1.33",
-         "IO::Pipe" : "1.15",
          "Module::Build" : "0.4003",
          "POSIX" : "1.32",
          "Pod::Coverage::TrustPod" : "0.100002",

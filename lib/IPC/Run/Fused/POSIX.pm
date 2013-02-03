@@ -12,8 +12,6 @@ BEGIN {
 
 # ABSTRACT: Implementation of IPC::Run::Fused for POSIX-ish systems.
 
-use IO::Pipe;
-
 
 sub run_fused {
   my ( $read_handle, @params ) = @_;
