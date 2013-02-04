@@ -45,12 +45,79 @@ BEGIN {
 
 sub run_fused {
   my ( $read_handle, @params ) = @_;
+  if ( ref $params[0] and ref $params[0] eq 'CODE') {
+      goto \&_run_fused_coderef;
+  }
+  goto \&_run_fused_job;
+}
 
+sub _run_fused_job {
+  my ( $read_handle, @params ) = @_;
+
+  my $config = _run_fused_jobdecode( @params );
+
+  Module::Runtime::require_module('File::Which');
+
+  $config->{which} = File::Which::which($config->{executable});
+
+  local $IPC::Run::Fused::FAIL_CONTEXT{which} = $config->{which};
+  local $IPC::Run::Fused::FAIL_CONTEXT{executable} = $config->{executable};
+  local $IPC::Run::Fused::FAIL_CONTEXT{command} = $config->{command};
+
+  if ( not $config->{which} ){
+    _fail('Failed to resolve executable to path');
+  }
+
+  Module::Runtime::require_module('Win32::Job');
+
+  pipe( $_[0], my $writer );
+
+  if ( my $pid = fork() ) {
+    return $pid;
+  }
+
+  my $job = Win32::Job->new();
+  $job->spawn(
+    $config->{which},
+    $config->{command},
+    {
+      stdout => $writer,
+      stderr => $writer,
+    }
+  ) or _fail('Could not spawn job');
+  my $result = $job->run( -1 , 0 );
+  if ( not $result )  {
+    my $status  = $job->status();
+    if( exists $status->{exitcode } and $status->{exitcode} == 293 ){
+      _fail('Process used more than allotted time');
+    }
+    _fail('Child process terminated with exit code' . $status->{exitcode} )
+  }
+  exit;
+}
+
+sub _run_fused_jobdecode {
+  my ( @params ) = @_;
+
+  if ( ref $params[0] and ref $params[0] eq 'SCALAR' ) {
+    my $command = ${ $params[0] };
+    $command =~ s/^\s*//;
+    return {
+      command => $command,
+      executable => _win32_command_find_invocant( $command ),
+    };
+  }
+  return {
+    executable => $params[0],
+    command    => _win32_escape_command( @params ),
+  };
+}
+
+
+sub _run_fused_coderef {
+  my ( $read_handle, $code ) = @_;
   my ( $reader, $writer );
 
-  if ( not ref $params[0] or not ref $params[0] eq 'CODE') {
-    _fail("Sorry, run_fused is entirely broken still for anything other than run_fused( handle, sub { } ) on Win32");
-  }
   socketpair( $reader, $writer, AF_UNIX, SOCK_STREAM, PF_UNSPEC ),
     and shutdown( $reader, 1 ),
     and shutdown( $writer, 0 ),
@@ -65,6 +132,10 @@ sub run_fused {
   close *STDOUT;
   open *STDOUT, '>>&=', $writer or _fail('Assigning to STDOUT');
   open *STDERR, '>>&=', $writer or _fail('Assigning to STDERR');
+  $code->();
+  exit;
+
+}
 
   #_share_handle_win32(*STDOUT);
   #_share_handle_win32(*STDERR);
