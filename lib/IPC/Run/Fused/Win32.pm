@@ -37,11 +37,9 @@ sub _fail { goto \&IPC::Run::Fused::_fail }
 
 BEGIN {
 
-  Module::Runtime::require_module('Win32API::File');
   Module::Runtime::require_module('Socket');
 
   Socket->import();
-  Win32API::File->import(qw( GetOsFHandle SetHandleInformation HANDLE_FLAG_INHERIT ));
 
 }
 
@@ -63,19 +61,13 @@ sub run_fused {
     and shutdown( $writer, 0 ),
     or _fail("creating socketpair");
 
-  #_share_handle_win32(*STDOUT, 0);
-  #_share_handle_win32(*STDIN, 0);
-
   if ( my $pid = fork() ) {
     $_[0] = $reader;
     return $pid;
   }
 
-  close *STDOUT;
   close *STDERR;
-
-  #*STDERR = IO::Handle->new();
-  #*STDOUT = IO::Handle->new();
+  close *STDOUT;
   open *STDOUT, '>>&=', $writer or _fail('Assigning to STDOUT');
   open *STDERR, '>>&=', $writer or _fail('Assigning to STDERR');
 
