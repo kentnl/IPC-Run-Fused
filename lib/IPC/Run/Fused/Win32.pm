@@ -33,6 +33,8 @@ B<NOTE:> at present, STDIN's FD is left unchanged, and child processes will inhe
 
 =cut
 
+sub _fail { goto \&IPC::Run::Fused::_fail }
+
 BEGIN {
 
   Module::Runtime::require_module('Win32API::File');

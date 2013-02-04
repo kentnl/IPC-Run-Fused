@@ -109,6 +109,28 @@ B<NOTE:> at present, STDIN's FD is left unchanged, and child processes will inhe
 
 use Sub::Exporter -setup => { exports => [ run_fused => \&_build_run_fused ], };
 
+our %FAIL_CONTEXT;
+
+sub _stringify {
+    return 'undef' if not defined $_[0];
+    return qq{`$_[0]`};
+}
+sub _fail  {
+  my $errors = {
+    '$?' => _stringify($?),
+    '$!' => _stringify($!),
+    '$^E' => _stringify($^E),
+    '$@'  => _stringify($@),
+    ( map { $_ => _stringify($FAIL_CONTEXT{$_})} keys %FAIL_CONTEXT )
+  };
+  my $message = '';
+  $message .= qq{\n} . $_ for @_ ;
+  $message .= sprintf qq{\n\t%s => %s}, $_, $errors->{$_} for sort keys %$errors;
+  $message .= qq{\n};
+  require Carp;
+  @_ = $message;
+  goto \&Carp::confess;
+}
 sub _build_run_fused {
   if ( $^O eq 'MSWin32' ) {
     require IPC::Run::Fused::Win32;
