@@ -32,6 +32,14 @@ B<NOTE:> at present, STDIN's FD is left unchanged, and child processes will inhe
 
 =cut
 
+sub _fail  {
+  my (@error_pos) = qw( ? ! ^E @ );
+  my (@errors) = map { "$_" } $?, $!, $^E, $@;
+  require Carp;
+
+  Carp::confess(join q{ }, @_ , map { ( "$_ => " , shift @errors ) } @error_pos );
+}
+
 sub run_fused {
   my ( $read_handle, @params ) = @_;
 
