@@ -17,7 +17,7 @@ use Module::Runtime;
 
   # Recommended
 
-  run_fused( my $fh, $execuable, @params ) || die "$@";
+  run_fused( my $fh, $executable, @params ) || die "$@";
 
   # Somewhat supported
 
@@ -43,11 +43,6 @@ BEGIN {
 
 }
 
-sub _share_handle_win32 {
-  my ( $handle, $share ) = @_;
-  my $oshandle = GetOsFHandle( $handle );
-  SetHandleInformation( $oshandle , HANDLE_FLAG_INHERIT() , $share );
-}
 sub run_fused {
   my ( $read_handle, @params ) = @_;
 
