@@ -22,8 +22,8 @@ sub jitter {
 
 sub process_result {
   my $result = shift;
-  my $stats = {};
-  for my $line ( split /\r?\n/, $result ){
+  my $stats  = {};
+  for my $line ( split /\r?\n/, $result ) {
     $line =~ s/\r?\n$//g;
     $stats->{$line}++;
   }

@@ -14,8 +14,8 @@ my $output = "w0w1w2w3w4w5w6w7w8w9w10\n" x 6 . join '', map { "<<$_>>\np0p1p2p3p
 
 sub process_result {
   my $result = shift;
-  my $stats = {};
-  for my $line ( split /\r?\n/, $result ){
+  my $stats  = {};
+  for my $line ( split /\r?\n/, $result ) {
     $line =~ s/\r?\n$//g;
     $stats->{$line}++;
   }

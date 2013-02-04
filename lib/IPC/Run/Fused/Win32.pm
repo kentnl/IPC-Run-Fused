@@ -45,8 +45,8 @@ BEGIN {
 
 sub run_fused {
   my ( $read_handle, @params ) = @_;
-  if ( ref $params[0] and ref $params[0] eq 'CODE') {
-      goto \&_run_fused_coderef;
+  if ( ref $params[0] and ref $params[0] eq 'CODE' ) {
+    goto \&_run_fused_coderef;
   }
   goto \&_run_fused_job;
 }
@@ -54,17 +54,17 @@ sub run_fused {
 sub _run_fused_job {
   my ( $read_handle, @params ) = @_;
 
-  my $config = _run_fused_jobdecode( @params );
+  my $config = _run_fused_jobdecode(@params);
 
   Module::Runtime::require_module('File::Which');
 
-  $config->{which} = File::Which::which($config->{executable});
+  $config->{which} = File::Which::which( $config->{executable} );
 
-  local $IPC::Run::Fused::FAIL_CONTEXT{which} = $config->{which};
+  local $IPC::Run::Fused::FAIL_CONTEXT{which}      = $config->{which};
   local $IPC::Run::Fused::FAIL_CONTEXT{executable} = $config->{executable};
-  local $IPC::Run::Fused::FAIL_CONTEXT{command} = $config->{command};
+  local $IPC::Run::Fused::FAIL_CONTEXT{command}    = $config->{command};
 
-  if ( not $config->{which} ){
+  if ( not $config->{which} ) {
     _fail('Failed to resolve executable to path');
   }
 
@@ -85,42 +85,39 @@ sub _run_fused_job {
       stderr => $writer,
     }
   ) or _fail('Could not spawn job');
-  my $result = $job->run( -1 , 0 );
-  if ( not $result )  {
-    my $status  = $job->status();
-    if( exists $status->{exitcode } and $status->{exitcode} == 293 ){
+  my $result = $job->run( -1, 0 );
+  if ( not $result ) {
+    my $status = $job->status();
+    if ( exists $status->{exitcode} and $status->{exitcode} == 293 ) {
       _fail('Process used more than allotted time');
     }
-    _fail('Child process terminated with exit code' . $status->{exitcode} )
+    _fail( 'Child process terminated with exit code' . $status->{exitcode} );
   }
   exit;
 }
 
 sub _run_fused_jobdecode {
-  my ( @params ) = @_;
+  my (@params) = @_;
 
   if ( ref $params[0] and ref $params[0] eq 'SCALAR' ) {
     my $command = ${ $params[0] };
     $command =~ s/^\s*//;
     return {
-      command => $command,
-      executable => _win32_command_find_invocant( $command ),
+      command    => $command,
+      executable => _win32_command_find_invocant($command),
     };
   }
   return {
     executable => $params[0],
-    command    => _win32_escape_command( @params ),
+    command    => _win32_escape_command(@params),
   };
 }
-
 
 sub _run_fused_coderef {
   my ( $read_handle, $code ) = @_;
   my ( $reader, $writer );
 
-  socketpair( $reader, $writer, AF_UNIX, SOCK_STREAM, PF_UNSPEC ),
-    and shutdown( $reader, 1 ),
-    and shutdown( $writer, 0 ),
+  socketpair( $reader, $writer, AF_UNIX, SOCK_STREAM, PF_UNSPEC ), and shutdown( $reader, 1 ), and shutdown( $writer, 0 ),
     or _fail("creating socketpair");
 
   if ( my $pid = fork() ) {
@@ -137,16 +134,17 @@ sub _run_fused_coderef {
 
 }
 
-our $BACKSLASH = chr(92);
-our $DBLBACKSLASH = $BACKSLASH x 2;
+our $BACKSLASH         = chr(92);
+our $DBLBACKSLASH      = $BACKSLASH x 2;
 our $DOS_SPECIAL_CHARS = {
-  chr(92) => ['backslash ' , $BACKSLASH x 2],
-  chr(34) => ['double-quotes', $BACKSLASH . chr(34) ],
+  chr(92) => [ 'backslash ',    $BACKSLASH x 2 ],
+  chr(34) => [ 'double-quotes', $BACKSLASH . chr(34) ],
+
   #chr(60) => ['open angle bracket', $backslash . chr(60)],
   #chr(62) => ['close angle bracket', $backslash . chr(62)],
 };
 our $DOS_REV_CHARS = {
-  map { ( $DOS_SPECIAL_CHARS->{$_}->[1] , [ $DOS_SPECIAL_CHARS->{$_}->[0], $_  ] ) }
+  map { ( $DOS_SPECIAL_CHARS->{$_}->[1], [ $DOS_SPECIAL_CHARS->{$_}->[0], $_ ] ) }
     keys %{$DOS_SPECIAL_CHARS}
 };
 
@@ -154,60 +152,61 @@ sub _win32_escape_command_char {
   return $_[0] unless exists $DOS_SPECIAL_CHARS->{ $_[0] };
   return $DOS_SPECIAL_CHARS->{ $_[0] }->[1];
 }
+
 sub _win32_escape_command_token {
-    my $chars = join q{}, map { _win32_escape_command_char($_) } split //, shift;
-    return qq{"$chars"};
+  my $chars = join q{}, map { _win32_escape_command_char($_) } split //, shift;
+  return qq{"$chars"};
 }
 
-sub _win32_escape_command { return join q{ }, map { _win32_escape_command_token($_) } @_ }
+sub _win32_escape_command {
+  return join q{ }, map { _win32_escape_command_token($_) } @_;
+}
 
 sub _win32_command_find_invocant {
-  my ( $command ) = "$_[0]";
+  my ($command) = "$_[0]";
   my $first = "";
   my @chars = split //, $command;
   my $inquote;
 
-  while( @chars ){
-    my $char = $chars[0];
+  while (@chars) {
+    my $char  = $chars[0];
     my $dchar = $chars[0] . $chars[1];
 
-    if ( not $inquote and $char eq q{"} ){
+    if ( not $inquote and $char eq q{"} ) {
       $inquote = 1;
       shift @chars;
       next;
     }
-    if ( $inquote and $char eq q{"}) {
+    if ( $inquote and $char eq q{"} ) {
       $inquote = undef;
       shift @chars;
       next;
     }
-    if( exists $DOS_REV_CHARS->{$dchar} ){
+    if ( exists $DOS_REV_CHARS->{$dchar} ) {
       $first .= $DOS_REV_CHARS->{$dchar}->[1];
       shift @chars;
       shift @chars;
       next;
     }
-    if ( $char eq q{ } and not $inquote ){
-      if ( not length $first ){
+    if ( $char eq q{ } and not $inquote ) {
+      if ( not length $first ) {
         shift @chars;
         next;
       }
       return $first;
     }
-    if ( $char eq q{ } and $inquote ){
-        $first .= $char;
-        shift @chars;
-        next;
+    if ( $char eq q{ } and $inquote ) {
+      $first .= $char;
+      shift @chars;
+      next;
     }
     $first .= $char;
     shift @chars;
   }
-  if ( $inquote ) {
+  if ($inquote) {
     _fail('Could not parse command from commandline');
   }
   return $first;
 }
-
-
 
 1;
