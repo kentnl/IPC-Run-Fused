@@ -137,22 +137,77 @@ sub _run_fused_coderef {
 
 }
 
-  #_share_handle_win32(*STDOUT);
-  #_share_handle_win32(*STDERR);
+our $BACKSLASH = chr(92);
+our $DBLBACKSLASH = $BACKSLASH x 2;
+our $DOS_SPECIAL_CHARS = {
+  chr(92) => ['backslash ' , $BACKSLASH x 2],
+  chr(34) => ['double-quotes', $BACKSLASH . chr(34) ],
+  #chr(60) => ['open angle bracket', $backslash . chr(60)],
+  #chr(62) => ['close angle bracket', $backslash . chr(62)],
+};
+our $DOS_REV_CHARS = {
+  map { ( $DOS_SPECIAL_CHARS->{$_}->[1] , [ $DOS_SPECIAL_CHARS->{$_}->[0], $_  ] ) }
+    keys %{$DOS_SPECIAL_CHARS}
+};
 
-  if ( ref $params[0] and ref $params[0] eq 'CODE' ) {
-    $params[0]->();
-    exit;
-  }
-  if ( ref $params[0] and ref $params[0] eq 'SCALAR' ) {
-    my $command = ${ $params[0] };
-    exec $command or _fail('<<exec command>> failed');
-    exit;
-  }
-
-  my $program = $params[0];
-  exec {$program} @params or _fail('<<exec {program} @argv>> failed');
-  exit;
+sub _win32_escape_command_char {
+  return $_[0] unless exists $DOS_SPECIAL_CHARS->{ $_[0] };
+  return $DOS_SPECIAL_CHARS->{ $_[0] }->[1];
 }
+sub _win32_escape_command_token {
+    my $chars = join q{}, map { _win32_escape_command_char($_) } split //, shift;
+    return qq{"$chars"};
+}
+
+sub _win32_escape_command { return join q{ }, map { _win32_escape_command_token($_) } @_ }
+
+sub _win32_command_find_invocant {
+  my ( $command ) = "$_[0]";
+  my $first = "";
+  my @chars = split //, $command;
+  my $inquote;
+
+  while( @chars ){
+    my $char = $chars[0];
+    my $dchar = $chars[0] . $chars[1];
+
+    if ( not $inquote and $char eq q{"} ){
+      $inquote = 1;
+      shift @chars;
+      next;
+    }
+    if ( $inquote and $char eq q{"}) {
+      $inquote = undef;
+      shift @chars;
+      next;
+    }
+    if( exists $DOS_REV_CHARS->{$dchar} ){
+      $first .= $DOS_REV_CHARS->{$dchar}->[1];
+      shift @chars;
+      shift @chars;
+      next;
+    }
+    if ( $char eq q{ } and not $inquote ){
+      if ( not length $first ){
+        shift @chars;
+        next;
+      }
+      return $first;
+    }
+    if ( $char eq q{ } and $inquote ){
+        $first .= $char;
+        shift @chars;
+        next;
+    }
+    $first .= $char;
+    shift @chars;
+  }
+  if ( $inquote ) {
+    _fail('Could not parse command from commandline');
+  }
+  return $first;
+}
+
+
 
 1;
