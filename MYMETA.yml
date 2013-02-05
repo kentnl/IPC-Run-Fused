@@ -20,13 +20,13 @@ name: IPC-Run-Fused
 provides:
   IPC::Run::Fused:
     file: lib/IPC/Run/Fused.pm
-    version: 0.04000000
+    version: 0.04000100
   IPC::Run::Fused::POSIX:
     file: lib/IPC/Run/Fused/POSIX.pm
-    version: 0.04000000
+    version: 0.04000100
   IPC::Run::Fused::Win32:
     file: lib/IPC/Run/Fused/Win32.pm
-    version: 0.04000000
+    version: 0.04000100
 requires:
   Carp: 0
   IO::Handle: 0
@@ -39,7 +39,7 @@ resources:
   bugtracker: https://github.com/kentfredric/IPC-Run-Fused/issues
   homepage: https://github.com/kentfredric/IPC-Run-Fused
   repository: https://github.com/kentfredric/IPC-Run-Fused.git
-version: 0.04000000
+version: 0.04000100
 x_BuiltWith:
   modules:
     Carp: 1.28

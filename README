@@ -3,7 +3,7 @@ NAME
     stream, painlessly.
 
 VERSION
-    version 0.04000000
+    version 0.04000100
 
 SYNOPSIS
       use IPC::Run::Fused qw( run_fused );

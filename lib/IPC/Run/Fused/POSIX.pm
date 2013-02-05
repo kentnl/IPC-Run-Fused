@@ -7,7 +7,7 @@ BEGIN {
   $IPC::Run::Fused::POSIX::AUTHORITY = 'cpan:KENTNL';
 }
 {
-  $IPC::Run::Fused::POSIX::VERSION = '0.04000000';
+  $IPC::Run::Fused::POSIX::VERSION = '0.04000100';
 }
 
 use IO::Handle;
@@ -59,7 +59,7 @@ IPC::Run::Fused::POSIX - Implementation of IPC::Run::Fused for POSIX-ish systems
 
 =head1 VERSION
 
-version 0.04000000
+version 0.04000100
 
 =head1 METHODS
 

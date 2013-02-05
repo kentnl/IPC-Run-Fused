@@ -2,6 +2,8 @@
 use strict;
 use warnings;
 
+use IO::Handle;
+
 *STDOUT->autoflush(0);
 *STDERR->autoflush(0);
 
