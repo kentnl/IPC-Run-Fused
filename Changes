@@ -1,6 +1,6 @@
 ﻿Revision history for IPC-Run-Fused
 
-0.04000000 2013-02-05T05:10:41Z
+0.04000000 2013-02-05T05:12:58Z
  [!Features]
  - Should now actually work on Win32 due to the discovery of Win32::Job
  - Fail behaviour should be more concise with additional context.
@@ -14,6 +14,10 @@
  [Dependencies::New / runtime_requires]
  - Carp
  - Module::Runtime
+
+ [Dependencies::New / runtime_suggests]
+ - Socket
+ - Win32::Job
 
  [Internals]
  - _fail method now unified via goto \&IPC::Run::Fused::_fail
