@@ -58,6 +58,7 @@ eval { $v .= pmver('IO::Handle','any version') };
 eval { $v .= pmver('Module::Build','0.4003') };
 eval { $v .= pmver('Module::Runtime','any version') };
 eval { $v .= pmver('Pod::Coverage::TrustPod','any version') };
+eval { $v .= pmver('Socket','any version') };
 eval { $v .= pmver('Sub::Exporter','0.982') };
 eval { $v .= pmver('Test::CPAN::Meta','any version') };
 eval { $v .= pmver('Test::More','0.98') };

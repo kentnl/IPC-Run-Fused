@@ -1,6 +1,6 @@
 ﻿Revision history for IPC-Run-Fused
 
-0.04000000 2013-02-05T05:08:34Z
+0.04000000 2013-02-05T05:09:34Z
  [!Features]
  - Should now actually work on Win32 due to the discovery of Win32::Job
  - Fail behaviour should be more concise with additional context.
