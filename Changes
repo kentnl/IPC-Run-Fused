@@ -1,5 +1,32 @@
 ﻿Revision history for IPC-Run-Fused
 
+0.04000000 2013-02-05T05:14:00Z
+ [!Features]
+ - Should now actually work on Win32 due to the discovery of Win32::Job
+ - Fail behaviour should be more concise with additional context.
+
+ [BugFix]
+ - previous release accidentally dropped _fail method.
+
+ [Dependencies::Changed / runtime_requires]
+ - perl 5.008000 -> v5.8.3
+
+ [Dependencies::New / runtime_requires]
+ - Carp
+ - Module::Runtime
+
+ [Dependencies::New / runtime_suggests]
+ - Socket
+ - Win32::Job
+
+ [Internals]
+ - _fail method now unified via goto \&IPC::Run::Fused::_fail
+ - new ::Win32 namespace to implement Win32 Features
+
+ [Tests]
+ - reworked to not be order dependent, only flush-atomic.
+ - previously disabled tests re-enabled on Win32
+
 0.03000000 2013-02-03T00:47:09Z
  [!Features]
  - Most the code for Unix-like environments moved to ::POSIX with a proxy

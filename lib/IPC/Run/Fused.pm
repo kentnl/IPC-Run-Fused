@@ -6,7 +6,7 @@ BEGIN {
   $IPC::Run::Fused::AUTHORITY = 'cpan:KENTNL';
 }
 {
-  $IPC::Run::Fused::VERSION = '0.03000000';
+  $IPC::Run::Fused::VERSION = '0.04000000';
 }
 use 5.008000;
 
@@ -17,9 +17,34 @@ use 5.008000;
 
 use Sub::Exporter -setup => { exports => [ run_fused => \&_build_run_fused ], };
 
+our %FAIL_CONTEXT;
+
+sub _stringify {
+  return 'undef' if not defined $_[0];
+  return qq{`$_[0]`};
+}
+
+sub _fail {
+  my $errors = {
+    '$?'  => _stringify($?),
+    '$!'  => _stringify($!),
+    '$^E' => _stringify($^E),
+    '$@'  => _stringify($@),
+    ( map { $_ => _stringify( $FAIL_CONTEXT{$_} ) } keys %FAIL_CONTEXT )
+  };
+  my $message = '';
+  $message .= qq{\n} . $_ for @_;
+  $message .= sprintf qq{\n\t%s => %s}, $_, $errors->{$_} for sort keys %$errors;
+  $message .= qq{\n};
+  require Carp;
+  @_ = $message;
+  goto \&Carp::confess;
+}
+
 sub _build_run_fused {
   if ( $^O eq 'MSWin32' ) {
-    return sub { die 'Win32 Support WIP' };
+    require IPC::Run::Fused::Win32;
+    return \&IPC::Run::Fused::Win32::run_fused;
   }
   require IPC::Run::Fused::POSIX;
   return \&IPC::Run::Fused::POSIX::run_fused;
@@ -40,7 +65,7 @@ IPC::Run::Fused - Capture Stdout/Stderr simultaneously as if it were one stream,
 
 =head1 VERSION
 
-version 0.03000000
+version 0.04000000
 
 =head1 SYNOPSIS
 

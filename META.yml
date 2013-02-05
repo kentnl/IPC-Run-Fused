@@ -20,23 +20,29 @@ name: IPC-Run-Fused
 provides:
   IPC::Run::Fused:
     file: lib/IPC/Run/Fused.pm
-    version: 0.03000000
+    version: 0.04000000
   IPC::Run::Fused::POSIX:
     file: lib/IPC/Run/Fused/POSIX.pm
-    version: 0.03000000
+    version: 0.04000000
+  IPC::Run::Fused::Win32:
+    file: lib/IPC/Run/Fused/Win32.pm
+    version: 0.04000000
 requires:
+  Carp: 0
   IO::Handle: 0
+  Module::Runtime: 0
   Sub::Exporter: 0.982
-  perl: 5.008000
+  perl: v5.8.3
   strict: 0
   warnings: 0
 resources:
   bugtracker: https://github.com/kentfredric/IPC-Run-Fused/issues
   homepage: https://github.com/kentfredric/IPC-Run-Fused
   repository: https://github.com/kentfredric/IPC-Run-Fused.git
-version: 0.03000000
+version: 0.04000000
 x_BuiltWith:
   modules:
+    Carp: 1.28
     Dist::Zilla::PluginBundle::Author::KENTNL: 1.7.0
     Dist::Zilla::PluginBundle::Author::KENTNL::Lite: 'NA(possibly not installed)'
     File::Find: 1.23
@@ -44,12 +50,15 @@ x_BuiltWith:
     FindBin: 1.51
     IO::Handle: 1.33
     Module::Build: 0.4003
+    Module::Runtime: 0.013
     Pod::Coverage::TrustPod: 0.100002
+    Socket: 2.009
     Sub::Exporter: 0.984
     Test::CPAN::Meta: 0.22
     Test::More: 0.98
     Test::Pod: 1.45
     Test::Pod::Coverage: 1.08
+    Win32::Job: 'NA(possibly not installed)'
     perl: 'NA(skipped: perl)'
     strict: 1.07
     version: 0.9901
@@ -277,7 +286,7 @@ x_Dist_Zilla:
     -
       class: Dist::Zilla::Plugin::Twitter
       name: '@Author::KENTNL/Twitter'
-      version: 0.017
+      version: 0.020
     -
       class: Dist::Zilla::Plugin::Prereqs
       config:
@@ -285,6 +294,14 @@ x_Dist_Zilla:
           phase: runtime
           type: requires
       name: Prereqs
+      version: 4.300030
+    -
+      class: Dist::Zilla::Plugin::Prereqs
+      config:
+        Dist::Zilla::Plugin::Prereqs:
+          phase: runtime
+          type: suggests
+      name: win32
       version: 4.300030
     -
       class: Dist::Zilla::Plugin::FinderCode
