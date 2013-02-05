@@ -1,6 +1,6 @@
 ﻿Revision history for IPC-Run-Fused
 
-0.04000100 2013-02-05T07:16:29Z
+0.04000100 2013-02-05T07:17:18Z
  [BugFix]
  - load IO::Handle in the test script.
 
