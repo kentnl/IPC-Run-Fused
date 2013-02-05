@@ -66,15 +66,15 @@
    "provides" : {
       "IPC::Run::Fused" : {
          "file" : "lib/IPC/Run/Fused.pm",
-         "version" : "0.03000001"
+         "version" : "0.04000000"
       },
       "IPC::Run::Fused::POSIX" : {
          "file" : "lib/IPC/Run/Fused/POSIX.pm",
-         "version" : "0.03000001"
+         "version" : "0.04000000"
       },
       "IPC::Run::Fused::Win32" : {
          "file" : "lib/IPC/Run/Fused/Win32.pm",
-         "version" : "0.03000001"
+         "version" : "0.04000000"
       }
    },
    "release_status" : "stable",
@@ -89,7 +89,7 @@
          "web" : "https://github.com/kentfredric/IPC-Run-Fused"
       }
    },
-   "version" : "0.03000001",
+   "version" : "0.04000000",
    "x_BuiltWith" : {
       "modules" : {
          "Carp" : "1.28",
