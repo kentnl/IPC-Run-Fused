@@ -49,6 +49,9 @@
             "perl" : "v5.8.3",
             "strict" : "0",
             "warnings" : "0"
+         },
+         "suggests" : {
+            "Win32::Job" : "0"
          }
       },
       "test" : {
@@ -104,6 +107,7 @@
          "Test::More" : "0.98",
          "Test::Pod" : "1.45",
          "Test::Pod::Coverage" : "1.08",
+         "Win32::Job" : "NA(possibly not installed)",
          "perl" : "NA(skipped: perl)",
          "strict" : "1.07",
          "version" : "0.9901",
@@ -402,6 +406,17 @@
                }
             },
             "name" : "Prereqs",
+            "version" : "4.300030"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::Prereqs",
+            "config" : {
+               "Dist::Zilla::Plugin::Prereqs" : {
+                  "phase" : "runtime",
+                  "type" : "suggests"
+               }
+            },
+            "name" : "runtimesuggests",
             "version" : "4.300030"
          },
          {
