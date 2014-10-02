@@ -115,6 +115,7 @@ our $AUTHORITY = 'cpan:KENTNL'; # AUTHORITY
 our %FAIL_CONTEXT;
 
 use Exporter qw(import);
+use subs 'run_fused';
 our @EXPORT_OK = qw( run_fused _fail );
 
 sub _stringify {
@@ -141,7 +142,7 @@ sub _fail {    ## no critic (Subroutines::RequireArgUnpacking)
   @_ = $message;
   goto \&Carp::confess;
 }
-use subs 'run_fused';
+
 
 sub _win32_run_fused {
   require IPC::Run::Fused::Win32;
