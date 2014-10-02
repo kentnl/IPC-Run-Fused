@@ -36,9 +36,8 @@ use IO::Handle;
 
 
 
-use IPC::Run::Fused qw( _fail );
-
 use Exporter qw(import);
+use IPC::Run::Fused qw( _fail );
 
 our @EXPORT_OK = qw( run_fused );
 
