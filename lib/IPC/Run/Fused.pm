@@ -190,15 +190,15 @@ Have you ever tried to do essentially the same as you would in bash do to this:
 
 And found massive road works getting in the way.
 
-Sure, you can aways do this style syntax:
+Sure, you can always do this style syntax:
 
   open my $fh, 'someapp --args foo 2>&1 |';
 
-But thats not very nice, because
+But that's not very nice, because
 
 =over 4
 
-=item 1. you're relying on a subshell to do that for you
+=item 1. you're relying on a sub-shell to do that for you
 
 =item 2. you have to manually escape everything
 

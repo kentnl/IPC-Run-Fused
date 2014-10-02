@@ -27,13 +27,13 @@ DESCRIPTION
 
     And found massive road works getting in the way.
 
-    Sure, you can aways do this style syntax:
+    Sure, you can always do this style syntax:
 
       open my $fh, 'someapp --args foo 2>&1 |';
 
-    But thats not very nice, because
+    But that's not very nice, because
 
-    1. you're relying on a subshell to do that for you
+    1. you're relying on a sub-shell to do that for you
     2. you have to manually escape everything
     3. you can't use list context.
 
