@@ -35,9 +35,9 @@ requires:
   strict: '0'
   warnings: '0'
 resources:
-  bugtracker: https://github.com/kentfredric/IPC-Run-Fused/issues
-  homepage: https://github.com/kentfredric/IPC-Run-Fused
-  repository: https://github.com/kentfredric/IPC-Run-Fused.git
+  bugtracker: https://github.com/kentnl/IPC-Run-Fused/issues
+  homepage: https://github.com/kentnl/IPC-Run-Fused
+  repository: https://github.com/kentnl/IPC-Run-Fused.git
 version: '1.000000'
 x_BuiltWith:
   failures:

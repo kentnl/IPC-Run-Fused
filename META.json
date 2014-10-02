@@ -126,13 +126,13 @@
    "release_status" : "stable",
    "resources" : {
       "bugtracker" : {
-         "web" : "https://github.com/kentfredric/IPC-Run-Fused/issues"
+         "web" : "https://github.com/kentnl/IPC-Run-Fused/issues"
       },
-      "homepage" : "https://github.com/kentfredric/IPC-Run-Fused",
+      "homepage" : "https://github.com/kentnl/IPC-Run-Fused",
       "repository" : {
          "type" : "git",
-         "url" : "https://github.com/kentfredric/IPC-Run-Fused.git",
-         "web" : "https://github.com/kentfredric/IPC-Run-Fused"
+         "url" : "https://github.com/kentnl/IPC-Run-Fused.git",
+         "web" : "https://github.com/kentnl/IPC-Run-Fused"
       }
    },
    "version" : "1.000000",
