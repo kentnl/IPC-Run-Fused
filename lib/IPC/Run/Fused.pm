@@ -114,7 +114,8 @@ our $AUTHORITY = 'cpan:KENTNL'; # AUTHORITY
 
 our %FAIL_CONTEXT;
 
-use Sub::Exporter::Progressive -setup => { exports => [qw( run_fused _fail )] };
+use Exporter qw(import);
+our @EXPORT_OK = qw( run_fused _fail );
 
 sub _stringify {
   my ($entry) = @_;
