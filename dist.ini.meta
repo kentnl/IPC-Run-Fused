@@ -1,7 +1,7 @@
 name    = IPC-Run-Fused
 author  = Kent Fredric <kentnl@cpan.org>
 license = Perl_5
-copyright_holder = Kent Fredric
+copyright_holder = Kent Fredric <kentfredric@gmail.com>
 
 [@Author::KENTNL]
 twitter_hash_tags = #perl #cpan
