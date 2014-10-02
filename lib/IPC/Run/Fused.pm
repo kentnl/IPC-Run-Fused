@@ -1,8 +1,8 @@
+use 5.008003;
 use strict;
 use warnings;
 
 package IPC::Run::Fused;
-use 5.008000;
 
 our $VERSION = '1.000000';
 

@@ -85,7 +85,7 @@
             "IO::Handle" : "0",
             "Module::Runtime" : "0",
             "Sub::Exporter" : "0.982",
-            "perl" : "v5.8.3",
+            "perl" : "5.008003",
             "strict" : "0",
             "warnings" : "0"
          },

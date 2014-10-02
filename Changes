@@ -1,6 +1,11 @@
 ﻿Revision history for IPC-Run-Fused
 
-1.000000 2014-10-02T11:00:53Z
+1.000000 2014-10-02T11:05:22Z
+ [00 - Important - Version Scheme Change]
+ - Using 1.xxxyyy ( mantissa=6 ) instead of 0.xxxyyyzz
+ - This may affect hand-operated downstreams
+ - This is the primary reason for the 1.x on the box.
+
  [01 - Important - Toolkit Switch]
  - Tooling now uses ExtUtils::MakeMaker
  - This may affect hand-operated downstreams
