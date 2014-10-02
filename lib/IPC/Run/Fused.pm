@@ -141,9 +141,21 @@ sub _fail {    ## no critic (Subroutines::RequireArgUnpacking)
   goto \&Carp::confess;
 }
 use subs 'run_fused';
-use if eval { 'MSWin32' eq $^O }, 'IPC::Run::Fused::Win32' => qw( run_fused );
-use if eval { 'MSWin32' ne $^O }, 'IPC::Run::Fused::POSIX' => qw( run_fused );
 
+sub _win32_run_fused {
+  require IPC::Run::Fused::Win32;
+  goto \&IPC::Run::Fused::Win32::run_fused;
+}
+sub _posix_run_fused {
+  require IPC::Run::Fused::POSIX;
+  goto \&IPC::Run::Fused::POSIX::run_fused;
+}
+
+if ( 'MSWin32' eq $^O ) {
+  *run_fused = \&_win32_run_fused;
+} else {
+  *run_fused = \&_posix_run_fused;
+}
 1;
 
 __END__

@@ -87,7 +87,6 @@
             "Module::Runtime" : "0",
             "Socket" : "0",
             "Sub::Exporter::Progressive" : "0",
-            "if" : "0",
             "perl" : "5.008003",
             "strict" : "0",
             "subs" : "0",
@@ -206,7 +205,6 @@
          "Test::More" : "1.001006",
          "Test::Pod" : "1.48",
          "Test::Pod::Coverage" : "1.10",
-         "if" : "0.0603",
          "strict" : "1.08",
          "subs" : "1.02",
          "warnings" : "1.26"

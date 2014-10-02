@@ -72,7 +72,6 @@ do { my $x = {
                                       'Module::Runtime' => '0',
                                       'Socket' => '0',
                                       'Sub::Exporter::Progressive' => '0',
-                                      'if' => '0',
                                       'perl' => '5.008003',
                                       'strict' => '0',
                                       'subs' => '0',
