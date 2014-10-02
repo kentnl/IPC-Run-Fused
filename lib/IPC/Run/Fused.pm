@@ -139,6 +139,7 @@ sub _fail {    ## no critic (Subroutines::RequireArgUnpacking)
 }
 
 sub _build_run_fused {
+  ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
   if ( 'MSWin32' eq $^O ) {
     require IPC::Run::Fused::Win32;
     return \&IPC::Run::Fused::Win32::run_fused;
