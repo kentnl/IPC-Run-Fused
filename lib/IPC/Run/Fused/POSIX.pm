@@ -43,14 +43,14 @@ our @EXPORT_OK = qw( run_fused );
 
 sub run_fused {    ## no critic ( Subroutines::RequireArgUnpacking )
 
-  my ( $read_handle, @params ) = @_;
+  my ( $read_handle, @params ) = ( \shift @_,@_ );
 
   my ( $reader, $writer );
 
   pipe $reader, $writer or _fail('Creating Pipe');
 
   if ( my $pid = fork ) {
-    $_[0] = $reader;
+    ${$read_handle} = $reader;
     return $pid;
   }
 

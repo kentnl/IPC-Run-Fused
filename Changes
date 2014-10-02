@@ -1,6 +1,6 @@
 ﻿Revision history for IPC-Run-Fused
 
-1.000000 2014-10-02T12:42:06Z
+1.000000 2014-10-02T14:43:00Z
  [00 - Important - Version Scheme Change]
  - Using 1.xxxyyy ( mantissa=6 ) instead of 0.xxxyyyzz
  - This may affect hand-operated downstreams
@@ -21,7 +21,7 @@
  - test: +2 ↓1 -2 (recommends: +3)
 
  [Internals]
- - use Sub::Exporter::Progressive instead
+ - use lower level Exporter code instead of Sub::Exporter
  - Avoid need for builder method and bake implementation at USE
 
  [Metadata]

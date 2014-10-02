@@ -37,6 +37,7 @@ use Module::Runtime;
 
 
 
+
 use IPC::Run::Fused qw(_fail);
 use Socket qw( AF_UNIX SOCK_STREAM PF_UNSPEC );
 
@@ -52,7 +53,7 @@ sub run_fused {
 }
 
 sub _run_fused_job {    ## no critic (Subroutines::RequireArgUnpacking)
-  my ( $read_handle, @params ) = @_;
+  my ( $read_handle, @params ) = ( \shift @_, @_ );
 
   my $config = _run_fused_jobdecode(@params);
 
@@ -70,7 +71,7 @@ sub _run_fused_job {    ## no critic (Subroutines::RequireArgUnpacking)
 
   Module::Runtime::require_module('Win32::Job');
 
-  pipe $_[0], my $writer;
+  pipe ${$read_handle}, my $writer;
 
   if ( my $pid = fork ) {
     return $pid;
@@ -113,9 +114,8 @@ sub _run_fused_jobdecode {
   };
 }
 
-sub _run_fused_coderef {    ## no critic (Subroutines::RequireArgUnpacking)
-
-  my ( $read_handle, $code ) = @_;
+sub _run_fused_coderef {
+  my ( $read_handle, $code ) = ( \shift @_, @_ );
   my ( $reader, $writer );
 
   socketpair $reader, $writer, AF_UNIX, SOCK_STREAM, PF_UNSPEC or _fail('creating socketpair');
@@ -123,7 +123,7 @@ sub _run_fused_coderef {    ## no critic (Subroutines::RequireArgUnpacking)
   shutdown $writer, 0 or _fail('Cant close read to writer');
 
   if ( my $pid = fork ) {
-    $_[0] = $reader;
+    ${$read_handle} = $reader;
     return $pid;
   }
 
@@ -252,7 +252,8 @@ $fh will point to an IO::Handle attached to the end of a pipe running back to th
 
 the command will be run in a fork, and stderr and stdout "fused" into a singluar pipe.
 
-B<NOTE:> at present, STDIN's FD is left unchanged, and child processes will inherit parent STDIN's, and will thus block ( somewhere ) waiting for response.
+B<NOTE:> at present, STDIN's FD is left unchanged, and child processes will inherit parent STDIN's, and will thus block
+( somewhere ) waiting for response.
 
 =head1 AUTHOR
 
