@@ -46,6 +46,7 @@ sub run_fused {
   pipe( $reader, $writer ) or _fail('Creating Pipe');
 
   if ( my $pid = fork() ) {
+    ## no critic ( Subroutines::RequireArgUnpacking )
     $_[0] = $reader;
     return $pid;
   }

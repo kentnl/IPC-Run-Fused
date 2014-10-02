@@ -74,7 +74,9 @@ sub _run_fused_job {
 
   Module::Runtime::require_module('Win32::Job');
 
+  ## no critic (Subroutines::RequireArgUnpacking)
   pipe( $_[0], my $writer );
+  ## use critic;
 
   if ( my $pid = fork() ) {
     return $pid;
@@ -153,8 +155,9 @@ our $DOS_REV_CHARS = {
 };
 
 sub _win32_escape_command_char {
-  return $_[0] unless exists $DOS_SPECIAL_CHARS->{ $_[0] };
-  return $DOS_SPECIAL_CHARS->{ $_[0] }->[1];
+  my ($char) = @_;
+  return $char unless exists $DOS_SPECIAL_CHARS->{$char};
+  return $DOS_SPECIAL_CHARS->{$char}->[1];
 }
 
 sub _win32_escape_command_token {
@@ -163,11 +166,13 @@ sub _win32_escape_command_token {
 }
 
 sub _win32_escape_command {
-  return join q{ }, map { _win32_escape_command_token($_) } @_;
+  my (@tokens) = @_;
+  return join q{ }, map { _win32_escape_command_token($_) } @tokens;
 }
 
 sub _win32_command_find_invocant {
-  my ($command) = "$_[0]";
+  my ($command) = @_;
+  $command = "$command";
   my $first = q[];
   my @chars = split //, $command;
   my $inquote;
