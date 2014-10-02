@@ -87,7 +87,7 @@ sub _run_fused_job {    ## no critic (Subroutines::RequireArgUnpacking)
     {
       stdout => $writer,
       stderr => $writer,
-    }
+    },
   ) or _fail('Could not spawn job');
   my $result = $job->run( -1, 0 );
   if ( not $result ) {
@@ -150,7 +150,7 @@ our $DOS_SPECIAL_CHARS = {
 };
 our $DOS_REV_CHARS = {
   map { ( $DOS_SPECIAL_CHARS->{$_}->[1], [ $DOS_SPECIAL_CHARS->{$_}->[0], $_ ] ) }
-    keys %{$DOS_SPECIAL_CHARS}
+    keys %{$DOS_SPECIAL_CHARS},
 };
 
 sub _win32_escape_command_char {

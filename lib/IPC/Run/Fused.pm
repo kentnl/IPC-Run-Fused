@@ -127,7 +127,7 @@ sub _fail {    ## no critic (Subroutines::RequireArgUnpacking)
     q[$!]  => _stringify($!),
     q[$^E] => _stringify($^E),
     q[$@]  => _stringify($@),
-    ( map { $_ => _stringify( $FAIL_CONTEXT{$_} ) } keys %FAIL_CONTEXT )
+    ( map { $_ => _stringify( $FAIL_CONTEXT{$_} ) } keys %FAIL_CONTEXT ),
   };
   my $message = q[];
   $message .= qq{\n} . $_ for @message;
