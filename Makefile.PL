@@ -26,7 +26,6 @@ my %WriteMakefileArgs = (
     "Socket" => 0,
     "Sub::Exporter::Progressive" => 0,
     "strict" => 0,
-    "subs" => 0,
     "warnings" => 0
   },
   "TEST_REQUIRES" => {
@@ -53,7 +52,6 @@ my %FallbackPrereqs = (
   "Sub::Exporter::Progressive" => 0,
   "Test::More" => "0.89",
   "strict" => 0,
-  "subs" => 0,
   "warnings" => 0
 );
 

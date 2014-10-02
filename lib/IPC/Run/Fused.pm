@@ -114,7 +114,6 @@ our $AUTHORITY = 'cpan:KENTNL'; # AUTHORITY
 
 our %FAIL_CONTEXT;
 
-use subs 'run_fused';
 use Sub::Exporter::Progressive -setup => { exports => [qw( run_fused _fail )] };
 
 sub _stringify {
@@ -141,7 +140,6 @@ sub _fail {    ## no critic (Subroutines::RequireArgUnpacking)
   @_ = $message;
   goto \&Carp::confess;
 }
-
 
 BEGIN {
   ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
