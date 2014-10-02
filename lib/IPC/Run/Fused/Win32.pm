@@ -131,8 +131,8 @@ sub _run_fused_coderef {    ## no critic (Subroutines::RequireArgUnpacking)
     return $pid;
   }
 
-  close *STDERR;
-  close *STDOUT;
+  close *STDERR or _fail('Closing STDERR');
+  close *STDOUT or _fail('Closing STDOUT');
   open *STDOUT, '>>&=', $writer or _fail('Assigning to STDOUT');
   open *STDERR, '>>&=', $writer or _fail('Assigning to STDERR');
   $code->();
