@@ -41,7 +41,6 @@ use IPC::Run::Fused qw( _fail );
 
 our @EXPORT_OK = qw( run_fused );
 
-
 sub run_fused {    ## no critic ( Subroutines::RequireArgUnpacking )
 
   my ( $read_handle, @params ) = @_;
