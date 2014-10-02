@@ -38,6 +38,8 @@ use IO::Handle;
 
 use IPC::Run::Fused qw( _fail );
 
+use Sub::Exporter::Progressive -setup => { exports => [qw( run_fused )] };
+
 sub run_fused {    ## no critic ( Subroutines::RequireArgUnpacking )
 
   my ( $read_handle, @params ) = @_;
