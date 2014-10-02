@@ -63,7 +63,7 @@ FEATURES
 
         We have a few global FH's inside our code, but they're only STDERR
         and STDOUT, at present I don't think I can circumvent that. If I
-        ever can, I'll endeavour to do so =)
+        ever can, I'll endeavour to do so ☺
 
 EXPORTED FUNCTIONS
     No functions are exported by default, be explicit with what you want.

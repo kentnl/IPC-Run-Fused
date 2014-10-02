@@ -230,7 +230,7 @@ I looked at L<IPC::Run> L<IPC::Run3> and L<IPC::Open3>, and they all seemed very
 
 All the competition seem to still have this thing for global file handles and you having to use them. Yuck!.
 
-We have a few global FH's inside our code, but they're only STDERR and STDOUT, at present I don't think I can circumvent that. If I ever can, I'll endeavour to do so =)
+We have a few global FH's inside our code, but they're only STDERR and STDOUT, at present I don't think I can circumvent that. If I ever can, I'll endeavour to do so ☺
 
 =back
 
