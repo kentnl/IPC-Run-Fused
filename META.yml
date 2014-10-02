@@ -9,7 +9,7 @@ build_requires:
   Test::More: '0.89'
 configure_requires:
   ExtUtils::MakeMaker: '0'
-dynamic_config: '0'
+dynamic_config: '1'
 generated_by: 'Dist::Zilla version 5.020, CPAN::Meta::Converter version 2.142690'
 license: perl
 meta-spec:
@@ -571,6 +571,13 @@ x_Dist_Zilla:
           type: requires
       name: Prereqs
       version: '5.020'
+    -
+      class: Dist::Zilla::Plugin::OSPrereqs
+      config:
+        Dist::Zilla::Plugin::OSPrereqs:
+          os: MSWin32
+      name: MSWin32
+      version: '0.005'
     -
       class: Dist::Zilla::Plugin::Prereqs
       config:

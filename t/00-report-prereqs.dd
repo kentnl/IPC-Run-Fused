@@ -77,7 +77,6 @@ do { my $x = {
                                       'warnings' => '0'
                                     },
                       'suggests' => {
-                                      'Socket' => '0',
                                       'Win32::Job' => '0'
                                     }
                     },

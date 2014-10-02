@@ -3,7 +3,7 @@
    "author" : [
       "Kent Fredric <kentnl@cpan.org>"
    ],
-   "dynamic_config" : 0,
+   "dynamic_config" : 1,
    "generated_by" : "Dist::Zilla version 5.020, CPAN::Meta::Converter version 2.142690",
    "license" : [
       "perl_5"
@@ -92,7 +92,6 @@
             "warnings" : "0"
          },
          "suggests" : {
-            "Socket" : "0",
             "Win32::Job" : "0"
          }
       },
@@ -811,6 +810,16 @@
             },
             "name" : "Prereqs",
             "version" : "5.020"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::OSPrereqs",
+            "config" : {
+               "Dist::Zilla::Plugin::OSPrereqs" : {
+                  "os" : "MSWin32"
+               }
+            },
+            "name" : "MSWin32",
+            "version" : "0.005"
          },
          {
             "class" : "Dist::Zilla::Plugin::Prereqs",
