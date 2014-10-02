@@ -139,7 +139,7 @@ sub _fail {    ## no critic (Subroutines::RequireArgUnpacking)
 }
 
 sub _build_run_fused {
-  if ( $^O eq 'MSWin32' ) {
+  if ( 'MSWin32' eq $^O ) {
     require IPC::Run::Fused::Win32;
     return \&IPC::Run::Fused::Win32::run_fused;
   }
