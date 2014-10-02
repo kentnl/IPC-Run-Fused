@@ -1,6 +1,6 @@
 ﻿Revision history for IPC-Run-Fused
 
-1.000000 2014-10-02T11:20:15Z
+1.000000 2014-10-02T11:21:23Z
  [00 - Important - Version Scheme Change]
  - Using 1.xxxyyy ( mantissa=6 ) instead of 0.xxxyyyzz
  - This may affect hand-operated downstreams
@@ -21,6 +21,7 @@
 
  [Metadata]
  - Specify email address in copyright data
+ - Migrate repo to kentnl org.
 
 0.04000100 2013-02-05T07:17:18Z
  [BugFix]
