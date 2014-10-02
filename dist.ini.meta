@@ -22,7 +22,6 @@ srcreadme = mkdn
 ;version_rel_time_zone = Pacific/Auckland
 
 [Prereqs]
-Sub::Exporter = 0.982
 
 [Prereqs / win32]
 -phase = runtime
