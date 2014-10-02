@@ -38,6 +38,7 @@ use Module::Runtime;
 
 
 use IPC::Run::Fused qw();
+use subs '_fail';
 
 BEGIN {
 

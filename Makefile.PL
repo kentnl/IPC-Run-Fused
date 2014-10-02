@@ -25,6 +25,7 @@ my %WriteMakefileArgs = (
     "Module::Runtime" => 0,
     "Sub::Exporter" => "0.982",
     "strict" => 0,
+    "subs" => 0,
     "warnings" => 0
   },
   "TEST_REQUIRES" => {
@@ -50,6 +51,7 @@ my %FallbackPrereqs = (
   "Sub::Exporter" => "0.982",
   "Test::More" => "0.89",
   "strict" => 0,
+  "subs" => 0,
   "warnings" => 0
 );
 

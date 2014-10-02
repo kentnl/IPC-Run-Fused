@@ -73,6 +73,7 @@ do { my $x = {
                                       'Sub::Exporter' => '0.982',
                                       'perl' => '5.008003',
                                       'strict' => '0',
+                                      'subs' => '0',
                                       'warnings' => '0'
                                     },
                       'suggests' => {
