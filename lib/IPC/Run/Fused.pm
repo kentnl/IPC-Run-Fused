@@ -224,7 +224,7 @@ But if you're using a string, this modules probably not affording you much.
 
 =item 2. No dicking around with managing multiple file handles yourself.
 
-I looked at L<IPC::Run> L<IPC::Run3> and L<IPC::Open3>, and they all seemed very unfriendly, and none did what I wnted.
+I looked at L<IPC::Run>, L<IPC::Run3> and L<IPC::Open3>, and they all seemed very unfriendly, and none did what I wnted.
 
 =item 3. Non-global filehandles supported by design.
 

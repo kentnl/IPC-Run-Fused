@@ -54,7 +54,7 @@ FEATURES
         you much.
 
     2. No dicking around with managing multiple file handles yourself.
-        I looked at IPC::Run IPC::Run3 and IPC::Open3, and they all seemed
+        I looked at IPC::Run, IPC::Run3 and IPC::Open3, and they all seemed
         very unfriendly, and none did what I wnted.
 
     3. Non-global filehandles supported by design.
