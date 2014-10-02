@@ -3,7 +3,9 @@ use strict;
 use warnings;
 
 package IPC::Run::Fused::POSIX;
-$IPC::Run::Fused::POSIX::VERSION = '0.04000101';
+
+our $VERSION = '1.000000';
+
 use IO::Handle;
 
 # ABSTRACT: Implementation of IPC::Run::Fused for POSIX-ish systems.
@@ -78,7 +80,7 @@ IPC::Run::Fused::POSIX - Implementation of IPC::Run::Fused for POSIX-ish systems
 
 =head1 VERSION
 
-version 0.04000101
+version 1.000000
 
 =head1 METHODS
 

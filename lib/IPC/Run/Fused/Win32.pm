@@ -3,7 +3,9 @@ use strict;
 use warnings;
 
 package IPC::Run::Fused::Win32;
-$IPC::Run::Fused::Win32::VERSION = '0.04000101';
+
+our $VERSION = '1.000000';
+
 use IO::Handle;
 use Module::Runtime;
 
@@ -223,7 +225,7 @@ IPC::Run::Fused::Win32 - Implementation of IPC::Run::Fused for Win32
 
 =head1 VERSION
 
-version 0.04000101
+version 1.000000
 
 =head1 METHODS
 

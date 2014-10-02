@@ -1,6 +1,6 @@
 ﻿Revision history for IPC-Run-Fused
 
-0.04000101 2014-10-02T11:00:53Z
+1.000000 2014-10-02T11:00:53Z
  [01 - Important - Toolkit Switch]
  - Tooling now uses ExtUtils::MakeMaker
  - This may affect hand-operated downstreams

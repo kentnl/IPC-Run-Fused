@@ -19,13 +19,13 @@ name: IPC-Run-Fused
 provides:
   IPC::Run::Fused:
     file: lib/IPC/Run/Fused.pm
-    version: '0.04000101'
+    version: '1.000000'
   IPC::Run::Fused::POSIX:
     file: lib/IPC/Run/Fused/POSIX.pm
-    version: '0.04000101'
+    version: '1.000000'
   IPC::Run::Fused::Win32:
     file: lib/IPC/Run/Fused/Win32.pm
-    version: '0.04000101'
+    version: '1.000000'
 requires:
   Carp: '0'
   IO::Handle: '0'
@@ -38,7 +38,7 @@ resources:
   bugtracker: https://github.com/kentfredric/IPC-Run-Fused/issues
   homepage: https://github.com/kentfredric/IPC-Run-Fused
   repository: https://github.com/kentfredric/IPC-Run-Fused.git
-version: '0.04000101'
+version: '1.000000'
 x_BuiltWith:
   failures:
     Win32::Job: 'module was not found in INC'
@@ -49,6 +49,7 @@ x_BuiltWith:
     Dist::Zilla::Plugin::Author::KENTNL::RecommendFixes: '0.003006'
     Dist::Zilla::Plugin::Authority: '1.006'
     Dist::Zilla::Plugin::AutoPrereqs: '5.020'
+    Dist::Zilla::Plugin::BumpVersionAfterRelease: '0.003'
     Dist::Zilla::Plugin::ConfirmRelease: '5.020'
     Dist::Zilla::Plugin::EOLTests: '0.02'
     Dist::Zilla::Plugin::Git::Check: '2.024'
@@ -57,7 +58,6 @@ x_BuiltWith:
     Dist::Zilla::Plugin::Git::Contributors: '0.007'
     Dist::Zilla::Plugin::Git::GatherDir: '2.024'
     Dist::Zilla::Plugin::Git::NextRelease: '0.003000'
-    Dist::Zilla::Plugin::Git::NextVersion::Sanitized: '0.002002'
     Dist::Zilla::Plugin::Git::Tag: '2.024'
     Dist::Zilla::Plugin::GithubMeta: '0.46'
     Dist::Zilla::Plugin::License: '5.020'
@@ -71,7 +71,6 @@ x_BuiltWith:
     Dist::Zilla::Plugin::MetaTests: '5.020'
     Dist::Zilla::Plugin::MetaYAML: '5.020'
     Dist::Zilla::Plugin::MinimumPerl: '1.003'
-    Dist::Zilla::Plugin::PkgVersion: '5.020'
     Dist::Zilla::Plugin::PodCoverageTests: '5.020'
     Dist::Zilla::Plugin::PodSyntaxTests: '5.020'
     Dist::Zilla::Plugin::PodWeaver: '4.006'
@@ -79,6 +78,7 @@ x_BuiltWith:
     Dist::Zilla::Plugin::Prereqs::Recommend::MatchInstalled: '0.003001'
     Dist::Zilla::Plugin::ReadmeAnyFromPod: '0.142470'
     Dist::Zilla::Plugin::ReadmeFromPod: '0.21'
+    Dist::Zilla::Plugin::RewriteVersion::Sanitized: '0.001004'
     Dist::Zilla::Plugin::RunExtraTests: '0.022'
     Dist::Zilla::Plugin::Test::CPAN::Changes: '0.008'
     Dist::Zilla::Plugin::Test::Compile::PerFile: '0.003000'
@@ -125,20 +125,6 @@ x_Dist_Zilla:
   perl:
     version: '5.021003'
   plugins:
-    -
-      class: Dist::Zilla::Plugin::Git::NextVersion::Sanitized
-      config:
-        Dist::Zilla::Plugin::Git::NextVersion:
-          first_version: '0.001000'
-          version_by_branch: '0'
-          version_regexp: (?^u:^(.*)-source$)
-        Dist::Zilla::Role::Git::Repo:
-          repo_root: .
-        Dist::Zilla::Role::Version::Sanitize:
-          mantissa: '8'
-          normal_form: numify
-      name: '@Author::KENTNL/Git::NextVersion::Sanitized'
-      version: '0.002002'
     -
       class: Dist::Zilla::Plugin::MetaConfig
       name: '@Author::KENTNL/MetaConfig'
@@ -274,9 +260,13 @@ x_Dist_Zilla:
       name: '@Author::KENTNL/ManifestSkip'
       version: '5.020'
     -
-      class: Dist::Zilla::Plugin::PkgVersion
-      name: '@Author::KENTNL/PkgVersion'
-      version: '5.020'
+      class: Dist::Zilla::Plugin::RewriteVersion::Sanitized
+      config:
+        Dist::Zilla::Role::Version::Sanitize:
+          mantissa: '6'
+          normal_form: numify
+      name: '@Author::KENTNL/RewriteVersion::Sanitized'
+      version: '0.001004'
     -
       class: Dist::Zilla::Plugin::PodWeaver
       config:
@@ -447,7 +437,7 @@ x_Dist_Zilla:
         Dist::Zilla::Plugin::Git::Tag:
           branch: ~
           signed: '0'
-          tag: 0.04000101-source
+          tag: 1.000000-source
           tag_format: '%v-source'
           tag_message: v%v
           time_zone: local
@@ -459,6 +449,10 @@ x_Dist_Zilla:
       class: Dist::Zilla::Plugin::Git::NextRelease
       name: '@Author::KENTNL/Git::NextRelease'
       version: '0.003000'
+    -
+      class: Dist::Zilla::Plugin::BumpVersionAfterRelease
+      name: '@Author::KENTNL/BumpVersionAfterRelease'
+      version: '0.003'
     -
       class: Dist::Zilla::Plugin::Git::Commit
       config:
@@ -497,7 +491,7 @@ x_Dist_Zilla:
         Dist::Zilla::Plugin::Git::Tag:
           branch: releases
           signed: '0'
-          tag: '0.04000101'
+          tag: '1.000000'
           tag_format: '%v'
           tag_message: v%v
           time_zone: local
