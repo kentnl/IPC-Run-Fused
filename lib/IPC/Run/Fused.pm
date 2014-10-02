@@ -148,7 +148,8 @@ sub _build_run_fused {
   require IPC::Run::Fused::POSIX;
   return \&IPC::Run::Fused::POSIX::run_fused;
 }
-{
+
+BEGIN {
   *run_fused = _build_run_fused();
 }
 
