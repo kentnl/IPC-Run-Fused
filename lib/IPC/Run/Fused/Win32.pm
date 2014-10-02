@@ -127,7 +127,9 @@ sub _run_fused_coderef {
     or _fail("creating socketpair");
 
   if ( my $pid = fork() ) {
+    ## no critic (Subroutines::RequireArgUnpacking)
     $_[0] = $reader;
+    ## use critic
     return $pid;
   }
 
