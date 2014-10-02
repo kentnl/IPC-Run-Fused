@@ -30,9 +30,9 @@ $fh will be clobbered like 'open' does, and $cmd, @args will be passed, as-is, t
 
 $fh will point to an IO::Handle attached to the end of a pipe running back to the called application.
 
-the command will be run in a fork, and stderr and stdout "fused" into a singluar pipe.
+the command will be run in a fork, and C<STDERR> and C<STDOUT> "fused" into a singular pipe.
 
-B<NOTE:> at present, STDIN's FD is left unchanged, and child processes will inherit parent STDIN's, and will thus block ( somewhere ) waiting for response.
+B<NOTE:> at present, C<STDIN>'s FD is left unchanged, and child processes will inherit parent C<STDIN>'s, and will thus block ( somewhere ) waiting for response.
 
 =cut
 
@@ -68,6 +68,7 @@ sub run_fused {    ## no critic ( Subroutines::RequireArgUnpacking )
   }
 
   my $program = $params[0];
+  ## no critic (ValuesAndExpressions::RequireInterpolationOfMetachars)
   exec {$program} @params or _fail('<<exec {program} @argv>> failed');
   exit;
 }
