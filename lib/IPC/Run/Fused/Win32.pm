@@ -45,7 +45,7 @@ use Exporter qw(import);
 our @EXPORT_OK = qw( run_fused );
 
 sub run_fused {
-  my ( $read_handle, @params ) = @_;
+  my ( undef, @params ) = @_;
   if ( ref $params[0] and 'CODE' eq ref $params[0] ) {
     goto \&_run_fused_coderef;
   }
