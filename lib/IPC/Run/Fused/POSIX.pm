@@ -36,7 +36,11 @@ use IO::Handle;
 
 
 
-sub _fail { goto \&IPC::Run::Fused::_fail }
+use IPC::Run::Fused qw();
+
+BEGIN {
+  *_fail = \&IPC::Run::Fused::_fail;
+}
 
 sub run_fused {    ## no critic ( Subroutines::RequireArgUnpacking )
 

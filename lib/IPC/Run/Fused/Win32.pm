@@ -37,9 +37,11 @@ use Module::Runtime;
 
 
 
-sub _fail { goto \&IPC::Run::Fused::_fail }
+use IPC::Run::Fused qw();
 
 BEGIN {
+
+  *_fail = \&IPC::Run::Fused::_fail;
 
   Module::Runtime::require_module('Socket');
 
