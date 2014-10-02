@@ -115,7 +115,7 @@ our $AUTHORITY = 'cpan:KENTNL'; # AUTHORITY
 our %FAIL_CONTEXT;
 
 use Exporter qw(import);
-use subs 'run_fused';
+sub run_fused;
 our @EXPORT_OK = qw( run_fused _fail );
 
 sub _stringify {
