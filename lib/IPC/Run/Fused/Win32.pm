@@ -102,7 +102,7 @@ sub _run_fused_jobdecode {
 
   if ( ref $params[0] and 'SCALAR' eq ref $params[0] ) {
     my $command = ${ $params[0] };
-    $command =~ s/^\s*//;
+    $command =~ s/\A\s*//msx;
     return {
       command    => $command,
       executable => _win32_command_find_invocant($command),
@@ -157,6 +157,7 @@ sub _win32_escape_command_char {
 }
 
 sub _win32_escape_command_token {
+  ## no critic (RegularExpressions)
   my $chars = join q{}, map { _win32_escape_command_char($_) } split //, shift;
   return qq{"$chars"};
 }
