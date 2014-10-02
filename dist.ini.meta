@@ -1,0 +1,27 @@
+name    = IPC-Run-Fused
+author  = Kent Fredric <kentnl@cpan.org>
+license = Perl_5
+copyright_holder = Kent Fredric
+
+[@Author::KENTNL]
+git_versions = 1
+twitter_hash_tags = #perl #cpan
+normal_form = numify
+mantissa = 8
+;version_major  = 0
+;version_minor  = 1
+;version_rel_year = 2009
+;version_rel_month = 10
+;version_rel_day = 21
+;version_rel_hour = 12
+;version_rel_time_zone = Pacific/Auckland
+
+[Prereqs]
+Sub::Exporter = 0.982
+
+[Prereqs / win32]
+-phase = runtime
+-relationship = suggests
+Win32::Job = 0
+Socket     = 0
+
