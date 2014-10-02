@@ -68,7 +68,8 @@ sub run_fused {    ## no critic ( Subroutines::RequireArgUnpacking )
   }
 
   my $program = $params[0];
-  exec {$program} @params or _fail('<<exec {program} @argv>> failed'); ## no critic (ValuesAndExpressions::RequireInterpolationOfMetachars)
+  ## no critic (ValuesAndExpressions::RequireInterpolationOfMetachars)
+  exec {$program} @params or _fail('<<exec {program} @argv>> failed');
   exit;
 }
 
