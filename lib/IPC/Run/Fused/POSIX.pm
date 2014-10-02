@@ -4,6 +4,8 @@ use warnings;
 
 package IPC::Run::Fused::POSIX;
 
+our $VERSION = '1.000000';
+
 use IO::Handle;
 
 # ABSTRACT: Implementation of IPC::Run::Fused for POSIX-ish systems.

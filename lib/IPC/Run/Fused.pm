@@ -4,6 +4,8 @@ use warnings;
 package IPC::Run::Fused;
 use 5.008000;
 
+our $VERSION = '1.000000';
+
 # ABSTRACT: Capture Stdout/Stderr simultaneously as if it were one stream, painlessly.
 #
 

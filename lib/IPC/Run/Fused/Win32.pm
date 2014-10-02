@@ -4,6 +4,8 @@ use warnings;
 
 package IPC::Run::Fused::Win32;
 
+our $VERSION = '1.000000';
+
 use IO::Handle;
 use Module::Runtime;
 
