@@ -114,6 +114,9 @@ our $AUTHORITY = 'cpan:KENTNL'; # AUTHORITY
 
 our %FAIL_CONTEXT;
 
+use subs 'run_fused';
+use Sub::Exporter::Progressive -setup => { exports => [qw( run_fused _fail )] };
+
 sub _stringify {
   my ($entry) = @_;
   return 'undef' if not defined $entry;
@@ -139,7 +142,6 @@ sub _fail {    ## no critic (Subroutines::RequireArgUnpacking)
   goto \&Carp::confess;
 }
 
-use subs 'run_fused';
 
 BEGIN {
   ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
@@ -151,7 +153,6 @@ BEGIN {
   *run_fused = \&IPC::Run::Fused::POSIX::run_fused;
 }
 
-use Sub::Exporter::Progressive -setup => { exports => [qw( run_fused _fail )] };
 
 1;
 
