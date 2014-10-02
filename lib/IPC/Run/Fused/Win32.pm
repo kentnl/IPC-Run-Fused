@@ -37,12 +37,9 @@ B<NOTE:> at present, STDIN's FD is left unchanged, and child processes will inhe
 
 =cut
 
-use IPC::Run::Fused qw();
-use subs '_fail';
+use IPC::Run::Fused qw(_fail);
 
 BEGIN {
-  ## no critic (Subroutines::ProhibitCallsToUnexportedSubs, Variables::ProtectPrivateVars)
-  *_fail = \&IPC::Run::Fused::_fail;
 
   Module::Runtime::require_module('Socket');
 
