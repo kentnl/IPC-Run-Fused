@@ -62,7 +62,7 @@ This code is barely tested, its here, because I spent hours griping about how th
 
     All the competition seem to still have this thing for global file handles and you having to use them. Yuck!.
 
-    We have a few global FH's inside our code, but they're only STDERR and STDOUT, at present I don't think I can circumvent that. If I ever can, I'll endeavour to do so =)
+    We have a few global FH's inside our code, but they're only STDERR and STDOUT, at present I don't think I can circumvent that. If I ever can, I'll endeavour to do so ☺
 
 # EXPORTED FUNCTIONS
 
