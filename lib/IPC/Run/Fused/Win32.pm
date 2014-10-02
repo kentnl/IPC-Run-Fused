@@ -122,8 +122,7 @@ sub _run_fused_coderef {    ## no critic (Subroutines::RequireArgUnpacking)
   my ( $read_handle, $code ) = @_;
   my ( $reader, $writer );
 
-  ## no critic (Subroutines::ProhibitCallsToUndeclaredSubs)
-  socketpair( $reader, $writer, AF_UNIX, SOCK_STREAM, PF_UNSPEC ) or _fail("creating socketpair");
+  socketpair( $reader, $writer, Socket::AF_UNIX, Socket::SOCK_STREAM, Socket::PF_UNSPEC ) or _fail("creating socketpair");
   shutdown( $reader, 1 ) or _fail("Cant close write to reader");
   shutdown( $writer, 0 ) or _fail("Cant close read to writer");
 
@@ -132,8 +131,8 @@ sub _run_fused_coderef {    ## no critic (Subroutines::RequireArgUnpacking)
     return $pid;
   }
 
-  close *STDERR;
-  close *STDOUT;
+  close *STDERR or _fail('Closing STDERR');
+  close *STDOUT or _fail('Closing STDOUT');
   open *STDOUT, '>>&=', $writer or _fail('Assigning to STDOUT');
   open *STDERR, '>>&=', $writer or _fail('Assigning to STDERR');
   $code->();
