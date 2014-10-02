@@ -38,7 +38,8 @@ B<NOTE:> at present, STDIN's FD is left unchanged, and child processes will inhe
 
 sub _fail { goto \&IPC::Run::Fused::_fail }
 
-sub run_fused {
+sub run_fused {    ## no critic ( Subroutines::RequireArgUnpacking )
+
   my ( $read_handle, @params ) = @_;
 
   my ( $reader, $writer );

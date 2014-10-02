@@ -115,11 +115,13 @@ use Sub::Exporter -setup => { exports => [ run_fused => \&_build_run_fused ], };
 our %FAIL_CONTEXT;
 
 sub _stringify {
-  return 'undef' if not defined $_[0];
-  return qq{`$_[0]`};
+  my ($entry) = @_;
+  return 'undef' if not defined $entry;
+  return qq{`$entry`};
 }
 
-sub _fail {
+sub _fail {    ## no critic (Subroutines::RequireArgUnpacking)
+  my (@message) = @_;
   my $errors = {
     q[$?]  => _stringify($?),
     q[$!]  => _stringify($!),
@@ -128,7 +130,7 @@ sub _fail {
     ( map { $_ => _stringify( $FAIL_CONTEXT{$_} ) } keys %FAIL_CONTEXT )
   };
   my $message = q[];
-  $message .= qq{\n} . $_ for @_;
+  $message .= qq{\n} . $_ for @message;
   $message .= sprintf qq{\n\t%s => %s}, $_, $errors->{$_} for sort keys %$errors;
   $message .= qq{\n};
   require Carp;

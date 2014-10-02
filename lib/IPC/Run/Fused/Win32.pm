@@ -55,7 +55,7 @@ sub run_fused {
   goto \&_run_fused_job;
 }
 
-sub _run_fused_job {
+sub _run_fused_job {    ## no critic (Subroutines::RequireArgUnpacking)
   my ( $read_handle, @params ) = @_;
 
   my $config = _run_fused_jobdecode(@params);
@@ -117,7 +117,8 @@ sub _run_fused_jobdecode {
   };
 }
 
-sub _run_fused_coderef {
+sub _run_fused_coderef {    ## no critic (Subroutines::RequireArgUnpacking)
+
   my ( $read_handle, $code ) = @_;
   my ( $reader, $writer );
 
@@ -153,8 +154,9 @@ our $DOS_REV_CHARS = {
 };
 
 sub _win32_escape_command_char {
-  return $_[0] unless exists $DOS_SPECIAL_CHARS->{ $_[0] };
-  return $DOS_SPECIAL_CHARS->{ $_[0] }->[1];
+  my ($char) = @_;
+  return $char unless exists $DOS_SPECIAL_CHARS->{$char};
+  return $DOS_SPECIAL_CHARS->{$char}->[1];
 }
 
 sub _win32_escape_command_token {
@@ -163,11 +165,13 @@ sub _win32_escape_command_token {
 }
 
 sub _win32_escape_command {
-  return join q{ }, map { _win32_escape_command_token($_) } @_;
+  my (@tokens) = @_;
+  return join q{ }, map { _win32_escape_command_token($_) } @tokens;
 }
 
 sub _win32_command_find_invocant {
-  my ($command) = "$_[0]";
+  my ($command) = @_;
+  $command = "$command";
   my $first = q[];
   my @chars = split //, $command;
   my $inquote;
