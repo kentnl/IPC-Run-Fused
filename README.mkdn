@@ -56,7 +56,7 @@ This code is barely tested, its here, because I spent hours griping about how th
 
 - 2. No dicking around with managing multiple file handles yourself.
 
-    I looked at [IPC::Run](https://metacpan.org/pod/IPC::Run) [IPC::Run3](https://metacpan.org/pod/IPC::Run3) and [IPC::Open3](https://metacpan.org/pod/IPC::Open3), and they all seemed very unfriendly, and none did what I wnted.
+    I looked at [IPC::Run](https://metacpan.org/pod/IPC::Run), [IPC::Run3](https://metacpan.org/pod/IPC::Run3) and [IPC::Open3](https://metacpan.org/pod/IPC::Open3), and they all seemed very unfriendly, and none did what I wnted.
 
 - 3. Non-global filehandles supported by design.
 
