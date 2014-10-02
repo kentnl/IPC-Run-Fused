@@ -74,9 +74,9 @@ sub _run_fused_job {    ## no critic (Subroutines::RequireArgUnpacking)
 
   Module::Runtime::require_module('Win32::Job');
 
-  pipe( $_[0], my $writer );
+  pipe $_[0], my $writer;
 
-  if ( my $pid = fork() ) {
+  if ( my $pid = fork ) {
     return $pid;
   }
 
@@ -122,11 +122,11 @@ sub _run_fused_coderef {    ## no critic (Subroutines::RequireArgUnpacking)
   my ( $read_handle, $code ) = @_;
   my ( $reader, $writer );
 
-  socketpair( $reader, $writer, Socket::AF_UNIX, Socket::SOCK_STREAM, Socket::PF_UNSPEC ) or _fail("creating socketpair");
-  shutdown( $reader, 1 ) or _fail("Cant close write to reader");
-  shutdown( $writer, 0 ) or _fail("Cant close read to writer");
+  socketpair $reader, $writer, Socket::AF_UNIX, Socket::SOCK_STREAM, Socket::PF_UNSPEC or _fail("creating socketpair");
+  shutdown $reader, 1 or _fail("Cant close write to reader");
+  shutdown $writer, 0 or _fail("Cant close read to writer");
 
-  if ( my $pid = fork() ) {
+  if ( my $pid = fork ) {
     $_[0] = $reader;
     return $pid;
   }
@@ -140,11 +140,11 @@ sub _run_fused_coderef {    ## no critic (Subroutines::RequireArgUnpacking)
 
 }
 
-our $BACKSLASH         = chr(92);
+our $BACKSLASH         = chr 92;
 our $DBLBACKSLASH      = $BACKSLASH x 2;
 our $DOS_SPECIAL_CHARS = {
-  chr(92) => [ 'backslash ',    $BACKSLASH x 2 ],
-  chr(34) => [ 'double-quotes', $BACKSLASH . chr(34) ],
+  chr 92 => [ 'backslash ',    $BACKSLASH x 2 ],
+  chr 34 => [ 'double-quotes', $BACKSLASH . chr 34 ],
 
   #chr(60) => ['open angle bracket', $backslash . chr(60)],
   #chr(62) => ['close angle bracket', $backslash . chr(62)],
