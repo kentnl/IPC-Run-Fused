@@ -15,10 +15,12 @@ dist.ini.meta
 lib/IPC/Run/Fused.pm
 lib/IPC/Run/Fused/POSIX.pm
 lib/IPC/Run/Fused/Win32.pm
+maint/perlcritic.rc.gen.pl
 misc/Changes.deps
 misc/Changes.deps.all
 misc/Changes.deps.dev
 misc/Changes.deps.opt
+misc/perlcritic.deps
 perlcritic.rc
 t/00-compile/lib_IPC_Run_Fused_POSIX_pm.t
 t/00-compile/lib_IPC_Run_Fused_Win32_pm.t
@@ -30,6 +32,7 @@ t/02-captures-nodelay.t
 t/03-captures-nodelay-fork.t
 t/04-win32-stringy-params.t
 t/tbin/01.pl
+weaver.ini
 xt/author/critic.t
 xt/release/cpan-changes.t
 xt/release/distmeta.t
