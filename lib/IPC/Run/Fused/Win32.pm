@@ -37,12 +37,9 @@ use Module::Runtime;
 
 
 
-use IPC::Run::Fused qw();
-use subs '_fail';
+use IPC::Run::Fused qw(_fail);
 
 BEGIN {
-  ## no critic (Subroutines::ProhibitCallsToUnexportedSubs, Variables::ProtectPrivateVars)
-  *_fail = \&IPC::Run::Fused::_fail;
 
   Module::Runtime::require_module('Socket');
 

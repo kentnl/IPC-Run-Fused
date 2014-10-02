@@ -151,7 +151,7 @@ BEGIN {
   *run_fused = \&IPC::Run::Fused::POSIX::run_fused;
 }
 
-use Sub::Exporter::Progressive -setup => { exports => [qw( run_fused )] };
+use Sub::Exporter::Progressive -setup => { exports => [qw( run_fused _fail )] };
 
 1;
 
