@@ -2,16 +2,109 @@ use strict;
 use warnings;
 
 package IPC::Run::Fused;
-BEGIN {
-  $IPC::Run::Fused::AUTHORITY = 'cpan:KENTNL';
-}
-{
-  $IPC::Run::Fused::VERSION = '0.04000100';
-}
+$IPC::Run::Fused::VERSION = '0.040001';
 use 5.008000;
 
 # ABSTRACT: Capture Stdout/Stderr simultaneously as if it were one stream, painlessly.
 #
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -59,13 +152,15 @@ __END__
 
 =pod
 
+=encoding UTF-8
+
 =head1 NAME
 
 IPC::Run::Fused - Capture Stdout/Stderr simultaneously as if it were one stream, painlessly.
 
 =head1 VERSION
 
-version 0.04000100
+version 0.040001
 
 =head1 SYNOPSIS
 
@@ -169,7 +264,7 @@ Kent Fredric <kentnl@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2013 by Kent Fredric.
+This software is copyright (c) 2014 by Kent Fredric.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

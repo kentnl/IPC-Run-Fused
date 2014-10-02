@@ -3,16 +3,33 @@ use strict;
 use warnings;
 
 package IPC::Run::Fused::POSIX;
-BEGIN {
-  $IPC::Run::Fused::POSIX::AUTHORITY = 'cpan:KENTNL';
-}
-{
-  $IPC::Run::Fused::POSIX::VERSION = '0.04000100';
-}
-
+$IPC::Run::Fused::POSIX::VERSION = '0.040001';
 use IO::Handle;
 
 # ABSTRACT: Implementation of IPC::Run::Fused for POSIX-ish systems.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 sub _fail { goto \&IPC::Run::Fused::_fail }
@@ -53,13 +70,15 @@ __END__
 
 =pod
 
+=encoding UTF-8
+
 =head1 NAME
 
 IPC::Run::Fused::POSIX - Implementation of IPC::Run::Fused for POSIX-ish systems.
 
 =head1 VERSION
 
-version 0.04000100
+version 0.040001
 
 =head1 METHODS
 
@@ -91,7 +110,7 @@ Kent Fredric <kentnl@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2013 by Kent Fredric.
+This software is copyright (c) 2014 by Kent Fredric.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
