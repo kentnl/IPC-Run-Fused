@@ -1,6 +1,6 @@
 ﻿Revision history for IPC-Run-Fused
 
-1.000000 2014-10-02T12:11:26Z
+1.000000 2014-10-02T12:19:25Z
  [00 - Important - Version Scheme Change]
  - Using 1.xxxyyy ( mantissa=6 ) instead of 0.xxxyyyzz
  - This may affect hand-operated downstreams
