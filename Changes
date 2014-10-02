@@ -1,6 +1,12 @@
 ﻿Revision history for IPC-Run-Fused
 
-0.04000101 2014-10-02T10:52:20Z
+0.04000101 2014-10-02T10:56:30Z
+ [Dependencies::Stats]
+ - Dependencies changed since 0.04000100, see misc/*.deps* for details
+ - build: ↑1
+ - configure: ↑1
+ - develop: +47 -2 (recommends: -1, suggests: +1 -1)
+ - test: +2 ↑1 -2 (recommends: +1)
 
 0.04000100 2013-02-05T07:17:18Z
  [BugFix]
@@ -56,7 +62,7 @@
  - Maint release.
 
  [BugFixes]
- - disabled tests on Win32. We have had it work on win32, but the tests are broken on win32, and we're	   not quite
+ - disabled tests on Win32. We have had it work on win32, but the tests are broken on win32, and we're	      not quite
    sure why yet. Code is planned to have a total overhaul at some point.
 
  [Dependencies::Stats]
@@ -107,7 +113,7 @@
  - Removed needless POSIX::dup();
  - Loads more error handling to try work out whats going wrong in tests.
  - Reorgansied fork() code into a handy subroutine.
- - Reduced Test-grinding from 400 to 100, as 100 seems enough to make problems	   turn up if there are any
+ - Reduced Test-grinding from 400 to 100, as 100 seems enough to make problems	      turn up if there are any
 
 0.01001122 2009-11-01T21:22:16Z
  - Fall back to native pipes if POSIX pipes fail. Experimental, so will carp.
