@@ -142,13 +142,20 @@ sub _fail {    ## no critic (Subroutines::RequireArgUnpacking)
 }
 use subs 'run_fused';
 
+sub _win32_run_fused {
+  require IPC::Run::Fused::Win32;
+  goto \&IPC::Run::Fused::Win32::run_fused;
+}
+sub _posix_run_fused {
+  require IPC::Run::Fused::POSIX;
+  goto \&IPC::Run::Fused::POSIX::run_fused;
+}
+
 ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
 if ( 'MSWin32' eq $^O ) {
-  require IPC::Run::Fused::Win32;
-  *run_fused = \&IPC::Run::Fused::Win32::run_fused;
+  *run_fused = \&_win32_run_fused;
 } else {
-  require IPC::Run::Fused::POSIX;
-  *run_fused = \&IPC::Run::Fused::POSIX::run_fused;
+  *run_fused = \&_posix_run_fused;
 }
 
 1;
