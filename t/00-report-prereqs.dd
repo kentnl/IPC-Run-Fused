@@ -75,9 +75,6 @@ do { my $x = {
                                       'perl' => '5.008003',
                                       'strict' => '0',
                                       'warnings' => '0'
-                                    },
-                      'suggests' => {
-                                      'Win32::Job' => '0'
                                     }
                     },
        'test' => {
