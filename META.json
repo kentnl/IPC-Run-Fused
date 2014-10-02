@@ -89,6 +89,7 @@
             "Sub::Exporter::Progressive" : "0",
             "perl" : "5.008003",
             "strict" : "0",
+            "subs" : "0",
             "warnings" : "0"
          },
          "suggests" : {
@@ -205,6 +206,7 @@
          "Test::Pod" : "1.48",
          "Test::Pod::Coverage" : "1.10",
          "strict" : "1.08",
+         "subs" : "1.02",
          "warnings" : "1.26"
       },
       "perl" : {

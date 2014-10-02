@@ -140,17 +140,16 @@ sub _fail {    ## no critic (Subroutines::RequireArgUnpacking)
   @_ = $message;
   goto \&Carp::confess;
 }
+use subs 'run_fused';
 
-BEGIN {
-  ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
-  if ( 'MSWin32' eq $^O ) {
-    require IPC::Run::Fused::Win32;
-    *run_fused = \&IPC::Run::Fused::Win32::run_fused;
-  }
+## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
+if ( 'MSWin32' eq $^O ) {
+  require IPC::Run::Fused::Win32;
+  *run_fused = \&IPC::Run::Fused::Win32::run_fused;
+} else {
   require IPC::Run::Fused::POSIX;
   *run_fused = \&IPC::Run::Fused::POSIX::run_fused;
 }
-
 
 1;
 
