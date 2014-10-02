@@ -225,13 +225,13 @@ But if you're using a string, this modules probably not affording you much.
 
 =item 2. No dicking around with managing multiple file handles yourself.
 
-I looked at L<IPC::Run>, L<IPC::Run3> and L<IPC::Open3>, and they all seemed very unfriendly, and none did what I wnted.
+I looked at L<IPC::Run>, L<IPC::Run3> and L<IPC::Open3>, and they all seemed very unfriendly, and none did what I wanted.
 
-=item 3. Non-global filehandles supported by design.
+=item 3. Non-global file-handles supported by design.
 
 All the competition seem to still have this thing for global file handles and you having to use them. Yuck!.
 
-We have a few global FH's inside our code, but they're only STDERR and STDOUT, at present I don't think I can circumvent that. If I ever can, I'll endeavour to do so ☺
+We have a few global file-handles inside our code, but they're only C<STDERR> and C<STDOUT>, at present I don't think I can circumvent that. If I ever can, I'll endeavor to do so ☺
 
 =back
 
@@ -259,9 +259,9 @@ $fh will be clobbered like 'open' does, and $cmd, @args will be passed, as-is, t
 
 $fh will point to an IO::Handle attached to the end of a pipe running back to the called application.
 
-the command will be run in a fork, and stderr and stdout "fused" into a singluar pipe.
+the command will be run in a fork, and C<STDERR> and C<STDOUT> "fused" into a singular pipe.
 
-B<NOTE:> at present, STDIN's FD is left unchanged, and child processes will inherit parent STDIN's, and will thus block ( somewhere ) waiting for response.
+B<NOTE:> at present, C<STDIN>'s file-descriptor is left unchanged, and child processes will inherit parent C<STDIN>'s, and will thus block ( somewhere ) waiting for response.
 
 =head1 AUTHOR
 
