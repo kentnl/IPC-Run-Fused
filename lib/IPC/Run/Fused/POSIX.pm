@@ -38,7 +38,8 @@ use IO::Handle;
 
 sub _fail { goto \&IPC::Run::Fused::_fail }
 
-sub run_fused {
+sub run_fused {    ## no critic ( Subroutines::RequireArgUnpacking )
+
   my ( $read_handle, @params ) = @_;
 
   my ( $reader, $writer );
@@ -46,7 +47,6 @@ sub run_fused {
   pipe( $reader, $writer ) or _fail('Creating Pipe');
 
   if ( my $pid = fork() ) {
-    ## no critic ( Subroutines::RequireArgUnpacking )
     $_[0] = $reader;
     return $pid;
   }
