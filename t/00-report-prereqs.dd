@@ -71,6 +71,7 @@ do { my $x = {
                                       'IO::Handle' => '0',
                                       'Module::Runtime' => '0',
                                       'Sub::Exporter' => '0.982',
+                                      'Sub::Exporter::Progressive' => '0',
                                       'perl' => '5.008003',
                                       'strict' => '0',
                                       'subs' => '0',

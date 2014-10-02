@@ -110,8 +110,6 @@ our $AUTHORITY = 'cpan:KENTNL'; # AUTHORITY
 
 
 
-use Sub::Exporter -setup => { exports => [ run_fused => \&_build_run_fused ], };
-
 our %FAIL_CONTEXT;
 
 sub _stringify {
@@ -139,19 +137,19 @@ sub _fail {    ## no critic (Subroutines::RequireArgUnpacking)
   goto \&Carp::confess;
 }
 
-sub _build_run_fused {
+use subs 'run_fused';
+
+BEGIN {
   ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
   if ( 'MSWin32' eq $^O ) {
     require IPC::Run::Fused::Win32;
-    return \&IPC::Run::Fused::Win32::run_fused;
+    *run_fused = \&IPC::Run::Fused::Win32::run_fused;
   }
   require IPC::Run::Fused::POSIX;
-  return \&IPC::Run::Fused::POSIX::run_fused;
+  *run_fused = \&IPC::Run::Fused::POSIX::run_fused;
 }
 
-BEGIN {
-  *run_fused = _build_run_fused();
-}
+use Sub::Exporter::Progressive -setup => { exports => [qw( run_fused )] };
 
 1;
 
