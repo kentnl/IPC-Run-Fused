@@ -20,13 +20,13 @@ name: IPC-Run-Fused
 provides:
   IPC::Run::Fused:
     file: lib/IPC/Run/Fused.pm
-    version: '0.040001'
+    version: '0.04000101'
   IPC::Run::Fused::POSIX:
     file: lib/IPC/Run/Fused/POSIX.pm
-    version: '0.040001'
+    version: '0.04000101'
   IPC::Run::Fused::Win32:
     file: lib/IPC/Run/Fused/Win32.pm
-    version: '0.040001'
+    version: '0.04000101'
 requires:
   Carp: '0'
   IO::Handle: '0'
@@ -39,7 +39,7 @@ resources:
   bugtracker: https://github.com/kentfredric/IPC-Run-Fused/issues
   homepage: https://github.com/kentfredric/IPC-Run-Fused
   repository: https://github.com/kentfredric/IPC-Run-Fused.git
-version: '0.040001'
+version: '0.04000101'
 x_BuiltWith:
   failures:
     Win32::Job: 'module was not found in INC'
@@ -138,7 +138,7 @@ x_Dist_Zilla:
         Dist::Zilla::Role::Git::Repo:
           repo_root: .
         Dist::Zilla::Role::Version::Sanitize:
-          mantissa: '6'
+          mantissa: '8'
           normal_form: numify
       name: '@Author::KENTNL/Git::NextVersion::Sanitized'
       version: '0.002002'
@@ -458,7 +458,7 @@ x_Dist_Zilla:
         Dist::Zilla::Plugin::Git::Tag:
           branch: ~
           signed: '0'
-          tag: 0.040001-source
+          tag: 0.04000101-source
           tag_format: '%v-source'
           tag_message: v%v
           time_zone: local
@@ -508,7 +508,7 @@ x_Dist_Zilla:
         Dist::Zilla::Plugin::Git::Tag:
           branch: releases
           signed: '0'
-          tag: '0.040001'
+          tag: '0.04000101'
           tag_format: '%v'
           tag_message: v%v
           time_zone: local

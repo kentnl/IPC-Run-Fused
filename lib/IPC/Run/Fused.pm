@@ -2,7 +2,7 @@ use strict;
 use warnings;
 
 package IPC::Run::Fused;
-$IPC::Run::Fused::VERSION = '0.040001';
+$IPC::Run::Fused::VERSION = '0.04000101';
 use 5.008000;
 
 # ABSTRACT: Capture Stdout/Stderr simultaneously as if it were one stream, painlessly.
@@ -160,7 +160,7 @@ IPC::Run::Fused - Capture Stdout/Stderr simultaneously as if it were one stream,
 
 =head1 VERSION
 
-version 0.040001
+version 0.04000101
 
 =head1 SYNOPSIS
 
