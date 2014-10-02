@@ -40,6 +40,7 @@ use IPC::Run::Fused qw();
 use subs '_fail';
 
 BEGIN {
+  ## no critic (Subroutines::ProhibitCallsToUnexportedSubs, Variables::ProtectPrivateVars)
   *_fail = \&IPC::Run::Fused::_fail;
 }
 
