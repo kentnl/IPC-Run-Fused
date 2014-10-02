@@ -39,7 +39,9 @@ use Module::Runtime;
 
 use IPC::Run::Fused qw(_fail);
 use Socket qw( AF_UNIX SOCK_STREAM PF_UNSPEC );
-use Sub::Exporter::Progressive -setup => { exports => [qw( run_fused )] };
+
+use Exporter qw(import);
+our @EXPORT_OK = qw( run_fused );
 
 sub run_fused {
   my ( $read_handle, @params ) = @_;

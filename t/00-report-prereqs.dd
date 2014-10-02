@@ -68,6 +68,7 @@ do { my $x = {
        'runtime' => {
                       'requires' => {
                                       'Carp' => '0',
+                                      'Exporter' => '0',
                                       'IO::Handle' => '0',
                                       'Module::Runtime' => '0',
                                       'Socket' => '0',

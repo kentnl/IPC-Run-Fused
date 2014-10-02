@@ -38,7 +38,10 @@ use IO::Handle;
 
 use IPC::Run::Fused qw( _fail );
 
-use Sub::Exporter::Progressive -setup => { exports => [qw( run_fused )] };
+use Exporter qw(import);
+
+our @EXPORT_OK = qw( run_fused );
+
 
 sub run_fused {    ## no critic ( Subroutines::RequireArgUnpacking )
 

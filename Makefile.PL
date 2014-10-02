@@ -21,6 +21,7 @@ my %WriteMakefileArgs = (
   "NAME" => "IPC::Run::Fused",
   "PREREQ_PM" => {
     "Carp" => 0,
+    "Exporter" => 0,
     "IO::Handle" => 0,
     "Module::Runtime" => 0,
     "Socket" => 0,
@@ -44,6 +45,7 @@ my %WriteMakefileArgs = (
 
 my %FallbackPrereqs = (
   "Carp" => 0,
+  "Exporter" => 0,
   "ExtUtils::MakeMaker" => 0,
   "File::Spec" => 0,
   "FindBin" => 0,
