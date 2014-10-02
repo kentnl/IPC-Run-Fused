@@ -70,6 +70,7 @@ do { my $x = {
                                       'Carp' => '0',
                                       'IO::Handle' => '0',
                                       'Module::Runtime' => '0',
+                                      'Socket' => '0',
                                       'Sub::Exporter::Progressive' => '0',
                                       'perl' => '5.008003',
                                       'strict' => '0',
