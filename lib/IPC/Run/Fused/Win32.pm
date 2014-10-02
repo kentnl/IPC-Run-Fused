@@ -6,10 +6,12 @@ package IPC::Run::Fused::Win32;
 
 our $VERSION = '1.000000';
 
+# ABSTRACT: Implementation of IPC::Run::Fused for Win32
+
+# AUTHORITY
+
 use IO::Handle;
 use Module::Runtime;
-
-# ABSTRACT: Implementation of IPC::Run::Fused for Win32
 
 =method run_fused
 

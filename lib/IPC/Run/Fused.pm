@@ -7,7 +7,8 @@ package IPC::Run::Fused;
 our $VERSION = '1.000000';
 
 # ABSTRACT: Capture Stdout/Stderr simultaneously as if it were one stream, painlessly.
-#
+
+# AUTHORITY
 
 =head1 SYNOPSIS
 
