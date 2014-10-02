@@ -131,7 +131,7 @@ sub _fail {    ## no critic (Subroutines::RequireArgUnpacking)
   };
   my $message = q[];
   $message .= qq{\n} . $_ for @message;
-  $message .= sprintf qq{\n\t%s => %s}, $_, $errors->{$_} for sort keys %$errors;
+  $message .= sprintf qq{\n\t%s => %s}, $_, $errors->{$_} for sort keys %{$errors};
   $message .= qq{\n};
   require Carp;
   @_ = $message;
