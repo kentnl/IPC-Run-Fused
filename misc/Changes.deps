@@ -21,6 +21,9 @@ This file contains changes in REQUIRED dependencies for standard CPAN phases (co
  [Removed / configure requires]
  - Module::Build 0.4003
 
+ [Removed / runtime requires]
+ - Sub::Exporter 0.982
+
  [Removed / test requires]
  - File::Find
  - File::Temp

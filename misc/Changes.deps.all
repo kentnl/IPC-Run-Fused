@@ -90,6 +90,9 @@ This file contains ALL changes in dependencies in both REQUIRED / OPTIONAL depen
  - Dist::Zilla::PluginBundle::Author::KENTNL::Lite
  - version 0.9901
 
+ [Removed / runtime requires]
+ - Sub::Exporter 0.982
+
  [Removed / test requires]
  - File::Find
  - File::Temp
