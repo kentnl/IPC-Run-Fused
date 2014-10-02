@@ -114,7 +114,7 @@ sub _run_fused_jobdecode {
   };
 }
 
-sub _run_fused_coderef {
+sub _run_fused_coderef {    ## no critic (Subroutines::RequireArgUnpacking)
   my ( $read_handle, $code ) = ( \shift @_, @_ );
   my ( $reader, $writer );
 

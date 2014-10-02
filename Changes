@@ -1,6 +1,6 @@
 ﻿Revision history for IPC-Run-Fused
 
-1.000000 2014-10-02T14:43:00Z
+1.000000 2014-10-02T14:53:42Z
  [00 - Important - Version Scheme Change]
  - Using 1.xxxyyy ( mantissa=6 ) instead of 0.xxxyyyzz
  - This may affect hand-operated downstreams
@@ -23,6 +23,7 @@
  [Internals]
  - use lower level Exporter code instead of Sub::Exporter
  - Avoid need for builder method and bake implementation at USE
+ - Newer technique for passing vivifable references around internally employed to make parameter passing more apparent.
 
  [Metadata]
  - Specify email address in copyright data

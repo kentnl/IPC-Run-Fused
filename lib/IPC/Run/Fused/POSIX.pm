@@ -43,7 +43,7 @@ our @EXPORT_OK = qw( run_fused );
 
 sub run_fused {    ## no critic ( Subroutines::RequireArgUnpacking )
 
-  my ( $read_handle, @params ) = ( \shift @_,@_ );
+  my ( $read_handle, @params ) = ( \shift @_, @_ );
 
   my ( $reader, $writer );
 

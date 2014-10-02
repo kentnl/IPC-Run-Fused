@@ -143,11 +143,11 @@ sub _fail {    ## no critic (Subroutines::RequireArgUnpacking)
   goto \&Carp::confess;
 }
 
-
 sub _win32_run_fused {
   require IPC::Run::Fused::Win32;
   goto \&IPC::Run::Fused::Win32::run_fused;
 }
+
 sub _posix_run_fused {
   require IPC::Run::Fused::POSIX;
   goto \&IPC::Run::Fused::POSIX::run_fused;
@@ -155,7 +155,8 @@ sub _posix_run_fused {
 
 if ( 'MSWin32' eq $^O ) {
   *run_fused = \&_win32_run_fused;
-} else {
+}
+else {
   *run_fused = \&_posix_run_fused;
 }
 1;
