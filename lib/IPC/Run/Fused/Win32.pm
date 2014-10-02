@@ -33,7 +33,8 @@ $fh will point to an IO::Handle attached to the end of a pipe running back to th
 
 the command will be run in a fork, and stderr and stdout "fused" into a singluar pipe.
 
-B<NOTE:> at present, STDIN's FD is left unchanged, and child processes will inherit parent STDIN's, and will thus block ( somewhere ) waiting for response.
+B<NOTE:> at present, STDIN's FD is left unchanged, and child processes will inherit parent STDIN's, and will thus block
+( somewhere ) waiting for response.
 
 =cut
 
