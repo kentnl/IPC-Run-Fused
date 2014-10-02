@@ -168,7 +168,7 @@ sub _win32_escape_command {
 
 sub _win32_command_find_invocant {
   my ($command) = "$_[0]";
-  my $first = "";
+  my $first = q[];
   my @chars = split //, $command;
   my $inquote;
 

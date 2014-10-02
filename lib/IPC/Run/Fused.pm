@@ -121,13 +121,13 @@ sub _stringify {
 
 sub _fail {
   my $errors = {
-    '$?'  => _stringify($?),
-    '$!'  => _stringify($!),
-    '$^E' => _stringify($^E),
-    '$@'  => _stringify($@),
+    q[$?]  => _stringify($?),
+    q[$!]  => _stringify($!),
+    q[$^E] => _stringify($^E),
+    q[$@]  => _stringify($@),
     ( map { $_ => _stringify( $FAIL_CONTEXT{$_} ) } keys %FAIL_CONTEXT )
   };
-  my $message = '';
+  my $message = q[];
   $message .= qq{\n} . $_ for @_;
   $message .= sprintf qq{\n\t%s => %s}, $_, $errors->{$_} for sort keys %$errors;
   $message .= qq{\n};
