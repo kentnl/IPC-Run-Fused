@@ -70,13 +70,15 @@ But if you're using a string, this modules probably not affording you much.
 
 =item 2. No dicking around with managing multiple file handles yourself.
 
-I looked at L<IPC::Run>, L<IPC::Run3> and L<IPC::Open3>, and they all seemed very unfriendly, and none did what I wanted.
+I looked at L<< C<IPC::Run>|IPC::Run >>, L<< C<IPC::Run3>|IPC::Run3 >> and L<< C<IPC::Open3>|IPC::Open3 >>, and they all seemed
+very unfriendly, and none did what I wanted.
 
 =item 3. Non-global file-handles supported by design.
 
 All the competition seem to still have this thing for global file handles and you having to use them. Yuck!.
 
-We have a few global file-handles inside our code, but they're only C<STDERR> and C<STDOUT>, at present I don't think I can circumvent that. If I ever can, I'll endeavor to do so ☺
+We have a few global file-handles inside our code, but they're only C<STDERR> and C<STDOUT>, at present I don't think I can
+circumvent that. If I ever can, I'll endeavor to do so ☺
 
 =back
 
