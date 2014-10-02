@@ -38,14 +38,10 @@ B<NOTE:> at present, STDIN's FD is left unchanged, and child processes will inhe
 =cut
 
 use IPC::Run::Fused qw(_fail);
+use Socket qw( AF_UNIX SOCK_STREAM PF_UNSPEC );
 
-BEGIN {
-
-  Module::Runtime::require_module('Socket');
-
-  Socket->import();
-
-}
+use Exporter qw(import);
+our @EXPORT_OK = qw( run_fused );
 
 sub run_fused {
   my ( $read_handle, @params ) = @_;
@@ -122,7 +118,7 @@ sub _run_fused_coderef {    ## no critic (Subroutines::RequireArgUnpacking)
   my ( $read_handle, $code ) = @_;
   my ( $reader, $writer );
 
-  socketpair $reader, $writer, Socket::AF_UNIX, Socket::SOCK_STREAM, Socket::PF_UNSPEC or _fail('creating socketpair');
+  socketpair $reader, $writer, AF_UNIX, SOCK_STREAM, PF_UNSPEC or _fail('creating socketpair');
   shutdown $reader, 1 or _fail('Cant close write to reader');
   shutdown $writer, 0 or _fail('Cant close read to writer');
 

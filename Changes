@@ -21,7 +21,7 @@
  - test: +2 ↓1 -2 (recommends: +3)
 
  [Internals]
- - use Sub::Exporter::Progressive instead
+ - use lower level Exporter code instead of Sub::Exporter
  - Avoid need for builder method and bake implementation at USE
 
  [Metadata]

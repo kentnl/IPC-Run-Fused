@@ -36,7 +36,10 @@ B<NOTE:> at present, STDIN's FD is left unchanged, and child processes will inhe
 
 =cut
 
+use Exporter qw(import);
 use IPC::Run::Fused qw( _fail );
+
+our @EXPORT_OK = qw( run_fused );
 
 sub run_fused {    ## no critic ( Subroutines::RequireArgUnpacking )
 

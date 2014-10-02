@@ -114,6 +114,10 @@ B<NOTE:> at present, C<STDIN>'s file-descriptor is left unchanged, and child pro
 
 our %FAIL_CONTEXT;
 
+use Exporter qw(import);
+sub run_fused;
+our @EXPORT_OK = qw( run_fused _fail );
+
 sub _stringify {
   my ($entry) = @_;
   return 'undef' if not defined $entry;
@@ -139,19 +143,21 @@ sub _fail {    ## no critic (Subroutines::RequireArgUnpacking)
   goto \&Carp::confess;
 }
 
-use subs 'run_fused';
-
-BEGIN {
-  ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
-  if ( 'MSWin32' eq $^O ) {
-    require IPC::Run::Fused::Win32;
-    *run_fused = \&IPC::Run::Fused::Win32::run_fused;
-  }
-  require IPC::Run::Fused::POSIX;
-  *run_fused = \&IPC::Run::Fused::POSIX::run_fused;
+sub _win32_run_fused {
+  require IPC::Run::Fused::Win32;
+  goto \&IPC::Run::Fused::Win32::run_fused;
 }
 
-use Sub::Exporter::Progressive -setup => { exports => [qw( run_fused _fail )] };
+sub _posix_run_fused {
+  require IPC::Run::Fused::POSIX;
+  goto \&IPC::Run::Fused::POSIX::run_fused;
+}
 
+if ( 'MSWin32' eq $^O ) {
+  *run_fused = \&_win32_run_fused;
+}
+else {
+  *run_fused = \&_posix_run_fused;
+}
 1;
 
