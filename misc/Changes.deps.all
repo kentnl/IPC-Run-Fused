@@ -93,6 +93,10 @@ This file contains ALL changes in dependencies in both REQUIRED / OPTIONAL depen
  [Removed / runtime requires]
  - Sub::Exporter 0.982
 
+ [Removed / runtime suggests]
+ - Socket
+ - Win32::Job
+
  [Removed / test requires]
  - File::Find
  - File::Temp
