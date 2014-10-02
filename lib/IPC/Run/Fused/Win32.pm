@@ -171,6 +171,7 @@ sub _win32_command_find_invocant {
   my ($command) = @_;
   $command = "$command";
   my $first = q[];
+  ## no critic (RegularExpressions)
   my @chars = split //, $command;
   my $inquote;
 
