@@ -6,9 +6,11 @@ package IPC::Run::Fused::POSIX;
 
 our $VERSION = '1.000000';
 
-use IO::Handle;
-
 # ABSTRACT: Implementation of IPC::Run::Fused for POSIX-ish systems.
+
+our $AUTHORITY = 'cpan:KENTNL'; # AUTHORITY
+
+use IO::Handle;
 
 
 
