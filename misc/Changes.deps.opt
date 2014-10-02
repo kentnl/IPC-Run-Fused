@@ -11,6 +11,7 @@ This file contains changes in OPTIONAL dependencies for standard CPAN phases (co
 
  [Removed / runtime suggests]
  - Socket
+ - Win32::Job
 
 0.04000100 2013-02-05T07:17:18Z
 
