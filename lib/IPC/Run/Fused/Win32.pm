@@ -122,6 +122,7 @@ sub _run_fused_coderef {    ## no critic (Subroutines::RequireArgUnpacking)
   my ( $read_handle, $code ) = @_;
   my ( $reader, $writer );
 
+  ## no critic (Subroutines::ProhibitCallsToUndeclaredSubs)
   socketpair( $reader, $writer, AF_UNIX, SOCK_STREAM, PF_UNSPEC ), and shutdown( $reader, 1 ), and shutdown( $writer, 0 ),
     or _fail("creating socketpair");
 
