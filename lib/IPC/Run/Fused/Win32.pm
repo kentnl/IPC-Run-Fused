@@ -122,8 +122,9 @@ sub _run_fused_coderef {    ## no critic (Subroutines::RequireArgUnpacking)
   my ( $read_handle, $code ) = @_;
   my ( $reader, $writer );
 
-  socketpair( $reader, $writer, AF_UNIX, SOCK_STREAM, PF_UNSPEC ), and shutdown( $reader, 1 ), and shutdown( $writer, 0 ),
-    or _fail("creating socketpair");
+  socketpair( $reader, $writer, Socket::AF_UNIX, Socket::SOCK_STREAM, Socket::PF_UNSPEC ) or _fail("creating socketpair");
+  shutdown( $reader, 1 ) or _fail("Cant close write to reader");
+  shutdown( $writer, 0 ) or _fail("Cant close read to writer");
 
   if ( my $pid = fork() ) {
     $_[0] = $reader;
