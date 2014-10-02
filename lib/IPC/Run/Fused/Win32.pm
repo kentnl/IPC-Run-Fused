@@ -55,7 +55,7 @@ sub run_fused {
   goto \&_run_fused_job;
 }
 
-sub _run_fused_job {
+sub _run_fused_job {    ## no critic (Subroutines::RequireArgUnpacking)
   my ( $read_handle, @params ) = @_;
 
   my $config = _run_fused_jobdecode(@params);
@@ -74,9 +74,7 @@ sub _run_fused_job {
 
   Module::Runtime::require_module('Win32::Job');
 
-  ## no critic (Subroutines::RequireArgUnpacking)
   pipe( $_[0], my $writer );
-  ## use critic;
 
   if ( my $pid = fork() ) {
     return $pid;
@@ -119,7 +117,8 @@ sub _run_fused_jobdecode {
   };
 }
 
-sub _run_fused_coderef {
+sub _run_fused_coderef {    ## no critic (Subroutines::RequireArgUnpacking)
+
   my ( $read_handle, $code ) = @_;
   my ( $reader, $writer );
 
@@ -127,9 +126,7 @@ sub _run_fused_coderef {
     or _fail("creating socketpair");
 
   if ( my $pid = fork() ) {
-    ## no critic (Subroutines::RequireArgUnpacking)
     $_[0] = $reader;
-    ## use critic
     return $pid;
   }
 
