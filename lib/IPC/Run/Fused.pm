@@ -123,6 +123,7 @@ sub _stringify {
 sub _fail {    ## no critic (Subroutines::RequireArgUnpacking)
   my (@message) = @_;
   my $errors = {
+    ## no critic (ValuesAndExpressions::RequireInterpolationOfMetachars)
     q[$?]  => _stringify($?),
     q[$!]  => _stringify($!),
     q[$^E] => _stringify($^E),
