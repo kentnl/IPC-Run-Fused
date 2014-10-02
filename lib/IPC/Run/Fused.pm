@@ -120,7 +120,7 @@ sub _stringify {
   return qq{`$entry`};
 }
 
-sub _fail {
+sub _fail {    ## no critic (Subroutines::RequireArgUnpacking)
   my (@message) = @_;
   my $errors = {
     q[$?]  => _stringify($?),
