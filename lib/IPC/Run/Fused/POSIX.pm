@@ -54,11 +54,11 @@ sub run_fused {    ## no critic ( Subroutines::RequireArgUnpacking )
   open *STDOUT, '>>&=', $writer->fileno or _fail('Assigning to STDOUT');
   open *STDERR, '>>&=', $writer->fileno or _fail('Assigning to STDERR');
 
-  if ( ref $params[0] and ref $params[0] eq 'CODE' ) {
+  if ( ref $params[0] and 'CODE' eq ref $params[0] ) {
     $params[0]->();
     exit;
   }
-  if ( ref $params[0] and ref $params[0] eq 'SCALAR' ) {
+  if ( ref $params[0] and 'SCALAR' eq ref $params[0] ) {
     my $command = ${ $params[0] };
     exec $command or _fail('<<exec command>> failed');
     exit;

@@ -49,7 +49,7 @@ BEGIN {
 
 sub run_fused {
   my ( $read_handle, @params ) = @_;
-  if ( ref $params[0] and ref $params[0] eq 'CODE' ) {
+  if ( ref $params[0] and 'CODE' eq ref $params[0] ) {
     goto \&_run_fused_coderef;
   }
   goto \&_run_fused_job;
@@ -92,7 +92,7 @@ sub _run_fused_job {    ## no critic (Subroutines::RequireArgUnpacking)
   my $result = $job->run( -1, 0 );
   if ( not $result ) {
     my $status = $job->status();
-    if ( exists $status->{exitcode} and $status->{exitcode} == 293 ) {
+    if ( exists $status->{exitcode} and 293 == $status->{exitcode} ) {
       _fail('Process used more than allotted time');
     }
     _fail( 'Child process terminated with exit code' . $status->{exitcode} );
@@ -103,7 +103,7 @@ sub _run_fused_job {    ## no critic (Subroutines::RequireArgUnpacking)
 sub _run_fused_jobdecode {
   my (@params) = @_;
 
-  if ( ref $params[0] and ref $params[0] eq 'SCALAR' ) {
+  if ( ref $params[0] and 'SCALAR' eq ref $params[0] ) {
     my $command = ${ $params[0] };
     $command =~ s/^\s*//;
     return {
@@ -180,12 +180,12 @@ sub _win32_command_find_invocant {
     my $char  = $chars[0];
     my $dchar = $chars[0] . $chars[1];
 
-    if ( not $inquote and $char eq q{"} ) {
+    if ( not $inquote and q["] eq $char ) {
       $inquote = 1;
       shift @chars;
       next;
     }
-    if ( $inquote and $char eq q{"} ) {
+    if ( $inquote and q["] eq $char ) {
       $inquote = undef;
       shift @chars;
       next;
@@ -196,14 +196,14 @@ sub _win32_command_find_invocant {
       shift @chars;
       next;
     }
-    if ( $char eq q{ } and not $inquote ) {
+    if ( q[ ] eq $char and not $inquote ) {
       if ( not length $first ) {
         shift @chars;
         next;
       }
       return $first;
     }
-    if ( $char eq q{ } and $inquote ) {
+    if ( q[ ] eq $char and $inquote ) {
       $first .= $char;
       shift @chars;
       next;
