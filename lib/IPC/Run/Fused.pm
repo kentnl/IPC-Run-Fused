@@ -1,63 +1,171 @@
+use 5.008003;
 use strict;
 use warnings;
 
 package IPC::Run::Fused;
-BEGIN {
-  $IPC::Run::Fused::AUTHORITY = 'cpan:KENTNL';
-}
-{
-  $IPC::Run::Fused::VERSION = '0.04000100';
-}
-use 5.008000;
+
+our $VERSION = '1.000000';
 
 # ABSTRACT: Capture Stdout/Stderr simultaneously as if it were one stream, painlessly.
-#
+
+our $AUTHORITY = 'cpan:KENTNL'; # AUTHORITY
 
 
 
-use Sub::Exporter -setup => { exports => [ run_fused => \&_build_run_fused ], };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 our %FAIL_CONTEXT;
 
+use Exporter qw(import);
+sub run_fused;
+our @EXPORT_OK = qw( run_fused _fail );
+
 sub _stringify {
-  return 'undef' if not defined $_[0];
-  return qq{`$_[0]`};
+  my ($entry) = @_;
+  return 'undef' if not defined $entry;
+  return qq{`$entry`};
 }
 
-sub _fail {
+sub _fail {    ## no critic (Subroutines::RequireArgUnpacking)
+  my (@message) = @_;
   my $errors = {
-    '$?'  => _stringify($?),
-    '$!'  => _stringify($!),
-    '$^E' => _stringify($^E),
-    '$@'  => _stringify($@),
-    ( map { $_ => _stringify( $FAIL_CONTEXT{$_} ) } keys %FAIL_CONTEXT )
+    ## no critic (ValuesAndExpressions::RequireInterpolationOfMetachars)
+    q[$?]  => _stringify($?),
+    q[$!]  => _stringify($!),
+    q[$^E] => _stringify($^E),
+    q[$@]  => _stringify($@),
+    ( map { $_ => _stringify( $FAIL_CONTEXT{$_} ) } keys %FAIL_CONTEXT ),
   };
-  my $message = '';
-  $message .= qq{\n} . $_ for @_;
-  $message .= sprintf qq{\n\t%s => %s}, $_, $errors->{$_} for sort keys %$errors;
+  my $message = q[];
+  $message .= qq{\n} . $_ for @message;
+  $message .= sprintf qq{\n\t%s => %s}, $_, $errors->{$_} for sort keys %{$errors};
   $message .= qq{\n};
   require Carp;
   @_ = $message;
   goto \&Carp::confess;
 }
 
-sub _build_run_fused {
-  if ( $^O eq 'MSWin32' ) {
-    require IPC::Run::Fused::Win32;
-    return \&IPC::Run::Fused::Win32::run_fused;
-  }
-  require IPC::Run::Fused::POSIX;
-  return \&IPC::Run::Fused::POSIX::run_fused;
-}
-{
-  *run_fused = _build_run_fused();
+sub _win32_run_fused {
+  require IPC::Run::Fused::Win32;
+  goto \&IPC::Run::Fused::Win32::run_fused;
 }
 
+sub _posix_run_fused {
+  require IPC::Run::Fused::POSIX;
+  goto \&IPC::Run::Fused::POSIX::run_fused;
+}
+
+if ( 'MSWin32' eq $^O ) {
+  *run_fused = \&_win32_run_fused;
+}
+else {
+  *run_fused = \&_posix_run_fused;
+}
 1;
 
 __END__
 
 =pod
+
+=encoding UTF-8
 
 =head1 NAME
 
@@ -65,7 +173,7 @@ IPC::Run::Fused - Capture Stdout/Stderr simultaneously as if it were one stream,
 
 =head1 VERSION
 
-version 0.04000100
+version 1.000000
 
 =head1 SYNOPSIS
 
@@ -90,15 +198,15 @@ Have you ever tried to do essentially the same as you would in bash do to this:
 
 And found massive road works getting in the way.
 
-Sure, you can aways do this style syntax:
+Sure, you can always do this style syntax:
 
   open my $fh, 'someapp --args foo 2>&1 |';
 
-But thats not very nice, because
+But that's not very nice, because
 
 =over 4
 
-=item 1. you're relying on a subshell to do that for you
+=item 1. you're relying on a sub-shell to do that for you
 
 =item 2. you have to manually escape everything
 
@@ -125,13 +233,15 @@ But if you're using a string, this modules probably not affording you much.
 
 =item 2. No dicking around with managing multiple file handles yourself.
 
-I looked at L<IPC::Run> L<IPC::Run3> and L<IPC::Open3>, and they all seemed very unfriendly, and none did what I wnted.
+I looked at L<< C<IPC::Run>|IPC::Run >>, L<< C<IPC::Run3>|IPC::Run3 >> and L<< C<IPC::Open3>|IPC::Open3 >>, and they all seemed
+very unfriendly, and none did what I wanted.
 
-=item 3. Non-global filehandles supported by design.
+=item 3. Non-global file-handles supported by design.
 
 All the competition seem to still have this thing for global file handles and you having to use them. Yuck!.
 
-We have a few global FH's inside our code, but they're only STDERR and STDOUT, at present I don't think I can circumvent that. If I ever can, I'll endeavour to do so =)
+We have a few global file-handles inside our code, but they're only C<STDERR> and C<STDOUT>, at present I don't think I can
+circumvent that. If I ever can, I'll endeavor to do so ☺
 
 =back
 
@@ -159,9 +269,9 @@ $fh will be clobbered like 'open' does, and $cmd, @args will be passed, as-is, t
 
 $fh will point to an IO::Handle attached to the end of a pipe running back to the called application.
 
-the command will be run in a fork, and stderr and stdout "fused" into a singluar pipe.
+the command will be run in a fork, and C<STDERR> and C<STDOUT> "fused" into a singular pipe.
 
-B<NOTE:> at present, STDIN's FD is left unchanged, and child processes will inherit parent STDIN's, and will thus block ( somewhere ) waiting for response.
+B<NOTE:> at present, C<STDIN>'s file-descriptor is left unchanged, and child processes will inherit parent C<STDIN>'s, and will thus block ( somewhere ) waiting for response.
 
 =head1 AUTHOR
 
@@ -169,7 +279,7 @@ Kent Fredric <kentnl@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2013 by Kent Fredric.
+This software is copyright (c) 2014 by Kent Fredric <kentfredric@gmail.com>.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

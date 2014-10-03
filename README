@@ -3,7 +3,7 @@ NAME
     stream, painlessly.
 
 VERSION
-    version 0.04000100
+    version 1.000000
 
 SYNOPSIS
       use IPC::Run::Fused qw( run_fused );
@@ -27,13 +27,13 @@ DESCRIPTION
 
     And found massive road works getting in the way.
 
-    Sure, you can aways do this style syntax:
+    Sure, you can always do this style syntax:
 
       open my $fh, 'someapp --args foo 2>&1 |';
 
-    But thats not very nice, because
+    But that's not very nice, because
 
-    1. you're relying on a subshell to do that for you
+    1. you're relying on a sub-shell to do that for you
     2. you have to manually escape everything
     3. you can't use list context.
 
@@ -54,16 +54,16 @@ FEATURES
         you much.
 
     2. No dicking around with managing multiple file handles yourself.
-        I looked at IPC::Run IPC::Run3 and IPC::Open3, and they all seemed
-        very unfriendly, and none did what I wnted.
+        I looked at "IPC::Run", "IPC::Run3" and "IPC::Open3", and they all
+        seemed very unfriendly, and none did what I wanted.
 
-    3. Non-global filehandles supported by design.
+    3. Non-global file-handles supported by design.
         All the competition seem to still have this thing for global file
         handles and you having to use them. Yuck!.
 
-        We have a few global FH's inside our code, but they're only STDERR
-        and STDOUT, at present I don't think I can circumvent that. If I
-        ever can, I'll endeavour to do so =)
+        We have a few global file-handles inside our code, but they're only
+        "STDERR" and "STDOUT", at present I don't think I can circumvent
+        that. If I ever can, I'll endeavor to do so ☺
 
 EXPORTED FUNCTIONS
     No functions are exported by default, be explicit with what you want.
@@ -89,18 +89,19 @@ EXPORTED FUNCTIONS
     $fh will point to an IO::Handle attached to the end of a pipe running
     back to the called application.
 
-    the command will be run in a fork, and stderr and stdout "fused" into a
-    singluar pipe.
+    the command will be run in a fork, and "STDERR" and "STDOUT" "fused"
+    into a singular pipe.
 
-    NOTE: at present, STDIN's FD is left unchanged, and child processes will
-    inherit parent STDIN's, and will thus block ( somewhere ) waiting for
-    response.
+    NOTE: at present, "STDIN"'s file-descriptor is left unchanged, and child
+    processes will inherit parent "STDIN"'s, and will thus block ( somewhere
+    ) waiting for response.
 
 AUTHOR
     Kent Fredric <kentnl@cpan.org>
 
 COPYRIGHT AND LICENSE
-    This software is copyright (c) 2013 by Kent Fredric.
+    This software is copyright (c) 2014 by Kent Fredric
+    <kentfredric@gmail.com>.
 
     This is free software; you can redistribute it and/or modify it under
     the same terms as the Perl 5 programming language system itself.

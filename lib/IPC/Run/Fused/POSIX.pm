@@ -1,48 +1,74 @@
-
+use 5.008003;
 use strict;
 use warnings;
 
 package IPC::Run::Fused::POSIX;
-BEGIN {
-  $IPC::Run::Fused::POSIX::AUTHORITY = 'cpan:KENTNL';
-}
-{
-  $IPC::Run::Fused::POSIX::VERSION = '0.04000100';
-}
 
-use IO::Handle;
+our $VERSION = '1.000000';
 
 # ABSTRACT: Implementation of IPC::Run::Fused for POSIX-ish systems.
 
+our $AUTHORITY = 'cpan:KENTNL'; # AUTHORITY
 
-sub _fail { goto \&IPC::Run::Fused::_fail }
+use IO::Handle;
 
-sub run_fused {
-  my ( $read_handle, @params ) = @_;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+use Exporter qw(import);
+use IPC::Run::Fused qw( _fail );
+
+our @EXPORT_OK = qw( run_fused );
+
+sub run_fused {    ## no critic ( Subroutines::RequireArgUnpacking )
+
+  my ( $read_handle, @params ) = ( \shift @_, @_ );
 
   my ( $reader, $writer );
 
-  pipe( $reader, $writer ) or _fail('Creating Pipe');
+  pipe $reader, $writer or _fail('Creating Pipe');
 
-  if ( my $pid = fork() ) {
-    $_[0] = $reader;
+  if ( my $pid = fork ) {
+    ${$read_handle} = $reader;
     return $pid;
   }
 
   open *STDOUT, '>>&=', $writer->fileno or _fail('Assigning to STDOUT');
   open *STDERR, '>>&=', $writer->fileno or _fail('Assigning to STDERR');
 
-  if ( ref $params[0] and ref $params[0] eq 'CODE' ) {
+  if ( ref $params[0] and 'CODE' eq ref $params[0] ) {
     $params[0]->();
     exit;
   }
-  if ( ref $params[0] and ref $params[0] eq 'SCALAR' ) {
+  if ( ref $params[0] and 'SCALAR' eq ref $params[0] ) {
     my $command = ${ $params[0] };
     exec $command or _fail('<<exec command>> failed');
     exit;
   }
 
   my $program = $params[0];
+  ## no critic (ValuesAndExpressions::RequireInterpolationOfMetachars)
   exec {$program} @params or _fail('<<exec {program} @argv>> failed');
   exit;
 }
@@ -53,13 +79,15 @@ __END__
 
 =pod
 
+=encoding UTF-8
+
 =head1 NAME
 
 IPC::Run::Fused::POSIX - Implementation of IPC::Run::Fused for POSIX-ish systems.
 
 =head1 VERSION
 
-version 0.04000100
+version 1.000000
 
 =head1 METHODS
 
@@ -81,9 +109,9 @@ $fh will be clobbered like 'open' does, and $cmd, @args will be passed, as-is, t
 
 $fh will point to an IO::Handle attached to the end of a pipe running back to the called application.
 
-the command will be run in a fork, and stderr and stdout "fused" into a singluar pipe.
+the command will be run in a fork, and C<STDERR> and C<STDOUT> "fused" into a singular pipe.
 
-B<NOTE:> at present, STDIN's FD is left unchanged, and child processes will inherit parent STDIN's, and will thus block ( somewhere ) waiting for response.
+B<NOTE:> at present, C<STDIN>'s FD is left unchanged, and child processes will inherit parent C<STDIN>'s, and will thus block ( somewhere ) waiting for response.
 
 =head1 AUTHOR
 
@@ -91,7 +119,7 @@ Kent Fredric <kentnl@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2013 by Kent Fredric.
+This software is copyright (c) 2014 by Kent Fredric <kentfredric@gmail.com>.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
