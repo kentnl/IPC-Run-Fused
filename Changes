@@ -1,6 +1,8 @@
 ﻿Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+1.000000 2014-10-03T05:04:57Z
  [00 - Important - Version Scheme Change]
  - Using 1.xxxyyy ( mantissa=6 ) instead of 0.xxxyyyzz
  - This may affect hand-operated downstreams
