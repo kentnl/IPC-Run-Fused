@@ -1,3 +1,4 @@
+; vim: syntax=dosini
 name    = IPC-Run-Fused
 author  = Kent Fredric <kentnl@cpan.org>
 license = Perl_5
