@@ -4,7 +4,7 @@ use warnings;
 
 package IPC::Run::Fused::Win32;
 
-our $VERSION = '1.000001';
+our $VERSION = '1.000002';
 
 # ABSTRACT: Implementation of IPC::Run::Fused for Win32
 
