@@ -1,3 +1,4 @@
-IPC-Run-Fused-*
-.build
+/IPC-Run-Fused-*
+/.build
 *.LOG
+/tmp/
