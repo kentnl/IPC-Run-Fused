@@ -4,7 +4,7 @@ use warnings;
 
 package IPC::Run::Fused;
 
-our $VERSION = '1.000001';
+our $VERSION = '1.000002';
 
 # ABSTRACT: Capture Stdout/Stderr simultaneously as if it were one stream, painlessly.
 
@@ -173,7 +173,7 @@ IPC::Run::Fused - Capture Stdout/Stderr simultaneously as if it were one stream,
 
 =head1 VERSION
 
-version 1.000001
+version 1.000002
 
 =head1 SYNOPSIS
 

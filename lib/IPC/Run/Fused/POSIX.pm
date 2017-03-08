@@ -4,7 +4,7 @@ use warnings;
 
 package IPC::Run::Fused::POSIX;
 
-our $VERSION = '1.000001';
+our $VERSION = '1.000002';
 
 # ABSTRACT: Implementation of IPC::Run::Fused for POSIX-ish systems.
 
@@ -87,7 +87,7 @@ IPC::Run::Fused::POSIX - Implementation of IPC::Run::Fused for POSIX-ish systems
 
 =head1 VERSION
 
-version 1.000001
+version 1.000002
 
 =head1 METHODS
 

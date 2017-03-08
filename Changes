@@ -1,5 +1,7 @@
 Revision history for IPC-Run-Fused
 
+1.000002 2017-03-08T15:25:49Z 72125a3
+
 1.000001 2017-03-08T14:46:47Z 9a6d4ee
  - Bugfix: Avoid test failures with -Ddefault_inc_excludes_dot
 

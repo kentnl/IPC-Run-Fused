@@ -21,13 +21,13 @@ name: IPC-Run-Fused
 provides:
   IPC::Run::Fused:
     file: lib/IPC/Run/Fused.pm
-    version: '1.000001'
+    version: '1.000002'
   IPC::Run::Fused::POSIX:
     file: lib/IPC/Run/Fused/POSIX.pm
-    version: '1.000001'
+    version: '1.000002'
   IPC::Run::Fused::Win32:
     file: lib/IPC/Run/Fused/Win32.pm
-    version: '1.000001'
+    version: '1.000002'
 requires:
   Carp: '0'
   Exporter: '0'
@@ -41,4 +41,4 @@ resources:
   bugtracker: https://github.com/kentnl/IPC-Run-Fused/issues
   homepage: https://github.com/kentnl/IPC-Run-Fused
   repository: https://github.com/kentnl/IPC-Run-Fused.git
-version: '1.000001'
+version: '1.000002'
